@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragment :: headerFragment}">
+</head>
+
+<body>
+  <!-- Container start -->
+  <div class="container-fluid">
+    <div th:replace="~{fragment :: sidebarFrgment}"></div>
+    <div class="view-content">
+      <!-- card area start -->
+      <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+        <div class="card-header div-head">
+          <div class="row mt-2">
+            <div class="d-flex justify-content-center">
+              <i class="fa-solid fa-money-check-dollar"></i>
+              <h2 class="h3 ms-3">Teacher Payment Management</h2>
+              <div class="col text-end">
+                <ul class="nav nav-tabs float-end">
+                  <li class="nav-item p-1">
+                    <button class="nav-link " data-bs-toggle="tab" data-bs-target="#tabFormArea" type="button"
+                      id="tabFormButton" style="background-color: rgba(240, 248, 255, 0.765);">
+                      Add Teacher Payment
+                    </button>
+                  </li>
+                  <li class="nav-item p-1">
+                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tabTableArea" type="button"
+                      style="background-color: rgba(240, 248, 255, 0.838);">
+                      View Teacher Payments
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Tab Content -->
+      <div class="tab-content">
+        <!-- Form Area start-->
+        <div class="tab-pane fade" id="tabFormArea">
+          <div class="row">
+            <div class="col">
+              <div class="card div-card mx-auto mt-3" style="max-width: 60rem;">
+                <div class="card-body">
+                  <!-- default submition eka wada krnawa auto html wala..api wenama submit function ekak use krnawnam default eka wada krna eka nawaththanna ona klin...defult method post -->
+                  <form id="formTeacherPayment" onsubmit="return false">
+                    <!-- Required mark area start -->
+                    <div class="row">
+                      <div class="col text-end fw-bold">
+                        <p>Required <span class="text-danger">*</span></p>
+                      </div>
+                    </div>
+                    <!-- Required mark area end -->
+                    <div class="row mt-3">
+                      <!-- select Teacher area start -->
+                      <label for="selectTeacher" class="col-2 form-label fw-bold mt-2">
+                        Teacher : <span class="text-danger">*</span>
+                      </label>
+                      <div class="col-4">
+                        <select required id="selectTeacher" class="form-select form-input"
+                          onchange="getPendingEnrollmentsByTeacher(this)">
+                        </select>
+                      </div>
+                      <!-- select Teacher area end -->
+                      <!-- Enrollment Month area start -->
+                      <label for="selectEnrollmentMonth" class="col-2 form-label fw-bold mt-2">
+                        Month : <span class="text-danger">*</span>
+                      </label>
+                      <div class="col-4">
+                        <select id="selectEnrollmentMonth" class="form-select form-input"
+                          onchange="getEnrollmentData(this)">
+
+                          <option value="" selected disabled>Select Month</option>
+                        </select>
+                      </div>
+                      <!-- Enrollment Month area end -->
+                    </div>
+                    <!-- Enrollment Payment Summary area start -->
+                    <!--Total Batch Income & Total Service Charge area start -->
+                    <h5 class="text-center fw-bold mt-4 text-primary">
+                      Enrollment Payment Summary
+                    </h5>
+                    <div class="row mt-3">
+                      <div class="col-2"></div>
+                      <div class="col-4 d-flex justify-content-between">
+                        <label class="fw-bold text-secondary">Total Batch Income :</label>
+                        <span id="totalBatchIncome" class="fw-bold  form-label"></span>
+                      </div>
+                      <div class="col-4 d-flex justify-content-between">
+                        <label class="fw-bold text-secondary">Total Service Charge :</label>
+                        <span id="totalServiceCharge" class="fw-bold form-label"></span>
+                      </div>
+                      <div class="col-2"></div>
+                    </div>
+                    <!--Total Batch Income & Total Service Charge area end -->
+
+                    <!-- Total Additional Charges & Net Amount area start -->
+                    <div class="row mt-2">
+
+                      <div class="col-2"></div>
+
+                      <div class="col-4 d-flex justify-content-between">
+                        <label class="fw-bold text-secondary">
+                          Total Additional Charges :
+                        </label>
+
+                        <span id="totalAdditionalCharges" class="fw-bold form-label"></span>
+                      </div>
+
+                      <div class="col-4 d-flex justify-content-between">
+                        <label class="fw-bold text-secondary">
+                          Net Amount :
+                        </label>
+
+                        <span id="netAmount" class="fw-bold form-label"></span>
+                      </div>
+
+                      <div class="col-2"></div>
+
+                    </div>
+                    <!-- Total Additional Charges & Net Amount area end -->
+
+                    <!-- Tax Amount & Final Amount area start -->
+                    <div class="row mt-2">
+
+                      <div class="col-2"></div>
+
+                      <!-- <div class="col-4 d-flex justify-content-between">
+                        <label class="fw-bold text-secondary">
+                          Tax Amount :
+                        </label>
+
+                        <span id="taxAmount" class="fw-bold form-label"></span>
+                      </div> -->
+
+                      <div class="col-4 d-flex justify-content-between">
+                        <label class="fw-bold text-secondary">
+                          Enrollment Amount :
+                        </label>
+
+                        <span id="enrollmentAmount" class="text-success fw-bold"></span>
+                      </div>
+
+                      <div class="col-2"></div>
+
+                    </div>
+                    <!-- Tax Amount & Final Amount area end -->
+
+                    <div class="row mt-4">
+                      <!-- Payment amount area start -->
+                      <label for="textPaymentAmount" class="col-2 form-label fw-bold mt-2">
+                        Pay-Amount : <span class="text-danger">*</span>
+                      </label>
+                      <div class="col-4">
+                        <input type="number" id="textPaymentAmount" required class="form-control form-input"
+                          placeholder="Enter Payment Amount"
+                          onkeyup="inputTextValidator(this,'^(([1-9][0-9]{0,7})|([1-9][0-9]{0,6}[.][0-9]{2}))$','teacherpayment','paidamount'); generateBalanceAmount();">
+                      </div>
+                      <!-- Payment amount area end -->
+                      <!--   Balance amount area start -->
+                      <!--  <label for="textBalanceAmount" class="col-2 form-label fw-bold mt-2">
+                        Balance Amount : <span class="text-danger">*</span>
+                      </label>
+                      <div class="col-4">
+                        <input type="number" id="textBalanceAmount" required class="form-control form-input"
+                          placeholder="Enter Balance Amount"
+                          onkeyup="inputTextValidator(this,'^(([0-9][0-9]{0,7})|([0-9][0-9]{0,6}[.][0-9]{2}))$','teacherpayment','balanceamount')">
+                      </div> -->
+                      <!-- Balance amount area end -->
+                      <!-- Payment type area start -->
+                      <label for="selectPaymentType" class="col-2 form-label fw-bold mt-2">
+                        Payment Type : <span class="text-danger">*</span>
+                      </label>
+                      <div class="col-4">
+                        <select id="selectPaymentType" required class="form-select form-input"
+                          onchange="changePaymentType(this)">
+                          <option value="" selected disabled>Select Payment Type</option>
+                          <option value="Cash">Cash</option>
+                          <option value="Bank Transfer">Bank Transfer</option>
+                          <option value="Cheque">Cheque</option>
+                        </select>
+                      </div>
+
+                    </div>
+                    <!-- Reference No area start -->
+                    <div class="row mt-3" id="divReferenceNo" hidden>
+
+                      <label for="textReferenceNo" class="col-2 form-label fw-bold mt-2">
+                        Reference No:
+                        <span class="text-danger">*</span>
+                      </label>
+
+                      <div class="col-4">
+                        <input type="text" id="textReferenceNo" class="form-control form-input"
+                          placeholder="Enter Reference No"
+                          onkeyup="inputTextValidator(this,'^[1-9][0-9]{0,9}$','teacherpayment','referenceno');">
+                      </div>
+
+                    </div>
+                    <!-- Reference No area end -->
+
+                    <!-- Payment type area end -->
+                    <!-- buttons area start -->
+                    <div class="row mt-2">
+                      <div class="d-flex justify-content-center gap-2 mt-3">
+                        <button class="btn fw-bold btnall btn-clear" id="buttonClear" type="button"
+                          onclick="clearFormData('formTeacherPayment','teacherpayment')">
+                          <i class="fa-solid fa-recycle"></i> Clear
+                        </button>
+                        <button class="btn fw-bold btnall btn-submit" id="buttonSubmit" type="button"
+                          onclick="buttonTeacherPaySubmit()">
+                          <i class="fa-solid fa-paper-plane"></i> Submit
+                        </button>
+                      </div>
+
+                    </div>
+                    <!-- Buttons area end-->
+                  </form>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Form Area end-->
+        <!-- Table Area start-->
+        <div class="tab-pane fade show active" id="tabTableArea">
+          <div class="row">
+            <div class="col">
+              <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                <div class="card-body">
+                  <table id="tableTeacherPayment" class="table table-hover table-bordered table-striped ">
+                    <thead class="text-dark tablehead tableh">
+                      <tr>
+                        <th>No</th>
+                        <!-- <th>Bill No</th> -->
+                        <th>Teacher</th>
+                        <th>Month</th>
+                        <th>Enrollment Amount</th>
+                        <th>Payment Type</th>
+                        <th>Status</th>
+                        <th>Modify</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tableBodyTeacherPayment">
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- Table Area start-->
+      </div>
+    </div>
+  </div>
+
+  <!-- Teacher Payment Print Modal -->
+  <div class="modal modalPrint" id="modalTeacherPaymentPrint">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content div-card">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="fw-bold">Teacher Payment Receipt</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close">
+          </button>
+        </div>
+        <!-- Modal Body -->
+        <div class="modal-body" id="printTeacherPaymentArea">
+
+          <!-- Header -->
+          <div class="text-center mb-4">
+            <!-- Institute Name -->
+            <h1 class="fw-bold form-label">
+              Jithma Institute
+            </h1>
+            <!-- Receipt Title -->
+            <h5 class="fw-bold">
+              Teacher Payment Receipt
+            </h5>
+            <hr>
+          </div>
+
+          <!-- Teacher Details -->
+          <div class="row mb-4">
+            <div class="col-6">
+              <table class="table table-bordered">
+                <tr>
+                  <th width="60%">Teacher Name</th>
+                  <td id="tdTeacherName"></td>
+                </tr>
+                <tr>
+                  <th>Enrollment Month</th>
+                  <td id="tdEnrollmentMonth"></td>
+                </tr>
+                <tr>
+                  <th>Payment Method</th>
+                  <td id="tdPaymentMethod"></td>
+                </tr>
+                <tr>
+                  <th>Payment Status</th>
+                  <td id="tdPaymentStatus"></td>
+                </tr>
+              </table>
+            </div>
+            <div class="col-6">
+              <table class="table table-bordered">
+                <tr>
+                  <th width="60%">Paid Amount</th>
+                  <td id="tdPaidAmount"></td>
+                </tr>
+                <!--  <tr>
+                  <th>Balance Amount</th>
+                  <td id="tdBalanceAmount"></td>
+                </tr> -->
+                <tr>
+                  <th>Enrollment Amount</th>
+                  <td id="tdEnrollmentAmount"></td>
+                </tr>
+                <tr>
+                  <th>Bill Number</th>
+                  <td id="tdBillNo"></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <!-- Batch Details Area -->
+          <div class="mt-4">
+            <div class="card shadow-sm border-0">
+              <div class="card-header text-white" style="background-color: rgb(53, 96, 138);">
+                <h5 class="mb-0 fw-bold">
+                  Batch Details
+                </h5>
+              </div>
+              <div class="card-body">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>Id</th>
+                      <th>Batch</th>
+                      <th>Register Count</th>
+                      <th>Batch Fee</th>
+                      <th>Total Income</th>
+                      <th>Free Card Count</th>
+                      <th>Additional Charges</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tbodyPrintBatchDetails">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Financial Summary -->
+          <div class="card shadow-sm border-0">
+            <div class="card-header text-white" style="background-color: rgb(53, 96, 138);">
+              <h5 class="mb-0 fw-bold">
+                Financial Summary
+              </h5>
+            </div>
+            <div class="card-body">
+
+              <!-- Row 01 -->
+              <div class="row mb-2">
+                <div class="col-6 d-flex justify-content-between">
+                  <label class="fw-bold">
+                    Total Batch Income :
+                  </label>
+                  <span id="tdTotalBatchIncome"></span>
+                </div>
+
+                <div class="col-6 d-flex justify-content-between">
+                  <label class="fw-bold">
+                    Total Service Charge :
+                  </label>
+                  <span id="tdTotalServiceCharge"></span>
+                </div>
+              </div>
+
+              <!-- Row 02 -->
+              <div class="row mb-3">
+                <div class="col-6 d-flex justify-content-between">
+                  <label class="fw-bold">
+                    Total Additional Charges :
+                  </label>
+                  <span id="tdTotalAdditionalCharges"></span>
+                </div>
+                <div class="col-6 d-flex justify-content-between">
+                  <label class="fw-bold">
+                    Net Amount :
+                  </label>
+                  <span id="tdNetAmount"></span>
+                </div>
+              </div>
+
+              <!-- Row 03 -->
+              <div class="row">
+                <!-- <div class="col-6 d-flex justify-content-between">
+                 <label class="fw-bold">
+                    Tax Amount :
+                  </label>
+                  <span id="tdTaxAmount"></span>
+                </div> -->
+                <div class="col-6 d-flex justify-content-between">
+                  <label class="fw-bold">
+                    Final Amount :
+                  </label>
+                  <span id="tdFinalAmount">
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="mt-5">
+            <div class="row">
+              <div class="col-6 text-center">
+                <hr>
+                <p class="fw-bold">
+                  Authorized Signature
+                </p>
+              </div>
+              <div class="col-6 text-center">
+                <hr>
+                <p class="fw-bold">
+                  Teacher Signature
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="button" onclick="buttonTeacherPaymentPrint()" class="btn btn-secondary">
+            Print
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div th:replace="~{fragment :: footerFragment}"></div>
+
+  <!-- link teacher payment js -->
+  <script src="modaljs/teacherpayment.js"></script>
+</body>
+
+</html>

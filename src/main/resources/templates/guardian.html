@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragment :: headerFragment}">
+</head>
+
+<body>
+    <!-- Container start -->
+    <div class="container-fluid">
+        <div th:replace="~{fragment :: sidebarFrgment}"></div>
+        <div class="view-content">
+            <!-- card area start -->
+            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                <div class="card-header div-head">
+                    <!-- title section strat -->
+                    <div class="row mt-2">
+                        <div class="d-flex justify-content-center">
+                            <i class="fa-solid fa-user-group"></i>
+                            <h3 class="h3 ms-3 "> Guardian Management</h3>
+                            <div class="col text-end">
+                                <ul class="nav nav-tabs float-end">
+                                    <li class="nav-item p-1">
+                                        <button id="tabFormButton" class="nav-link active" data-bs-toggle="tab"
+                                            data-bs-target="#tabFormArea" type="button"
+                                            style="background-color: rgba(240, 248, 255, 0.765);">Add
+                                            Guardian</button>
+                                    </li>
+                                    <li class="nav-item p-1">
+                                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabTableArea"
+                                            type="button" style="background-color: rgba(240, 248, 255, 0.838);"
+                                            onclick="showGuardianFormTab ()">View
+                                            Guardian data</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- title section end -->
+                </div>
+            </div>
+
+            <div class="tab-content">
+                <!-- Guardian Form -->
+                <div class="tab-pane fade show active" id="tabFormArea">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card div-card mx-auto mt-3" style="max-width: 60rem;">
+                                <div class="card-body">
+                                    <!-- default submition eka wada krnawa auto html wala..api wenama submit function ekak use krnawnam default eka wada krna eka nawaththanna ona klin...defult method post -->
+                                    <form id="formGuardian" onsubmit="return false">
+                                        <!-- required mark start -->
+                                        <div class="row mt-3">
+                                            <div class="col text-end fw-bold">
+                                                <p>Required <span class="text-danger">*</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <!-- Guardian Name area start -->
+                                            <label for="textGuardianName" class="col-2 form-label fw-bold mt-2">
+                                                Guardian Name :
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <input type="text" required id="textGuardianName"
+                                                    class="form-control form-input"
+                                                    placeholder="Enter Guardian Name Here"
+                                                    onkeyup="inputTextValidator(this,'^([A-Z][a-z]{2,20}(\\s)){1,20}([Dd]e\\s)?([A-Z][a-z]{2,20})$','guardian','guardianname')">
+                                            </div>
+                                            <!-- Guardian Name area end -->
+
+                                            <!-- Guardian NIC area start -->
+                                            <label for="textGuardianNic" class="col-2 form-label fw-bold mt-2">
+                                                Guardian NIC :
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <input type="text" placeholder="Enter Guardian NIC Here" required
+                                                    id="textGuardianNic" class="form-control form-input"
+                                                    onkeyup="guardianNicValidator()">
+                                            </div>
+                                            <!-- Guardian NIC area start -->
+                                        </div>
+                                        <div class="row mt-4">
+                                            <!-- Guardian Contact area start -->
+                                            <label for="textGuardianMobile" class="col-2 form-label fw-bold mt-2">
+                                                Contact No :
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <input type="text" id="textGuardianMobile"
+                                                    class="form-control form-input "
+                                                    placeholder="Enter Guardian Contact Number Here"
+                                                    onkeyup="inputTextValidator(this,'^[0][7][01245678][0-9]{7}$','guardian','mobileno')">
+                                            </div>
+                                            <!-- Guardian Contact area end -->
+
+                                            <!-- Guardian Type area start -->
+                                            <label for="selectGuardianType" class="col-2 form-label fw-bold mt-2">
+                                                Guardian Type :
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <select required id="selectGuardianType" class="form-select form-input"
+                                                    onchange="handleSelectedOtherGuardian(); this.style.border='2px solid green';">
+                                                    <option value="" selected disabled>Select Guardian Type
+                                                    </option>
+                                                    <option value="Father">Father</option>
+                                                    <option value="Mother">Mother</option>
+                                                    <option value="Other">Other</option>
+                                                </select>
+
+                                            </div>
+                                            <!-- Guardian Type area end -->
+                                        </div>
+
+                                        <div class="row mt-4" id="otherTypeRow" hidden>
+                                            <div class="col-6"></div>
+                                            <!-- Guardian type- other  area start -->
+                                            <label for="otherGuardianType" class="col-2 form-label fw-bold mt-2">
+                                            </label>
+                                            <div class="col-4">
+                                                <input type="text" class="form-control form-input" required
+                                                    placeholder="Enter Guardain Type|Example:Uncle"
+                                                    id="otherGuardianType">
+
+                                            </div>
+                                            <!-- Guardian type- other  area start -->
+
+                                        </div>
+                                        <div class="row mt-4">
+                                            <!-- Guardian adress area start -->
+                                            <label for="textGuAddress" class="col-2 form-label fw-bold mt-2">
+                                                Address:
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <textarea class="form-control form-input" id="textGuAddress"
+                                                    onkeyup="inputTextValidator(this,'^[A-Za-z0-9 ,/.-]{5,100}$','guardian','address')"
+                                                    placeholder="Enter Guardian Address Here"></textarea>
+                                                <!-- ^([A-Za-z0-9\\,\\/\\-]{2,15}[\\,]{0,1}[ ]){1,10}([A-Z][a-z]{2,15}[.])$ -->
+                                            </div>
+                                            <!-- Guardian adress area end -->
+                                            <!-- Guardian status area start -->
+                                            <label for="selectGuardianStatus" id="guardianStatusLabel"
+                                                class="col-2 form-label fw-bold mt-2">
+                                                Status:
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4" id="guardianStatusSelect">
+                                                <select required id="selectGuardianStatus"
+                                                    class="form-select form-input" onchange="guardian.guardianstatus_id=JSON.parse(this.value);
+                                this.style.border='2px solid green';">
+                                                    <option value="" selected disabled>Select Guardian Status
+                                                    </option>
+                                                    <option value="Active">Active</option>
+                                                    <option value="In-Active">In-Active</option>
+                                                </select>
+                                            </div>
+                                            <!--Guardian status area end -->
+                                        </div>
+
+
+                                        <!-- buttons area start -->
+                                        <div class="row mt-2">
+                                            <div class="d-flex justify-content-center gap-2 mt-3">
+                                                <button class="btn fw-bold btnall btn-clear" id="buttonClear"
+                                                    type="button" onclick="clearFormData('formGuardian','guardian')">
+                                                    <i class="fa-solid fa-recycle"></i> Clear
+                                                </button>
+                                                <button class="btn fw-bold btnall btn-update" id="buttonUpdate"
+                                                    type="button" onclick="buttonGuardianUpdate()">
+                                                    <i class="fa-solid fa-edit"></i> Update
+                                                </button>
+                                                <button class="btn fw-bold btnall btn-submit" id="buttonSubmit"
+                                                    type="button" onclick="buttonGuardianSubmit()">
+                                                    <i class="fa-solid fa-paper-plane"></i> Submit
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                        <!-- buttons area end -->
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Guardaian Table -->
+                <div class="tab-pane fade" id="tabTableArea">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                                <div class="card-body">
+                                    <table id="tableGuardaian" class="table table-hover table-bordered table-striped ">
+                                        <thead class="text-dark tablehead tableh">
+                                            <tr>
+                                                <th></th>
+                                                <th>Guardian Name</th>
+                                                <th>Guardian NIC</th>
+                                                <th>Contact Number</th>
+                                                <th>Guardian Type</th>
+                                                <th>Guardian Status</th>
+                                                <th>Modify</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tableBodyGuardian">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Guardian Print Modal start-->
+    <div class="modal modalPrint" id="modalGuardianPrint">
+        <div class="modal-dialog">
+            <div class="modal-content div-card">
+                <div class="modal-header">
+                    <h4>Print Guardian Details</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="tablePrint table table-bordered table-hover" id="tablePrintGuardian">
+                        <tbody>
+                            <tr>
+                                <th>Guardian Name</th>
+                                <td id="tdGuardianName"></td>
+                            </tr>
+                            <tr>
+                                <th>Guardian NIC</th>
+                                <td id="tdNic"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Mobile Number</th>
+                                <td id="tdMobile"></td>
+                            </tr>
+                            <tr>
+                                <th>Address</th>
+                                <td id="tdAddress"></td>
+                            </tr>
+                            <tr>
+                                <th>Guardian Type</th>
+                                <td id="tdGuardianType"></td>
+                            </tr>
+                            <tr>
+                                <th>Guardaian Status</th>
+                                <td id="tdGuardianStatus"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="buttonPrint()" class="btn btn-secondary">
+                        Print
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Guardian Print Modal start-->
+
+    <div th:replace="~{fragment :: footerFragment}"></div>
+
+    <!-- linkemployee js file -->
+    <script src="modaljs/guardian.js"></script>
+
+
+
+
+</body>
+
+
+
+</html>

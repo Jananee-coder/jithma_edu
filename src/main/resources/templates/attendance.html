@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragment :: headerFragment}">
+</head>
+
+<body>
+  <!-- Container start -->
+  <div class="container-fluid">
+    <div th:replace="~{fragment :: sidebarFrgment}"></div>
+    <div class="view-content">
+      <!-- card area start -->
+      <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+        <div class="card-header div-head">
+          <div class="row mt-2">
+            <div class="d-flex justify-content-center">
+              <i class="fa-solid fa-clipboard-list"></i>
+              <h3 class="h3 ms-3">Attendance Management</h3>
+              <div class="col text-end">
+                <ul class="nav nav-tabs float-end">
+                  <li class="nav-item p-1">
+                    <button id="tabFormButton" class="nav-link " data-bs-toggle="tab" data-bs-target="#tabFormArea"
+                      type="button" style="background-color: rgba(240, 248, 255, 0.765);">Add
+                      Attendance</button>
+                  </li>
+                  <li class="nav-item p-1">
+                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tabTableArea" type="button"
+                      style="background-color: rgba(240, 248, 255, 0.838);">View
+                      Attendance</button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="tab-content">
+        <!-- Attendance Form -->
+        <div class="tab-pane fade" id="tabFormArea">
+          <div class="row">
+            <div class="col">
+              <div class="card div-card mx-auto mt-3" style="max-width: 40rem;">
+                <div class="card-body">
+                  <form id="formAttendance" onsubmit="return false">
+                    <!-- default submition eka wada krnawa auto html wala..api wenama submit function ekak use krnawnam default eka wada krna eka nawaththanna ona klin...defult method post -->
+                    <!-- Required mark -->
+                    <div class="row">
+                      <div class="col text-end fw-bold">
+                        <p>Required <span class="text-danger">*</span></p>
+                      </div>
+                    </div>
+                    <!-- Student No -->
+                    <div class="row mt-2">
+                      <div class="col-1"></div>
+                      <label for="textStuNoFilter" class="col-3 form-label fw-bold">
+                        Student No : <span class="text-danger">*</span>
+                      </label>
+                      <div class="col-7">
+                        <input type="text" id="textStuNoFilter" required class="form-control form-input"
+                          placeholder="Enter Student No">
+                      </div>
+                      <div class="col-1"></div>
+                    </div>
+
+                    <!-- Photo + Calling Name -->
+                    <div class="row mt-2">
+                      <div class="col-4"></div>
+                      <div class="col-4">
+                        <div class="row">
+                          <div class="col">
+                            <div id="divStudentPhoto"
+                              style="display:none; text-align:center; flex-direction: column; align-items: center;">
+                              <img src="images/studenticon.jpg" id="imgPhoto"
+                                style="width: 75px; height: 75px; border-radius: 50%;">
+                            </div>
+                          </div>
+                          <div class="col">
+                            <p id="pCallingName" class="fw-bold form-label mb-0 mt-2 text-center"></p>
+                          </div>
+                        </div>
+                        <div class="col-4"></div>
+                      </div>
+                    </div>
+                    <!-- batch select area -->
+                    <div class="row mt-2">
+                      <div class="col-1"></div>
+                      <label for="selectBatch" class=" col-3 form-label fw-bold mt-2">
+                        Batch Name :
+                        <span class="text-danger">*</span> </label>
+                      <div class="col-7">
+                        <select required id="selectBatch" class="form-select form-input" onchange="attendance.batch_id=JSON.parse(this.value);
+                                this.style.border='2px solid green';  checkPaymentStatus();">
+                          <option value="" disabled selected>Select Batch</option>
+                          <option value="2025 Grade 6 ICT - Janith Perera Sunday Theory Class">2025 Grade 6 ICT -
+                            Janith
+                            Perera Sunday Theory Class</option>
+                        </select>
+                      </div>
+                      <div class="col-1"></div>
+                    </div>
+
+                    <!-- Paid Status -->
+                    <div class="row mt-2" id="rowPaidStatus" style="display:none;">
+                      <div class="col-1"></div>
+                      <label for="pPaidStatus" class="col-3 form-label fw-bold mt-2">
+                        Paid Status :
+                      </label>
+                      <div class="col-7">
+                        <p id="pPaidStatus" class="fw-bold mt-2 mb-0"></p>
+                      </div>
+                      <div class="col-1"></div>
+                    </div>
+
+
+                    <!-- Check-in area -->
+                    <div class="row mt-3">
+                      <div class="col-1"></div>
+                      <label for="timeCheckIn" class="col-3 form-label fw-bold mt-2">
+                        Check-In : <span class="text-danger">*</span>
+                      </label>
+                      <div class="col-4">
+                        <input type="time" required id="timeCheckIn" class="form-control form-input">
+                      </div>
+                      <div class="col-4"></div>
+                    </div>
+
+
+                    <!-- buttons area start -->
+                    <div class="row mt-2">
+                      <div class="d-flex justify-content-center gap-2 mt-3">
+                        <button class="btn fw-bold btnall btn-clear" id="buttonClear" type="button"
+                          onclick="clearFormData('formAttendance','attendance')">
+                          <i class="fa-solid fa-recycle"></i> Clear
+                        </button>
+                        <!-- <button class="btn fw-bold btnall btn-update" id="buttonUpdate" type="button"
+                          >
+                          <i class="fa-solid fa-edit"></i> Update
+                        </button> -->
+                        <button class="btn fw-bold btnall btn-submit" id="buttonSubmit" type="button"
+                          onclick="buttonAttendanceSubmit()">
+                          <i class="fa-solid fa-paper-plane"></i> Submit
+                        </button>
+                      </div>
+                      <!-- buttons area end -->
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+        <!-- Attendance Table -->
+        <div class="tab-pane fade  show active" id="tabTableArea">
+          <div class="row">
+            <div class="col">
+              <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                <div class="card-body">
+                  <table id="tableAttendance" class="table table-hover table-bordered table-striped">
+                    <thead class="text-dark tablehead tableh">
+                      <tr>
+                        <th>No</th>
+                        <th>Student No</th>
+                        <th>Batch</th>
+                        <th>Date</th>
+                        <th>Check-In</th>
+                        <th>Modify</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tableBodyAttendance">
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Attendance Table -->
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- Attendance Print Modal -->
+  <div class="modal modalPrint" id="modalAttendancePrint">
+    <div class="modal-dialog">
+      <div class="modal-content div-card">
+        <div class="modal-header">
+          <h4>Print Attendance</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+        </div>
+        <div class="modal-body">
+          <table class="tablePrint table table-bordered table-hover" id="tablePrintAttendance">
+            <tbody>
+              <tr>
+                <th>Stundent No</th>
+                <td id="tdStundentNo"></td>
+              </tr>
+              <tr>
+                <th>Student Name</th>
+                <td id="tdStudentName"></td>
+              </tr>
+              <tr>
+                <th>Batch Name</th>
+                <td id="tdBatchName"></td>
+              </tr>
+              <tr>
+                <th>Attendance Date</th>
+                <td id="tdDate"></td>
+              </tr>
+              <tr>
+                <th>Check-In</th>
+                <td id="tdCheckIn"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" onclick="buttonPrint()" class="btn btn-secondary">
+            Print
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div th:replace="~{fragment :: footerFragment}"></div>
+
+  <!-- link attendance js -->
+  <script src="modaljs/attendance.js"></script>
+
+</body>
+
+</html>

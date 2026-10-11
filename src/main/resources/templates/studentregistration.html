@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragment :: headerFragment}">
+</head>
+
+<body>
+    <!-- Container start -->
+    <div class="container-fluid">
+        <div th:replace="~{fragment :: sidebarFrgment}"></div>
+        <div class="view-content">
+            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                <div class="card-header div-head">
+                    <div class="row mt-2">
+                        <div class="d-flex justify-content-center">
+                            <i class="fa-solid fa-clipboard-list"></i>
+                            <h3 class="h3 ms-3">Student to Batch Registration Management</h3>
+                            <div class="col text-end">
+                                <ul class="nav nav-tabs float-end">
+                                    <li class="nav-item p-1">
+                                        <button id="tabFormButton" class="nav-link" data-bs-toggle="tab"
+                                            data-bs-target="#tabFormArea" type="button"
+                                            style="background-color: rgba(240, 248, 255, 0.765);">
+                                            Add Registration
+                                        </button>
+                                    </li>
+                                    <li class="nav-item p-1">
+                                        <button class="nav-link active" data-bs-toggle="tab"
+                                            data-bs-target="#tabTableArea" type="button"
+                                            style="background-color: rgba(240, 248, 255, 0.838);">
+                                            View Registrations
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Tab Content -->
+            <div class="tab-content">
+                <!-- Form Area start -->
+                <div class="tab-pane fade" id="tabFormArea">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card div-card mx-auto mt-3" style="max-width: 50rem;">
+                                <div class="card-body">
+                                    <form id="formStudentRegistration" onsubmit="return false">
+                                        <!-- default submition eka wada krnawa auto html wala..api wenama submit function ekak use krnawnam default eka wada krna eka nawaththanna ona klin...defult method post -->
+                                        <!-- Required mark -->
+                                        <div class="row">
+                                            <div class="col text-end fw-bold">
+                                                <p>Required <span class="text-danger">*</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="row mt-2">
+                                                    <!-- Student No -->
+                                                    <label for="textStuNoFilter" class="col-4 form-label fw-bold">
+                                                        Student No : <span class="text-danger">*</span>
+                                                    </label>
+                                                    <div class="col-8 d-flex align-items-center gap-3">
+                                                        <input type="text" id="textStuNoFilter" required
+                                                            class="form-control form-input"
+                                                            placeholder="Enter Student No">
+                                                    </div>
+                                                </div>
+
+                                                <!-- Photo + Calling Name + Button -->
+                                                <div class="row mt-2">
+                                                    <!-- Photo and Calling Name at end of column -->
+                                                    <div class="col-7">
+                                                        <div id="divStudentPhoto"
+                                                            style="display:none; text-align:centr; flex-direction: column; align-items: center;">
+
+                                                            <img src="images/studenticon.jpg" id="imgPhoto"
+                                                                style="width: 75px; height: 75px; border-radius: 50%;">
+
+                                                            <p id="pCallingName"
+                                                                class="fw-bold form-label mb-0 mt-2 text-center"></p>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- View Button -->
+                                                    <div class="col-3">
+                                                        <div id="divButtonView" style="display:none; text-align:left;">
+                                                            <button type="button" id="btnViewStudent"
+                                                                class="btn btn-sm fw-bold"
+                                                                style="display:none; background-color: rgb(164, 201, 232); width: 120px;">
+                                                                View more
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-2"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="row mt-2">
+                                                    <!-- Grade -->
+                                                    <label for="selectGrade" class="col-4 form-label fw-bold mt-2">
+                                                        Grade : <span class="text-danger">*</span>
+                                                    </label>
+                                                    <div class="col-8">
+                                                        <select id="selectGrade" required class="form-select form-input"
+                                                            onchange="studentregistration.grade_id=JSON.parse(this.value); this.style.border='2px solid green';">
+                                                            <option value="" selected disabled>Select Grade</option>
+                                                            <option value="1">Grade 6</option>
+                                                            <option value="2">Grade 7</option>
+                                                            <option value="3">Grade 8</option>
+                                                            <option value="4">Grade 9</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-3">
+                                                    <!-- Subject -->
+                                                    <label for="selectSubject" class="form-label fw-bold mt-2 col-4">
+                                                        Subject : <span class="text-danger">*</span>
+                                                    </label>
+                                                    <div class="col-8">
+                                                        <select id="selectSubject" required
+                                                            class="form-select form-input"
+                                                            onchange="studentregistration.subjectdetail_id=JSON.parse(this.value); this.style.border='2px solid green';">
+                                                            <option value="" selected disabled>Select Subject</option>
+                                                            <option value="1">ICT</option>
+                                                            <option value="2">Mathematics</option>
+                                                            <option value="3">Science</option>
+                                                            <option value="4">English</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-3">
+                                                    <!-- Teacher -->
+                                                    <label for="selectTeacher" class="col-4 form-label fw-bold mt-2">
+                                                        Teacher : <span class="text-danger">*</span>
+                                                    </label>
+                                                    <div class="col-8">
+                                                        <select id="selectTeacher" required
+                                                            class="form-select form-input"
+                                                            onchange="studentregistration.teacher_id=JSON.parse(this.value); this.style.border='2px solid green';">
+                                                            <option value="" selected disabled>Select Teacher</option>
+                                                            <option value="1">Janith Perera</option>
+                                                            <option value="2">Kasun Perera</option>
+                                                            <option value="3">Nadeesha Silva</option>
+                                                            <option value="4">Ruwan Jayasuriya</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-2"></div>
+                                            <!-- Batch -->
+                                            <label for="selectBatch" class="col-2 form-label fw-bold mt-2">
+                                                Batch Name : <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-6">
+                                                <select required id="selectBatch" class="form-select form-input"
+                                                    onchange="studentregistration.batch_id=JSON.parse(this.value);
+                                this.style.border='2px solid green';">
+                                                    <option value="" selected disabled>Select Batch</option>
+                                                    <option value="1">2026 Grade 6 ICT - Janith Perera Sunday Theory
+                                                        Class</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-2"></div>
+                                        </div>
+
+                                        <div class="row mt-3">
+                                            <!-- Registration Type -->
+                                            <label for="selectRegType" class="col-2 form-label fw-bold mt-2">
+                                                Reg-Type : <span class="text-danger">*</span>
+                                            </label>
+
+                                            <div class="col-4">
+                                                <select id="selectRegType" required class="form-select form-input">
+                                                    <option value="" selected disabled>Select Type</option>
+                                                    <option value="Normal">Normal</option>
+                                                    <option value="Free">Free</option>
+                                                </select>
+                                            </div>
+
+                                            <!-- Fee -->
+                                            <label for="textFee" class="col-2 form-label fw-bold mt-2">
+                                                Fee (Rs.) : <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <input type="number" id="textFee" required
+                                                    class="form-control form-input" placeholder="Enter Registration Fee"
+                                                    onkeyup="inputTextValidator(this,'^[0-9][0-9]{0,9}$','studentregistration','regfee')">
+                                            </div>
+                                        </div>
+
+                                        <!-- Registration Date & Status -->
+                                        <div class="row mt-3">
+                                            <!-- Registration Status -->
+                                            <label id="regStatusLabel" for="selectRegStatus"
+                                                class="col-2 form-label fw-bold mt-2">
+                                                Reg-Status : <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4" id="regStatusSelect">
+                                                <select id="selectRegStatus" required class="form-select form-input"
+                                                    onchange="studentregistration.studentregstatus_id=JSON.parse(this.value);
+                                this.style.border='2px solid green';">
+                                                    <option value="" selected disabled>Select Status</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <!-- buttons area start -->
+                                        <div class="row mt-2">
+                                            <div class="d-flex justify-content-center gap-2 mt-3">
+                                                <button class="btn fw-bold btnall btn-clear" id="buttonClear"
+                                                    type="button"
+                                                    onclick="clearFormData('formStudentRegistration','studentregistration')">
+                                                    <i class="fa-solid fa-recycle"></i> Clear
+                                                </button>
+                                                <button class="btn fw-bold btnall btn-update" id="buttonUpdate"
+                                                    type="button" onclick="buttonStudentRegistrationUpdate()">
+                                                    <i class="fa-solid fa-edit"></i> Update
+                                                </button>
+                                                <button class="btn fw-bold btnall btn-submit" id="buttonSubmit"
+                                                    type="button" onclick="buttonStudentRegistrationSubmit ()">
+                                                    <i class="fa-solid fa-paper-plane"></i> Submit
+                                                </button>
+                                            </div>
+                                            <!-- buttons area end -->
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Form Area end -->
+
+                <!-- Table Area start -->
+                <div class="tab-pane fade show active" id="tabTableArea">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                                <div class="card-body">
+                                    <table id="tableStudentRegistration"
+                                        class="table table-hover table-bordered table-striped">
+                                        <thead class="text-dark tablehead tableh">
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Student No</th>
+                                                <th>Batch Name</th>
+                                                <!-- <th>Fee(Rs.)</th> -->
+                                                <th>Status</th>
+                                                <th>Modify</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tableBodyRegistration">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Table Area end -->
+            </div>
+        </div>
+    </div>
+
+    <!-- registration Print Modal -->
+    <div class="modal modalPrint" id="modalRegistrationPrint">
+        <div class="modal-dialog">
+            <div class="modal-content div-card">
+                <div class="modal-header">
+                    <h4>Print Registration detail</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="tablePrint table table-bordered table-hover" id="tablePrintRegistration">
+                        <tbody>
+                            <tr>
+                                <th>Stundent No</th>
+                                <td id="tdStundentNo"></td>
+                            </tr>
+                            <tr>
+                                <th>Student Name</th>
+                                <td id="tdStudentName"></td>
+                            </tr>
+                            <tr>
+                                <th>Batch Name</th>
+                                <td id="tdBatchName"></td>
+                            </tr>
+                            <tr>
+                                <th>Registration Type</th>
+                                <td id="tdRegType"></td>
+                            </tr>
+                            <tr>
+                                <th>Fee (Rs.)</th>
+                                <td id="tdFee"></td>
+                            </tr>
+                            <tr>
+                                <th>Registration Date</th>
+                                <td id="tdRegDate"></td>
+                            </tr>
+                            <tr>
+                                <th>Registration Status</th>
+                                <td id="tdRegistrationStatus"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="buttonPrint()" class="btn btn-secondary">
+                        Print
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal modalPrint" id="modalStudentDetail">
+        <div class="modal-dialog">
+            <div class="modal-content div-card">
+                <div class="modal-header">
+                    <h4>Student Details</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="tablePrint table table-hover table-bordered" id="tableShowStudent">
+                        <tbody>
+                            <tr>
+                                <th>Student Number</th>
+                                <td id="tdStudentNo"></td>
+                            </tr>
+                            <tr>
+                                <th>Full Name</th>
+                                <td id="tdFullName"></td>
+                            </tr>
+                            <tr>
+                                <th>Calling Name</th>
+                                <td id="tdCallingName"></td>
+                            </tr>
+                            <tr>
+                                <th>NIC</th>
+                                <td id="tdNic"></td>
+                            </tr>
+                            <tr>
+                                <th>Date of Birth</th>
+                                <td id="tdDob"></td>
+                            </tr>
+                            <tr>
+                                <th>Gender</th>
+                                <td id="tdGender"></td>
+                            </tr>
+                            <tr>
+                                <th>Address</th>
+                                <td id="tdAddress"></td>
+                            </tr>
+                            <tr>
+                                <th>Mobile Number</th>
+                                <td id="tdMobile"></td>
+                            </tr>
+                            <tr>
+                                <th>School Name</th>
+                                <td id="tdSchool"></td>
+                            </tr>
+                            <tr>
+                                <th>Student Status</th>
+                                <td id="tdStudentStatus"></td>
+                            </tr>
+                            <tr>
+                                <th>Guardian Name</th>
+                                <td id="tdGuardianName"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="~{fragment :: footerFragment}"></div>
+
+    <!-- link js file -->
+    <script src="modaljs/studentregistration.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragment :: headerFragment}">
+</head>
+
+<body>
+    <!-- Container start -->
+    <div class="container-fluid">
+        <div th:replace="~{fragment :: sidebarFrgment}"></div>
+        <div class="view-content">
+            <!-- card area start -->
+            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                <div class="card-header div-head">
+                    <!-- title section strat -->
+                    <div class="row mt-2">
+                        <div class="d-flex justify-content-center">
+                            <i class="fa-solid fa-user-shield"></i>
+                            <h3 class="h3 ms-3"> Privilege Management</h3>
+                            <div class="col text-end">
+                                <ul class="nav nav-tabs float-end">
+                                    <li class="nav-item p-1">
+                                        <button id="tabFormButton" class="nav-link active" data-bs-toggle="tab"
+                                            data-bs-target="#tabFormArea" type="button"
+                                            style="background-color: rgba(240, 248, 255, 0.765);">Add
+                                            Privilege</button>
+                                    </li>
+                                    <li class="nav-item p-1">
+                                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabTableArea"
+                                            type="button" style="background-color: rgba(240, 248, 255, 0.838);">View
+                                            Privilege data</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- title section end -->
+                </div>
+            </div>
+            <div class="tab-content">
+                <!-- privilege Form -->
+                <div class="tab-pane fade" id="tabFormArea">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card div-card mx-auto mt-3" style="max-width: 40rem;">
+                                <div class="card-body">
+                                    <form id="formPrivilege" onsubmit="return false">
+                                        <!-- default submition eka wada krnawa auto html wala..api wenama submit function ekak use krnawnam default eka wada krna eka nawaththanna ona klin...defult method post -->
+                                        <!--Role select area start -->
+                                        <div class="row mt-4">
+                                            <div class="col-1"></div>
+                                            <label for="selectRole" class="col-3 form-label fw-bold mt-2">
+                                                Role :
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-7">
+                                                <select onchange="privilege.role_id=JSON.parse(this.value);
+                                this.style.border='2px solid green';" id="selectRole" class="form-select form-input">
+                                                    <option value="" selected disabled>Select Role</option>
+                                                    <option value="Manager">Manager</option>
+                                                    <option value="Store-Manager">Store-Manager</option>
+                                                    <option value="Cashier">Cashier</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-1"></div>
+                                        </div>
+                                        <!--Module select area end-->
+                                        <div class="row mt-4">
+                                            <div class="col-1"></div>
+                                            <label for="selectModule" class="col-3 form-label fw-bold mt-2">
+                                                Module :
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-7">
+                                                <select onchange="privilege.module_id=JSON.parse(this.value);
+                                this.style.border='2px solid green';" id="selectModule" class="form-select form-input">
+                                                    <option value="" selected disabled>Select Module</option>
+                                                    <option value="Employee">Employee</option>
+                                                    <option value="Privilege">Privilege</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-1"></div>
+                                        </div>
+                                        <!--Module select area end-->
+
+
+                                        <!-- Select Status Area -->
+                                        <div class="row mt-4">
+                                            <div class="col-1"></div>
+                                            <label for="radioSelect" id="labelSelect"
+                                                class="col-3 form-check-label fw-bold form-label mt-2">
+                                                Select : <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-7">
+                                                <input type="radio" id="radioSelect1" name="select"
+                                                    class="form-check-input" onchange="privilege.privi_select = true;"
+                                                    required> Granted
+                                                <input type="radio" id="radioSelect2" name="select"
+                                                    class="form-check-input" onchange="privilege.privi_select = false;"
+                                                    required> Not-Granted
+                                            </div>
+                                            <div class="col-1"></div>
+                                        </div>
+
+                                        <!-- Insert Status Area -->
+                                        <div class="row mt-4">
+                                            <div class="col-1"></div>
+                                            <label for="radioInsert" id="labelInsert"
+                                                class="col-3 form-check-label fw-bold form-label mt-2">
+                                                Insert : <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-7">
+                                                <input type="radio" id="radioInsert1" name="insert"
+                                                    class="form-check-input" onchange="privilege.privi_insert = true;"
+                                                    required> Granted
+                                                <input type="radio" id="radioInsert2" name="insert"
+                                                    class="form-check-input" onchange="privilege.privi_insert = false;"
+                                                    required> Not-Granted
+                                            </div>
+                                            <div class="col-1"></div>
+                                        </div>
+
+                                        <!-- Update Status Area -->
+                                        <div class="row mt-4">
+                                            <div class="col-1"></div>
+                                            <label for="radioUpdate" id="labelUpdate"
+                                                class="col-3 form-check-label fw-bold form-label mt-2">
+                                                Update : <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-7">
+                                                <input type="radio" id="radioUpdate1" name="update"
+                                                    class="form-check-input" onchange="privilege.privi_update = true;"
+                                                    required> Granted
+                                                <input type="radio" id="radioUpdate2" name="update"
+                                                    class="form-check-input" onchange="privilege.privi_update = false;"
+                                                    required> Not-Granted
+                                            </div>
+                                            <div class="col-1"></div>
+                                        </div>
+
+                                        <!-- Delete Status Area -->
+                                        <div class="row mt-4">
+                                            <div class="col-1"></div>
+                                            <label for="radioDelete" id="labelDelete"
+                                                class="col-3 form-check-label fw-bold form-label mt-2">
+                                                Delete :<span class="text-danger">*</span>
+                                            </label>
+
+                                            <div class="col-7">
+                                                <input type="radio" id="radioDelete1" name="delete"
+                                                    class="form-check-input" onchange="privilege.privi_delete = true;"
+                                                    required> Granted
+                                                <input type="radio" id="radioDelete2" name="delete"
+                                                    class="form-check-input" onchange="privilege.privi_delete = false;"
+                                                    required> Not-Granted
+                                            </div>
+                                            <div class="col-1"></div>
+                                        </div>
+                                        <!-- buttons area start -->
+                                        <div class="row mt-2">
+                                            <div class="d-flex justify-content-center gap-2 mt-3">
+                                                <button class="btn fw-bold btnall btn-clear" id="buttonClear"
+                                                    type="button" onclick="clearFormData('formPrivilege','privilege')">
+                                                    <i class="fa-solid fa-recycle"></i> Clear
+                                                </button>
+                                                <button class="btn fw-bold btnall btn-update" id="buttonUpdate"
+                                                    type="button" onclick="buttonPrivilegeUpdate()">
+                                                    <i class="fa-solid fa-edit"></i> Update
+                                                </button>
+                                                <button class="btn fw-bold btnall btn-submit" id="buttonSubmit"
+                                                    type="button" onclick="buttonPrivilegeSubmit()">
+                                                    <i class="fa-solid fa-paper-plane"></i> Submit
+                                                </button>
+                                            </div>
+                                            <!-- buttons area end -->
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- privilege Table -->
+                <div class="tab-pane fade  show active" id="tabTableArea">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                                <div class="card-body">
+                                    <table id="tablePrivilege" class="table table-hover table-bordered table-striped">
+                                        <thead class="text-dark tablehead tableh">
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Role</th>
+                                                <th>Module</th>
+                                                <th>Select</th>
+                                                <th>Insert</th>
+                                                <th>Update</th>
+                                                <th>Delete</th>
+                                                <th>Modify</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tableBodyPrivilege">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- privilege Print Modal -->
+    <div class="modal modalPrint" id="modalPrivilegePrint">
+        <div class="modal-dialog">
+            <div class="modal-content div-card">
+                <div class="modal-header">
+                    <h4>Print Privilege</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="tablePrint table table-bordered table-hover" id="tablePrintPrivilege">
+                        <tbody>
+                            <tr>
+                                <th>Role</th>
+                                <td id="tdRole"></td>
+                            </tr>
+                            <tr>
+                                <th>Module</th>
+                                <td id="tdModule"></td>
+                            </tr>
+                            <tr>
+                                <th>Select Privilege</th>
+                                <td id="tdSelect"></td>
+                            </tr>
+                            <tr>
+                                <th>Insert Privilege</th>
+                                <td id="tdInsert"></td>
+                            </tr>
+                            <tr>
+                                <th>Update Privilege</th>
+                                <td id="tdUpdate"></td>
+                            </tr>
+                            <tr>
+                                <th>Delete Privilege</th>
+                                <td id="tdDelete"></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="buttonPrint()" class="btn btn-secondary">
+                        Print
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{fragment :: footerFragment}"></div>
+
+    <!-- linkemployee js file -->
+    <script src="modaljs/privilege.js"></script>
+
+</body>
+
+</html>

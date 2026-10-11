@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragment :: headerFragment}">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div th:replace="~{fragment :: sidebarFrgment}"></div>
+        <div class="view-content">
+            <div class="card div-card mx-auto mt-3" style="max-width: 40rem;">
+                <div class="card-header div-head">
+                    <!-- title section strat -->
+                    <div class="row mt-2">
+                        <div class="d-flex justify-content-start">
+                            <i class="fa-solid fa-user-pen"></i>
+                            <h3 class="h3 ms-3 ">Change Profile</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <!-- Replace form with table -->
+                    <table class="table table-hover" style="text-align: center; vertical-align: middle; width: 100%;">
+                        <!-- Profile Photo -->
+                        <tr>
+                            <th>User Photo</th>
+                            <td colspan="2" class="text-center">
+                                <img src="images/usericon.jpg" id="imgEmpPhoto"
+                                    style="width: 75px; height: 75px; border-radius: 50%;">
+                                <button class="btn fw-bold" style="background-color: rgb(164, 201, 232);"
+                                    onclick="fileEmpPhoto.click()">Select a
+                                    Photo</button>
+                                <button class="btn fw-bold" style="background-color: rgb(164, 201, 232);"
+                                    onclick="clearPhoto()">Clear</button>
+                                <input type="file" id="fileEmpPhoto" class="form-control form-input"
+                                    style="display: none;"
+                                    onchange="validateFile(this,changeUser,'userphoto',imgEmpPhoto)">
+                            </td>
+                        </tr>
+
+                        <!-- Username -->
+                        <tr>
+                            <th>Username</th>
+                            <td>
+                                <input type="text" class="form-control form-input" id="textCPUsername" disabled
+                                    placeholder="Username"
+                                    onkeyup="inputTextValidator(this,'^[A-Za-z0-9]{4,20}$','changeUser','username')">
+                            </td>
+                            <td>
+                                <button type="button" class="btn" onclick="textCPUsername.disabled='';"
+                                    style="background-color: rgb(164, 201, 232);">Edit</button>
+                            </td>
+                        </tr>
+
+                        <!-- Password -->
+                        <tr>
+                            <th>Password</th>
+                            <td>
+                                <input type="password" class="form-control form-input" id="textCPPassword" disabled
+                                    placeholder="Password"
+                                    onkeyup="inputTextValidator(this,'^[A-Za-z0-9\\_\\$\\#\\@\\-]{4,16}$','changeUser','newpassword')">
+
+                                <input type="password" class="form-control form-input mt-2" id="textCPRePassword"
+                                    disabled placeholder="Confirm Password">
+                            </td>
+                            <td>
+                                <button type="button" class="btn" style="background-color: rgb(164, 201, 232);"
+                                    onclick="textCPPassword.disabled=''; textCPRePassword.disabled=''">Edit</button>
+                            </td>
+                        </tr>
+                        <!-- Email -->
+                        <tr>
+                            <th>Email</th>
+                            <td>
+                                <input type="email" class="form-control form-input" id="textCPUseremail" disabled
+                                    placeholder="Email"
+                                    onkeyup="inputTextValidator(this,'^[a-z]{1,20}[a-z0-9\\*\\#]{0,20}[@][a-z]{4,10}[.][a-z]{2,3}$','changeUser','useremail')">
+                            </td>
+                            <td>
+                                <button type="button" class="btn" style="background-color: rgb(164, 201, 232);"
+                                    onclick="textCPUseremail.disabled='';">Edit</button>
+                            </td>
+                        </tr>
+
+                        <!-- Save Button -->
+                        <tr>
+                            <td colspan="3" class="text-center">
+                                <button type="button" class="btn btn-submit btnall"
+                                    onclick="saveButtonChange()">Save</button>
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- End table -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+     <div th:replace="~{fragment :: footerFragment}"></div>
+
+    <script>
+        // On page load: initialize user data
+        window.onload = () => {
+            changeUser = new Object(); // Object to track changes
+            let loggedUser = getDataAjaxGetRequest("/getloggeduser"); // Get current user
+
+            // Load user photo
+            if (loggedUser.userphoto != null) {
+                imgEmpPhoto.src = atob(loggedUser.userphoto); // decode base64
+                changeUser.olduserphoto = loggedUser.userphoto; // store original
+            }
+            changeUser.userphoto = loggedUser.userphoto; // current value
+
+            // Load username
+            textCPUsername.value = loggedUser.username;
+            changeUser.oldusername = loggedUser.username;
+            changeUser.username = loggedUser.username;
+
+            // Load email
+            textCPUseremail.value = loggedUser.useremail;
+            changeUser.olduseremail = loggedUser.useremail;
+            changeUser.useremail = loggedUser.useremail;
+        }
+
+        // Check which fields have changed
+        const checkChanges = () => {
+            let changes = "";
+
+            // Username change
+            if (changeUser.oldusername != changeUser.username) {
+                changes += "User name is changed. "
+                    + changeUser.oldusername + " --> " + changeUser.username + "\n";
+            }
+
+            // Email change
+            if (changeUser.olduseremail != changeUser.useremail) {
+                changes += "User email is changed. "
+                    + changeUser.olduseremail + " --> " + changeUser.useremail + "\n";
+            }
+
+            // Password change (only if not empty and matches confirmation)
+            if (textCPPassword.value !== "" && textCPPassword.value === textCPRePassword.value) {
+                changeUser.newpassword = textCPPassword.value;
+                changes += "Password is changed.\n";
+            }
+
+            // Photo change
+            if (changeUser.userphoto != changeUser.olduserphoto) {
+                changes += "Photo is changed.\n";
+            }
+
+            return changes; // Return all detected changes
+        }
+
+        // Handle save button click
+        const saveButtonChange = () => {
+            let changes = checkChanges();
+
+            if (changes != "") {
+                // Confirm changes with SweetAlert
+                Swal.fire({
+                    title: "Confirm Update",
+                    html: changes.replaceAll("\n", "<br>"),
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, Update",
+                    cancelButtonText: "Cancel"
+                }).then((result) => {
+
+                    if (result.isConfirmed) {
+                        // Send updated data to backend
+                        const postResponse = setDataAjaxGetRequest("/changeprofile", "POST", changeUser);
+
+                        if (postResponse === "OK") {
+                            // Success: alert and logout
+                            Swal.fire({
+                                title: "Saved!",
+                                text: "Profile updated successfully!",
+                                icon: "success"
+                            }).then(() => {
+                                window.location.replace("/logout");
+                            });
+
+                        } else {
+                            // Backend error
+                            Swal.fire({
+                                title: "Error!",
+                                html: "Update not completed.<br>" + postResponse,
+                                icon: "error"
+                            });
+                        }
+                    }
+
+                });
+
+            } else {
+                // No changes detected
+                Swal.fire({
+                    title: "No Changes",
+                    text: "Nothing was changed.",
+                    icon: "info"
+                });
+            }
+        }
+
+        // Clear photo button functionality
+        const clearPhoto = () => {
+            imgEmpPhoto.src = "images/usericon.jpg"; // default image
+            fileEmpPhoto.value = "";
+            changeUser.userphoto = null; // mark photo as changed
+        }
+
+        // Password confirmation listener
+        textCPRePassword.addEventListener("keyup", () => {
+            let elementValue = textCPRePassword.value;
+            changeUser.newrepassword = elementValue; // store retype password
+
+            if (elementValue === textCPPassword.value) {
+                changeUser.newpassword = elementValue; // match
+                textCPRePassword.style.border = "2px solid green";
+            } else {
+                textCPRePassword.style.border = "2px solid red"; // mismatch
+            }
+        });
+
+        // Password field listener to update border in real-time
+        textCPPassword.addEventListener("keyup", () => {
+            if (textCPRePassword.value === "") return;
+            if (textCPPassword.value === textCPRePassword.value) {
+                textCPRePassword.style.border = "2px solid green";
+            } else {
+                textCPRePassword.style.border = "2px solid red";
+            }
+        });
+
+        // Username typing listener to keep changeUser updated
+        textCPUsername.addEventListener("keyup", () => {
+            changeUser.username = textCPUsername.value;
+        });
+    </script>
+</body>
+
+</html>

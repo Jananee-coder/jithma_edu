@@ -1,0 +1,220 @@
+:root {
+    --main-blue: #1976d2;
+    --menu-bg: #005fa3;
+    --submenu-bg: #e8f1fb;
+    --submenu-hover: #d0e4fa;
+    --light-bg: #b7d5dd;
+    --text-dark: #1a1a1a;
+    --white: #ffffff;
+}
+
+/* ==== BASE ==== */
+body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif !important;
+    background-color: var(--light-bg);
+}
+
+/* ==== SIDEBAR ==== */
+.sidebar {
+    width: 260px;
+    background-color: var(--menu-bg);
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;           
+    flex-direction: column;    
+    overflow-y: auto;
+    color: var(--white);
+}
+
+/* Add this to push the user section to the bottom */
+.sidebar > .user-container-wrapper {
+    margin-top: auto;          /* This pushes the container to the bottom */
+}
+
+.sidebar .logo {
+    text-align: center;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.sidebar .logo img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.sidebar h4 {
+    font-weight: bold;
+    color: white;
+    margin-top: 10px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar ul li a {
+    display: block;
+    color: white;
+    padding: 8px 20px;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.sidebar ul li a:hover {
+    background-color: var(--hover-blue);
+}
+
+.submenu {
+    display: none;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar ul li:hover .submenu {
+    display: block;
+}
+
+.submenu a {
+    padding-left: 45px !important;
+    font-size: 0.95rem;
+}
+
+/* ==== TOPBAR ==== */
+.topbar {
+    height: 60px;
+    background-color: var(--white);
+    margin-left: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 25px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    width: calc(100% - 260px);
+    z-index: 10;
+}
+
+/* ==== MAIN CONTENT ==== */
+.main-content {
+    margin-left: 260px;
+    margin-top: 70px;
+    padding: 25px;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    background-color: var(--white);
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+}
+
+.card-icon {
+    font-size: 2rem;
+    color: var(--main-blue);
+}
+
+/* ==== CAROUSEL ==== */
+.carousel-inner img {
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* ==== SCROLLBAR ==== */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #8ab6e0;
+    border-radius: 10px;
+}
+
+/* ==== RESPONSIVE ==== */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+    }
+
+    .topbar {
+        margin-left: 200px;
+        width: calc(100% - 200px);
+    }
+
+    .main-content {
+        margin-left: 200px;
+    }
+}
+
+/* ==== Sidebar Logged User - Blue Theme ==== */
+.logged-user {
+    background-color: #1370b3;;        /* main blue theme */
+    border-top: 1px solid #005fa3;    /* darker blue border */
+    padding: 10px 8px;                /* compact padding */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #ffffff;                   /* text white for contrast */
+}
+
+/* User image */
+.logged-user .user-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 5px;
+    border: 2px solid #ffffff;        /* white border for contrast */
+}
+
+/* Username */
+.logged-user .username {
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: #ffffff;                   /* white text */
+}
+
+/* Buttons container */
+.logged-user .user-actions {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+/* Individual buttons */
+.logged-user .user-actions .btn {
+    flex: 1;
+    max-width: 100px;
+    font-size: 13px;
+    padding: 5px 8px;
+    border-radius: 4px;
+    border: none;
+    background-color:  #17537dd7;;        /* darker blue buttons */
+    color: #ffffff;
+    cursor: pointer;
+   
+}
+
+.logged-user .user-actions .btn:hover {
+    background-color: #003f73;        /* hover effect */
+}

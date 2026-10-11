@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragment :: headerFragment}">
+</head>
+
+<body>
+    <!-- Container start -->
+    <div class="container-fluid">
+        <div th:replace="~{fragment :: sidebarFrgment}"></div>
+        <div class="view-content">
+            <!-- card area start -->
+            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                <div class="card-header div-head">
+                    <!-- title section strat -->
+                    <div class="row mt-2">
+                        <div class="d-flex justify-content-center">
+                            <i class="fa-solid fa-chalkboard"></i>
+                            <h3 class="h3 ms-3 ">Teacher Class Detail Management</h3>
+                            <div class="col text-end">
+                                <ul class="nav nav-tabs float-end">
+                                    <li class="nav-item p-1">
+                                        <button id="tabFormButton" class="nav-link" data-bs-toggle="tab"
+                                            data-bs-target="#tabFormArea" type="button"
+                                            style="background-color: rgba(240, 248, 255, 0.765);">Add
+                                            Class detail</button>
+                                    </li>
+                                    <li class="nav-item p-1">
+                                        <button class="nav-link active" data-bs-toggle="tab"
+                                            data-bs-target="#tabTableArea" type="button"
+                                            style="background-color: rgba(240, 248, 255, 0.838);">View
+                                            Class detail data</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- title section end -->
+                </div>
+            </div>
+            <div class="tab-content">
+                <!-- class detail Form -->
+                <div class="tab-pane fade" id="tabFormArea">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card div-card mx-auto mt-3" style="max-width: 40rem;">
+                                <div class="card-body">
+                                    <form id="formClassDetail" onsubmit="return false">
+                                        <!-- default submition eka wada krnawa auto html wala..api wenama submit function ekak use krnawnam default eka wada krna eka nawaththanna ona klin...defult method post -->
+                                        <!-- Required mark area start -->
+                                        <div class="row mt-2">
+                                            <div class="col text-end fw-bold">
+                                                <p>Required <span class="text-danger">*</span></p>
+                                            </div>
+                                        </div>
+                                        <!-- Required mark area end -->
+                                        <!-- Grade area start -->
+                                        <div class="row mt-4">
+                                            <div class="col-1"></div>
+                                            <label for="selectGrade" class="col-3 form-label fw-bold mt-2">
+                                                Grade : <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-7">
+                                                <select id="selectGrade" class="form-select form-input" onchange="classdetail.grade_id=JSON.parse(this.value);
+                                this.style.border='2px solid green';" required>
+                                                    <option value="" disabled selected>Select Grade</option>
+                                                    <option value="6">Grade 6</option>
+                                                    <option value="7">Grade 7</option>
+                                                    <option value="8">Grade 8</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-1"></div>
+                                        </div>
+                                        <!-- Grade area end -->
+                                        <!-- Subject area start -->
+                                        <div class="row mt-4">
+                                            <div class="col-1"></div>
+                                            <label for="selectSubject" class="col-3 form-label fw-bold mt-2">
+                                                Subject : <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-7">
+                                                <select id="selectSubject" class="form-select form-input" required
+                                                    onchange="classdetail.subjectdetail_id=JSON.parse(this.value);
+                                this.style.border='2px solid green';">
+                                                    <option value="" disabled selected>Select Subject</option>
+                                                    <option value="ICT">ICT</option>
+                                                    <option value="Maths">Maths</option>
+                                                    <option value="Science">Science</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-1"></div>
+                                        </div>
+                                        <!-- Subject area end -->
+                                        <!-- Teacher area start-->
+                                        <div class="row mt-4">
+                                            <div class="col-1"></div>
+                                            <label for="selectTeacher" class="col-3 form-label fw-bold mt-2">
+                                                Teacher : <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-7">
+                                                <select id="selectTeacher" class="form-select form-input" required
+                                                    onchange="classdetail.teacher_id=JSON.parse(this.value);
+                                this.style.border='2px solid green';">
+                                                    <option value="" disabled selected>Select Teacher</option>
+                                                    <option value="1">Janith Perera</option>
+                                                    <option value="2">Kumari Silva</option>
+                                                    <option value="3">Nuwan Fernando</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-1"></div>
+                                        </div>
+                                        <!-- Teacher area end-->
+                                        <!-- Class Name area start -->
+                                        <div class="row mt-4">
+                                            <div class="col-1"></div>
+                                            <label for="textClassName" class="col-3 form-label fw-bold mt-2">
+                                                Class Name : <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-7">
+                                                <input type="text" id="textClassName" class="form-control form-input"
+                                                    readonly placeholder="Ex: Grade 6 ICT - Janith Perera" required>
+                                            </div>
+                                            <div class="col-1"></div>
+                                        </div>
+                                        <!-- Class Name area end -->
+                                        <!-- Class Status area start -->
+                                        <div class="row mt-4">
+                                            <div class="col-1"></div>
+                                            <label for="selectClassStatus" id="classdetailStatusLabel"
+                                                class="col-3 form-label fw-bold mt-2">
+                                                Class Status : <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-7" id="classdetailStatusSelect">
+                                                <select id="selectClassStatus" class="form-select form-input" required
+                                                    onchange="classdetail.classdetailstatus_id=JSON.parse(this.value);
+                                this.style.border='2px solid green';">
+                                                    <option value="" disabled selected>Select Status</option>
+                                                    <option value="Active">Active</option>
+                                                    <option value="Inactive">Inactive</option>
+                                                    <option value="Completed">Completed</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-1"></div>
+                                        </div>
+
+
+                                        <!-- buttons area start -->
+                                        <div class="row mt-2">
+                                            <div class="d-flex justify-content-center gap-2 mt-3">
+                                                <button class="btn fw-bold btnall btn-clear" id="buttonClear"
+                                                    type="button" onclick="clearFormData('formClassDetail','classdetail')">
+                                                    <i class="fa-solid fa-recycle"></i> Clear
+                                                </button>
+                                                <button class="btn fw-bold btnall btn-update" id="buttonUpdate"
+                                                    type="button" onclick="buttonClassDetailUpdate()">
+                                                    <i class="fa-solid fa-edit"></i> Update
+                                                </button>
+                                                <button class="btn fw-bold btnall btn-submit" id="buttonSubmit"
+                                                    type="button" onclick="buttonClassDetailSubmit()">
+                                                    <i class="fa-solid fa-paper-plane"></i> Submit
+                                                </button>
+                                            </div>
+                                            <!-- buttons area end -->
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- class detail Table -->
+                <div class="tab-pane fade show active" id="tabTableArea">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                                <div class="card-body">
+                                    <table id="tableClassDetail" class="table table-hover table-bordered table-striped">
+                                        <thead class="text-dark tablehead tableh">
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Class Name</th>
+                                                <!-- <th>Grade</th>
+                                    <th>Subject</th>
+                                    <th>Teacher</th> -->
+                                                <th>Status</th>
+                                                <th>Modify</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tableClassDetailBody">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Class detai Print Modal start-->
+    <div class="modal modalPrint" id="modalClassDetailPrint">
+        <div class="modal-dialog">
+            <div class="modal-content div-card">
+                <div class="modal-header">
+                    <h4>Print Class Details</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="tablePrint table table-bordered table-hover" id="tablePrintClassDetail">
+                        <tbody>
+                            <tr>
+                                <th>Grade</th>
+                                <td id="tdGrade"></td>
+                            </tr>
+                            <tr>
+                                <th>Subject</th>
+                                <td id="tdSubject"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Teacher</th>
+                                <td id="tdTeacher"></td>
+                            </tr>
+                            <tr>
+                                <th>Class Name</th>
+                                <td id="tdClassName"></td>
+                            </tr>
+                            <tr>
+                                <th>Status</th>
+                                <td id="tdStatus"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="buttonPrint()" class="btn btn-secondary">
+                        Print
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{fragment :: footerFragment}"></div>
+
+    <!-- link class detail js file -->
+    <script src="modaljs/classdetail.js"></script>
+
+
+</body>
+
+
+
+</html>

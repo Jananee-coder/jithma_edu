@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragment :: headerFragment}">
+    <style>
+        .status-present {
+            color: green;
+            border: 1px solid green;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+
+        .status-absent {
+            color: red;
+            border: 1px solid red;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- container start -->
+    <div class="container-fluid">
+        <!-- sidebar start -->
+        <div th:replace="~{fragment :: sidebarFrgment}"></div>
+        <!-- sidebar end -->
+        <!-- view content start -->
+        <div class="view-content">
+            <!-- title card start -->
+            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                <div class="card-header div-head">
+                    <!-- title section start -->
+                    <div class="row mt-2">
+                        <div class="d-flex justify-content-center">
+                            <i class="fa-solid fa-file-lines"></i>
+                            <!-- title -->
+                            <h3 class="h2 ms-3">
+                                Student Attendance Report
+                            </h3>
+                            <!-- print button -->
+                            <div class="col text-end">
+                                <button type="button" id="btnPrintReport" class="btn btn-light fw-bold"
+                                    style="background-color: rgba(240, 248, 255, 0.765);">
+                                    <i class="fa-solid fa-print"></i>
+                                    Print Report
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- title section end -->
+                </div>
+            </div>
+            <!-- title card end -->
+            <!-- filter card start -->
+            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                <div class="card-body">
+                    <div class="row">
+
+                        <!-- Student -->
+                        <div class="col-lg-2 col-md-6">
+                            <label for="textStudent" class="form-label fw-bold">
+                                Student :
+                            </label>
+                            <input type="text" id="textStudent" class="form-control"
+                                style="border: 2px solid rgb(107, 153, 194);" list="studentList"
+                                placeholder="Enter Student No">
+                            <datalist id="studentList">
+                                <option value="ST2600001"></option>
+                                <option value="ST2600002 - Kasun Fernando"></option>
+                                <option value="ST2600003 - Ayesha Kumari"></option>
+                                <option value="ST2600004 - Dinuka Silva"></option>
+                                <option value="ST2600005 - Senuja Jayasinghe"></option>
+                            </datalist>
+                        </div>
+
+                        <!-- Batch -->
+                        <div class="col-lg-4 col-md-6">
+                            <label for="selectBatch" class="form-label">
+                                Batch Name :
+                            </label>
+
+                            <select id="selectBatch" class="form-select" style="border: 2px solid rgb(107, 153, 194);">
+
+                                <option>Select Batch</option>
+
+                                <option>
+                                    2026 Grade 6 ICT - Sandupama Gamage - Monday Revision Class
+                                </option>
+
+                                <option>
+                                    2026 Grade 6 ICT - Sandupama Gamage - Wednesday Theory Class
+                                </option>
+
+                                <option>
+                                    2026 Grade 6 ICT - Sandupama Gamage - Monday Theory Class
+                                </option>
+
+                                <option>
+                                    2026 Grade 6 Tamil - Jayasekara Hettiarachchi - Wednesday Theory Class
+                                </option>
+
+                                <option>
+                                    2026 Grade 7 Mathematics - Rukman Premalal - Friday Theory Class
+                                </option>
+
+                                <option>
+                                    2026 Grade 6 Mathematics - Rukman Premalal - Friday Theory Class
+                                </option>
+
+                                <option>
+                                    2026 Grade 6 English - Meril Fernando - Thursday Theory Class
+                                </option>
+
+                                <option>
+                                    2026 Grade 6 Science - Deepal Dias - Monday Theory Class
+                                </option>
+
+                                <option selected>
+                                    2026 Grade 7 ICT - Prasanga Perera - Tuesday Theory Class
+                                </option>
+
+                                <option>
+                                    2026 Grade 6 ICT - Prasanga Perera - Monday Theory Class
+                                </option>
+
+                            </select>
+                        </div>
+
+                        <!-- From Date -->
+                        <div class="col-lg-2 col-md-6">
+                            <label class="form-label fw-bold">
+                                From Date :
+                            </label>
+                            <input type="date" class="form-control" style="border: 2px solid rgb(107, 153, 194);"
+                                value="2026-06-01">
+                        </div>
+
+                        <!-- To Date -->
+                        <div class="col-lg-2 col-md-6">
+                            <label class="form-label fw-bold">
+                                To Date :
+                            </label>
+                            <input type="date" class="form-control" style="border: 2px solid rgb(107, 153, 194);"
+                                value="2026-07-13">
+                        </div>
+
+                        <!-- Generate -->
+                        <div class="col-lg-2 col-md-6 d-flex align-items-end">
+                            <button type="button" class="btn fw-bold" style="background-color: rgb(162,197,227);">
+                                <i class="fa-solid fa-file-lines"></i>
+                                Generate
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- report table start -->
+                <div class="row mt-4">
+                    <div class="col-2"></div>
+                    <div class="col-8">
+                        <table id="tableStudentAttendance" class="table table-hover table-bordered table-striped">
+                            <!-- table head -->
+                            <thead class="text-dark tablehead tableh">
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Attendance Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+                                    <td>1</td>
+                                    <td>2026-06-02</td>
+                                    <td><span class="text-success">Present</span></td>
+                                </tr>
+
+                                <tr>
+                                    <td>2</td>
+                                    <td>2026-06-09</td>
+                                    <td><span class="text-success">Present</span></td>
+                                </tr>
+
+                                <tr>
+                                    <td>3</td>
+                                    <td>2026-06-16</td>
+                                    <td><span class="text-danger">Absent</span></td>
+                                </tr>
+
+                                <tr>
+                                    <td>4</td>
+                                    <td>2026-06-23</td>
+                                    <td><span class="text-success">Present</span></td>
+                                </tr>
+
+                                <tr>
+                                    <td>5</td>
+                                    <td>2026-06-30</td>
+                                    <td><span class="text-success">Present</span></td>
+                                </tr>
+
+                                <tr>
+                                    <td>6</td>
+                                    <td>2026-07-07</td>
+                                    <td><span class="text-success">Present</span></td>
+                                </tr>
+
+                            </tbody>
+                            <!-- table body -->
+                            <tbody id="tableBodyStudentAttendance">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-2"></div>
+
+                </div>
+                <!-- report table end -->
+                <!-- summary section start -->
+                <div class="row mx-3 mt-3 mb-3">
+
+                    <div class="col-md-3">
+                        <div class="alert alert-primary">
+                            <strong>Total Classes :</strong> 6
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="alert alert-success">
+                            <strong>Present :</strong> 5
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="alert alert-danger">
+                            <strong>Absent :</strong> 1
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="alert alert-info">
+                            <strong>Attendance :</strong> 83.33%
+                        </div>
+                    </div>
+
+                </div>
+                <!-- summary section end -->
+            </div>
+            <!-- filter card end -->
+        </div>
+        <!-- view content end -->
+    </div>
+    <!-- container end -->
+    <script>
+        //initialize datatable
+        $('#tableStudentAttendance').DataTable();
+    </script>
+
+    <!-- link bootstrap js -->
+    <script src="bootstrap-5.2.3/js/bootstrap.bundle.min.js"></script>
+
+    <!-- link fontawesome js -->
+    <script src="fontawesome-6.7.2/js/all.min.js"></script>
+
+    <!-- link sweetalert2 js -->
+    <script src="sweetalert2/sweetalert2.min.js"></script>
+
+    <!-- link utilityFunction js -->
+    <script src="js/utilityFunction.js"></script>
+
+    <!-- link report js -->
+    <!-- <script src="reportjs/reportstudentattendance.js"></script> -->
+
+</body>
+
+</html>

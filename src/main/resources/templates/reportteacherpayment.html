@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragment :: headerFragment}">
+</head>
+
+<body>
+
+    <!-- Container start -->
+    <div class="container-fluid">
+        <!-- Sidebar -->
+        <div th:replace="~{fragment :: sidebarFrgment}"></div>
+        <!-- View Content -->
+        <div class="view-content">
+            <!-- Title Card -->
+            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                <div class="card-header div-head">
+                    <div class="row mt-2">
+                        <div class="d-flex justify-content-center">
+                            <!-- Report icon -->
+                            <i class="fa-solid fa-file-lines"></i>
+                            <!-- Report title -->
+                            <h3 class="h2 ms-3">
+                                Teacher Payment / Income Report
+                            </h3>
+                            <!-- Print button -->
+                            <div class="col text-end">
+                                <button type="button" id="btnPrintReport" class="btn btn-light fw-bold"
+                                    onclick="buttonPrint();">
+                                    <i class="fa-solid fa-print"></i> Print Report </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Card -->
+            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Teacher Selection -->
+                        <div class="col-lg-3 col-md-6">
+                            <label for="selectTeacher" class="form-label fw-bold">
+                                Teacher :
+                            </label>
+                            <select required id="selectTeacher" class="form-select form-input js-example-basic-single">
+                                <option value="" selected disabled>Select Teacher</option>
+                                <option value="1">Janith Perera</option>
+                                <option value="2">Kamal Fernando</option>
+
+                            </select>
+                        </div>
+                        <!-- Start Date -->
+                        <div class="col-lg-2 col-md-6">
+                            <label for="inputStartDate" class="form-label fw-bold">
+                                Start Date :
+                            </label>
+                            <input type="date" id="inputStartDate" class="form-control form-input">
+                        </div>
+
+                        <!-- End Date -->
+                        <div class="col-lg-2 col-md-6">
+                            <label for="inputEndDate" class="form-label fw-bold">
+                                End Date :
+                            </label>
+                            <input type="date" id="inputEndDate" class="form-control form-input">
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <label for="selectReportType" class="form-label fw-bold">
+                                Report Type :
+                            </label>
+
+                            <select id="selectReportType" class="form-select form-input">
+                                <option value="" selected disabled>Select Report Type</option>
+                                <option value="Daily">Daily</option>
+                                <option value="Weekly">Weekly</option>
+                                <option value="Monthly">Monthly</option>
+                                <option value="Annual">Annual</option>
+                            </select>
+                        </div>
+
+                        <!-- Generate Report Button -->
+                        <div class="col-lg-2 col-md-6 d-flex align-items-end">
+                            <button type="button" id="btnGenerateReport" class="btn fw-bold"
+                                style="background-color: rgb(162, 197, 227);" onclick="generateTeacherPaymentReport();">
+                                <i class="fa-solid fa-file-lines"></i>
+                                Generate
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Report Table -->
+                <div class="row mx-3 mb-3">
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <!-- Print area start -->
+                                    <div id="printArea">
+                                        <table id="tableTeacherPaymentReport"
+                                            class="table table-hover table-bordered table-striped">
+                                            <thead class="text-dark tablehead tableh">
+                                                <tr>
+                                                    <th>Id</th>
+                                                    <th>Batch Name</th>
+                                                    <th>Total Price</th>
+                                                    <th>Institute Fee</th>
+                                                    <th>Total Income</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableBodyTeacherPaymentReport">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- Print area end -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-body">
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- View Content End -->
+    </div>
+    <!-- Container End -->
+
+    <div th:replace="~{fragment :: footerFragment}"></div>
+
+    <!-- Report JS -->
+    <script src="reportjs/reportteacherpayment.js"></script>
+
+</body>
+
+</html>

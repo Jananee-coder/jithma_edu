@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragment :: headerFragment}">
+</head>
+
+
+<body>
+    <!-- Container start -->
+    <div class="container-fluid">
+        <div th:replace="~{fragment :: sidebarFrgment}"></div>
+        <div class="view-content">
+            <!-- card area start -->
+            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                <div class="card-header div-head">
+                    <!-- title section strat -->
+                    <div class="row mt-2">
+                        <div class="d-flex justify-content-center">
+                            <i class="fa-solid fa-list-check"></i>
+                            <h3 class="h3 ms-3">Batch to Hall Allocation Management</h3>
+                            <div class="col text-end">
+                                <ul class="nav nav-tabs float-end">
+                                    <li class="nav-item p-1">
+                                        <button id="tabFormButton" class="nav-link" data-bs-toggle="tab"
+                                            data-bs-target="#tabFormArea" type="button"
+                                            style="background-color: rgba(240, 248, 255, 0.765);">Add
+                                            Hall
+                                            Allocation</button>
+                                    </li>
+                                    <li class="nav-item p-1">
+                                        <button class="nav-link active" data-bs-toggle="tab"
+                                            data-bs-target="#tabTableArea" type="button"
+                                            style="background-color: rgba(240, 248, 255, 0.838);">View Hall
+                                            Allocation
+                                            data</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- title section end -->
+                </div>
+            </div>
+            <div class="tab-content">
+                <!-- Allocation Form -->
+                <div class="tab-pane fade" id="tabFormArea">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card div-card mx-auto mt-3" style="max-width: 50rem;">
+                                <div class="card-body">
+                                    <form id="formAllocation" onsubmit="return false">
+                                        <!-- default submition eka wada krnawa auto html wala..api wenama submit function ekak use krnawnam default eka wada krna eka nawaththanna ona klin...defult method post -->
+                                        <!-- required mark start -->
+                                        <div class="row mt-2">
+                                            <div class="col text-end fw-bold">
+                                                <p>Required <span class="text-danger">*</span></p>
+                                            </div>
+                                        </div>
+                                        <!-- required mark end -->
+                                        <div class="row mt-3">
+                                            <div class="col-2"></div>
+                                            <!-- Batch  area start-->
+                                            <label for="selectBatch" class="col-2 form-label fw-bold mt-2">Batch Name:
+                                                <span class="text-danger">*</span></label>
+                                            <div class="col-6">
+                                                <select id="selectBatch"
+                                                    class="form-select form-input js-example-basic-single"
+                                                    onchange="hallallocation.batch_id=JSON.parse(this.value);allocationWithBatchDetails();$(this).next('.select2-container').find('.select2-selection').addClass('valid-border');">
+                                                </select>
+                                            </div>
+                                            <!-- Batch  area end-->
+                                            <div class="col-2"></div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <!-- Hall area start -->
+                                            <label for="selectHall" class="col-2 form-label fw-bold mt-2">Hall Name :
+                                                <span class="text-danger">*</span></label>
+                                            <div class="col-4">
+                                                <select required id="selectHall" class="form-select form-input"
+                                                    onchange="hallallocation.hall_id=JSON.parse(this.value);
+                                this.style.border='2px solid green';">
+                                                    <option value="" selected disabled>Select Hall</option>
+                                                    <option value="Hall A">Hall A</option>
+                                                    <option value="Hall B">Hall B</option>
+                                                </select>
+                                            </div>
+                                            <!-- Hall area end -->
+                                            <!-- Allocation Type area start -->
+                                            <label for="selectType" class="col-2 form-label fw-bold mt-2">Type :
+                                                <span class="text-danger">*</span></label>
+                                            <div class="col-4">
+                                                <select required id="selectType" class="form-select form-input"
+                                                    onchange="hallallocation.allocationtype_id=JSON.parse(this.value);
+                                this.style.border='2px solid green';  handleAdditionalType();">
+                                                    <option value="" selected disabled>Select Allocation Type
+                                                    </option>
+                                                    <option value="Normal">Normal</option>
+                                                    <option value="Additional">Additional</option>
+                                                </select>
+                                            </div>
+                                            <!-- Allocation Type area start -->
+                                        </div>
+
+                                        <div class="row mt-3">
+                                            <!-- slect Weekday area start-->
+                                            <label for="selectWeekday" class="col-2 form-label fw-bold mt-2">Weekday
+                                                :
+                                                <span class="text-danger">*</span></label>
+                                            <div class="col-4">
+                                                <select required id="selectWeekday" class="form-select form-input"
+                                                    onchange="hallallocation.weekday_id=JSON.parse(this.value);
+                                this.style.border='2px solid green';">
+                                                    <option value="" selected disabled>Select Weekday</option>
+                                                    <option value="Monday">Monday</option>
+                                                    <option value="Tuesday">Tuesday</option>
+                                                    <option value="Wednesday">Wednesday</option>
+                                                    <option value="Thursday">Thursday</option>
+                                                    <option value="Friday">Friday</option>
+                                                    <option value="Saturday">Saturday</option>
+                                                </select>
+                                            </div>
+                                            <!-- slect Weekday area end-->
+                                            <!-- Date area start-->
+                                            <label for="dateAllocate" class="col-2 form-label fw-bold mt-2">Date :
+                                                <span class="text-danger">*</span></label>
+                                            <div class="col-4">
+                                                <input type="date" id="dateAllocate" class="form-control form-input"
+                                                    onchange="hallallocation.date=this.value;
+                                this.style.border='2px solid green';">
+                                            </div>
+                                            <!-- Date area end-->
+
+                                        </div>
+
+                                        <div class="row mt-3">
+                                            <!-- Start Time area start-->
+                                            <label for="startTime" class="col-2 form-label fw-bold mt-2">Start Time
+                                                :
+                                                <span class="text-danger">*</span></label>
+                                            <div class="col-4">
+                                                <input type="time" required id="startTime"
+                                                    class="form-control form-input" onchange="hallallocation.starttime=this.value;
+                                this.style.border='2px solid green';">
+                                            </div>
+                                            <!-- Start Time area end-->
+
+                                            <!-- End Time area start-->
+                                            <label for="endTime" class="col-2 form-label fw-bold mt-2">End Time :
+                                                <span class="text-danger">*</span></label>
+                                            <div class="col-4">
+                                                <input type="time" required id="endTime" class="form-control form-input"
+                                                    onchange="hallallocation.endtime=this.value;
+                                this.style.border='2px solid green';">
+                                            </div>
+                                            <!-- End Time area end-->
+
+                                        </div>
+
+                                        <div class="row mt-3">
+                                            <!-- Allocation Status area start-->
+                                            <label for="selectStatus" class="col-2 form-label fw-bold mt-2"
+                                                id="hallAllocationStatusLabel">
+                                                Status :
+                                                <span class="text-danger">*</span></label>
+                                            <div class="col-4" id="hallAllocationStatuSelect">
+                                                <select required id="selectStatus" class="form-select form-input"
+                                                    onchange="hallallocation.allocationstatus_id=JSON.parse(this.value);
+                                this.style.border='2px solid green';">
+                                                    <option value="" selected disabled>Select Status</option>
+                                                    <option value="Active">Active</option>
+                                                    <option value="Cancelled">Cancelled</option>
+                                                    <option value="Pending">Pending</option>
+                                                </select>
+                                            </div>
+                                            <!-- Allocation Status area start-->
+                                        </div>
+                                        <!-- buttons area start -->
+                                        <div class="row mt-2">
+                                            <div class="d-flex justify-content-center gap-2 mt-3">
+                                                <button class="btn fw-bold btnall btn-clear" id="buttonClear"
+                                                    type="button" onclick="clearFormData('formAllocation','hallallocation')">
+                                                    <i class="fa-solid fa-recycle"></i> Clear
+                                                </button>
+                                                <button class="btn fw-bold btnall btn-update" id="buttonUpdate"
+                                                    type="button" onclick="buttonHallAllocationUpdate()">
+                                                    <i class="fa-solid fa-edit"></i> Update
+                                                </button>
+                                                <button class="btn fw-bold btnall btn-submit" id="buttonSubmit"
+                                                    type="button" onclick="buttonHallAllocationSubmit()">
+                                                    <i class="fa-solid fa-paper-plane"></i> Submit
+                                                </button>
+                                            </div>
+                                            <!-- buttons area end -->
+                                        </div>
+                                    </form>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- Allocation Table -->
+                <div class="tab-pane fade show active" id="tabTableArea">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                                <div class="card-body">
+                                    <table id="tableHallAllocation"
+                                        class="table table-hover table-bordered table-striped">
+                                        <thead class="text-dark tablehead tableh">
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Batch Name</th>
+                                                <th>Hall</th>
+                                                <th>Type</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tableBodyHallAllocation">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <!-- Hall Allocation Print Modal -->
+    <div class="modal modalPrint" id="modalHallAllocationPrint">
+        <div class="modal-dialog">
+            <div class="modal-content div-card">
+                <div class="modal-header">
+                    <h4>Print Hall</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="tablePrint table table-bordered table-hover" id="tablePrintHallAllocation">
+                        <tbody>
+                            <tr>
+                                <th>Batch Name</th>
+                                <td id="tdBatchname"></td>
+                            </tr>
+                            <tr>
+                                <th>Hall Name</th>
+                                <td id="tdHallname"></td>
+                            </tr>
+                            <tr>
+                                <th>Allocation Type</th>
+                                <td id="tdAllocationType"></td>
+                            </tr>
+                            <tr>
+                                <th>Weekday</th>
+                                <td id="tdWeekday"></td>
+                            </tr>
+                            <tr>
+                                <th>Allocation Date</th>
+                                <td id="tdDate"></td>
+                            </tr>
+                            <tr>
+                                <th>Start Time</th>
+                                <td id="tdStartTime"></td>
+                            </tr>
+
+                            <tr>
+                                <th>End Time</th>
+                                <td id="tdEndTime"></td>
+                            </tr>
+                            <tr>
+                                <th>Hall Allocation Status</th>
+                                <td id="tdHallAllocationStatus"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="buttonPrint()" class="btn btn-secondary">
+                        Print
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="~{fragment :: footerFragment}"></div>
+
+    <!-- linkemployee js file -->
+    <script src="modaljs/hallallocation.js"></script>
+</body>
+
+</html>

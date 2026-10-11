@@ -1,0 +1,205 @@
+<head th:fragment="headerFragment">
+    <title th:text="${title}"> </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Add title area for employee module -->
+    <!-- <title th:text="${title}"></title> -->
+    <!-- add icon are -->
+    <link rel="icon" href="images/IT.png" type="image">
+    <!-- link boostrap css file -->
+    <link rel="stylesheet" href="bootstrap-5.2.3/css/bootstrap.min.css">
+    <!-- link jquery js -->
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <!-- sweetalert2 css file link -->
+    <link rel="stylesheet" href="sweetalert2/sweetalert2.min.css">
+    <!-- select2 css file link -->
+    <link rel="stylesheet" href="select2/css/select2.min.css">
+    <!-- link datatable css file -->
+    <link rel="stylesheet" href="dataTables-1.13.6/css/jquery.dataTables.min.css">
+    <!-- link datatable js file -->
+    <script src="dataTables-1.13.6/js/jquery.dataTables.js"></script>
+    <!-- link css file -->
+    <link rel="stylesheet" href="styles/common.css">
+    <!-- custom css -->
+    <link rel="stylesheet" href="styles/dashboard.css">
+
+
+    <script th:inline="javascript">
+        window.addEventListener("load", function () {
+            let userImage = /*[[${userphoto}]]*/ "userphoto";
+            console.log(userImage);
+
+            if (userImage != null) {
+                imgUserImage.src = atob(userImage);
+            }
+        });
+    </script>
+
+</head>
+
+<div th:fragment="sidebarFrgment">
+
+
+    <!-- ==== SIDEBAR ==== -->
+    <div class="sidebar">
+        <div class="logo">
+            <img src="images/jlogo.jpg" alt="Logo">
+            <h4>Jithma Institute</h4>
+        </div>
+
+        <ul>
+            <li class="ADMINISTRATION">
+                <a href="/dashboard" class="menu-toggle"><i class="fa-solid fa-gauge me-2"></i>
+                    Dashboard</a>
+            </li>
+            <li>
+                <a href="#" class="menu-toggle"><i class="fa-solid fa-screwdriver-wrench me-2"></i>
+                    Administration</a>
+                <ul class="submenu">
+                    <li class="EMPLOYEE"><a href="/employee"><i class="fa-solid fa-user-tie me-2"></i> Employee</a></li>
+                    <li class="USER"><a href="/user"><i class="fa-solid fa-users-gear me-2"></i> User</a></li>
+                    <li class="PRIVILEGE"><a href="/privilege"><i class="fa-solid fa-user-shield me-2"></i>
+                            Privilege</a></li>
+                </ul>
+            </li>
+
+            <li class="STUDENT_MENU">
+                <a href="#" class="menu-toggle"><i class="fa-solid fa-user-graduate me-2"></i> Student</a>
+                <ul class="submenu">
+                    <li class="GUARDIAN"><a href="/guardian"><i class="fa-solid fa-user-group me-2"></i> Guardian</a>
+                    </li>
+                    <li class="STUDENT"><a href="/student"><i class="fa-solid fa-user-plus me-2"></i> Add Student</a>
+                    </li>
+                    <li class="REGISTRATION"><a href="/studentregistration"><i
+                                class="fa-solid fa-clipboard-list me-2"></i> Registration</a>
+                    </li>
+                    <li class="STUDENTPAYMENT"><a href="/studentpayment"><i class="fa-solid fa-credit-card me-2"></i>
+                            Payments</a></li>
+                </ul>
+            </li>
+
+            <li class="TEACHER_MENU">
+                <a href="#" class="menu-toggle"><i class="fa-solid fa-chalkboard-user me-2"></i> Teacher</a>
+                <ul class="submenu">
+                    <li class="TEACHER"><a href="/teacher"><i class="fa-solid fa-user-plus me-2"></i> Add Teacher</a>
+                    </li>
+                    <li class="ENROLLMENT"><a href="/enrollment"><i class="fa-solid fa-user-check me-2"></i> Teacher
+                            Enrollment</a>
+                    </li>
+                    <li class="TEACHERPAYMENT"><a href="/teacherpayment"><i
+                                class="fa-solid fa-money-check-dollar me-2"></i> Payment</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="CLASS_MENU">
+                <a href="#" class="menu-toggle"><i class="fa-solid fa-school me-2"></i> Class</a>
+                <ul class="submenu">
+                    <li class="CLASSDETAIL"><a href="/classdetail"><i class="fa-solid fa-chalkboard me-2"></i> Add
+                            Class</a></li>
+                    <li class="BATCH"><a href="/batch"><i class="fa-solid fa-layer-group me-2"></i> Add Batch</a></li>
+                    <li class="ATTENDANCE"><a href="/attendance"><i class="fa-solid fa-user-clock me-2"></i>
+                            Attendance</a></li>
+                </ul>
+            </li>
+
+            <li class="HALL_MENU">
+                <a href="#" class="menu-toggle"><i class="fa-solid fa-door-open me-2"></i> Hall Allocation</a>
+                <ul class="submenu">
+                    <li class="HALL"><a href="/hall"><i class="fa-solid fa-building-columns me-2"></i> Add Class
+                            Hall</a></li>
+                    <li class="HALLALLOCATION"><a href="/hallallocation"><i class="fa-solid fa-list-check me-2"></i>
+                            Hall Allocation</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="REPORT_MENU">
+                <a href="#"><i class="fa-solid fa-chart-line me-2"></i> Report</a>
+                <ul class="submenu">
+                    <li id="batchwisereport"><a href="/batchwisestudentreport"><i
+                                class="fa-solid fa-file-lines me-2"></i>Batch-wise
+                            Student</a></li>
+                    <li id="studentattreport">
+                        <a href="/studentattendancereport">
+                            <i class="fa-solid fa-file-lines me-2"></i> Student Attendance
+                        </a>
+                    </li>
+                    <li id="batchattreport">
+                        <a href="/batchattendancereport">
+                            <i class="fa-solid fa-file-lines me-2"></i> Batch Attendance
+                        </a>
+                    </li>
+                    <!--  <li>
+                        <a href="/teacherpaymentreport">
+                            <i class="fa-solid fa-file-lines me-2"></i> Teacher Payment
+                        </a>
+                    </li> -->
+                    <li id="dailyreport">
+                        <a href="/dailypaymentanalyticalreport">
+                            <i class="fa-solid fa-file-lines me-2"></i> Daily Pay-Analytics
+                        </a>
+                    </li>
+                    <li id="monthlyreport">
+                        <a href="/monthlypaymentanalyticalreport">
+                            <i class="fa-solid fa-file-lines me-2"></i> Monthly Pay-Analytics
+                        </a>
+                    </li>
+                    <li id="yearlyreport">
+                        <a href="/yearlypaymentanalyticalreport">
+                            <i class="fa-solid fa-file-lines me-2"></i> Yearly Pay-Analytics
+                        </a>
+                    </li>
+                    <li id="rolewisecashreport">
+                        <a href="/reportrolewisecashcollection">
+                            <i class="fa-solid fa-file-lines me-2"></i>
+                            Daily Cash
+                        </a>
+                    </li>
+                    <li id="managerreport">
+                        <a href="/managercashcollectionreport">
+                            <i class="fa-solid fa-file-lines me-2"></i>
+                            Cash Collection / Manager
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div class="logged-user mt-auto text-center p-3">
+            <img src="images/usericon.jpg" alt="" id="imgUserImage" class="user-image">
+            <span class="fw-bold username" th:text="${loggedusername}">User</span>
+
+            <!-- Buttons side by side -->
+            <div class="user-actions mt-2 d-flex justify-content-center gap-2">
+                <a href="/changeprofile" class="btn btn-sm btn-primary">Change Profile</a>
+                <a href="/logout" class="btn btn-sm btn-danger">Logout</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div th:fragment="footerFragment">
+
+    <!-- link boostrap js file -->
+    <script src="bootstrap-5.2.3/js/bootstrap.bundle.min.js"></script>
+
+    <!-- link fontawesome js file -->
+    <script src="fontawesome-6.7.2/js/all.min.js"></script>
+
+    <!-- link sweetalert2 js file -->
+    <script src="sweetalert2/sweetalert2.min.js"></script>
+
+    <!-- link select2 js file -->
+    <script src="select2/js/select2.min.js"></script>
+
+    <!-- link utilityFunction js file -->
+    <script src="js/utilityFunction.js"></script>
+    <!-- side bar js -->
+    <script src="modaljs/sidebar.js"></script>
+    <!-- link jquery js -->
+    <script src="js/chart.js"></script>
+
+
+
+</div>

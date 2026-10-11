@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragment :: headerFragment}">
+</head>
+
+<body>
+    <!-- container start -->
+    <div class="container-fluid">
+        <!-- sidebar start -->
+        <div th:replace="~{fragment :: sidebarFrgment}"></div>
+        <!-- sidebar end -->
+        <!-- view content start -->
+        <div class="view-content">
+            <!-- title card start -->
+            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                <div class="card-header div-head">
+                    <!-- title section start -->
+                    <div class="row mt-2">
+                        <div class="d-flex justify-content-center">
+                            <i class="fa-solid fa-file-lines"></i>
+                            <!-- title -->
+                            <h4 class="h2 ms-3">
+                                Daily Payment Analytical Report/ Teacher
+                            </h4>
+                            <!-- print button -->
+                            <div class="col text-end">
+                                <button type="button" id="btnPrintReport" class="btn btn-light fw-bold"
+                                    style="background-color: rgba(240, 248, 255, 0.765);">
+                                    <i class="fa-solid fa-print"></i>
+                                    Print Report
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- title section end -->
+                </div>
+            </div>
+            <!-- title card end -->
+            <!-- filter card start -->
+            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                <div class="card-body">
+                    <div class="card-body">
+                        <div class="card-body">
+                            <div class="row justify-content-center">
+
+                                <!-- Teacher -->
+                                <div class="col-lg-3 col-md-6">
+                                    <label class="form-label fw-bold">
+                                        Teacher :
+                                    </label>
+
+                                    <select id="selectTeacher" class="form-select form-input js-example-basic-single">
+                                    </select>
+                                </div>
+
+
+                                <!-- Date -->
+                                <div class="col-lg-3 col-md-6">
+                                    <label class="form-label fw-bold">
+                                        Date :
+                                    </label>
+                                    <input type="date" id="inputDate" class="form-control form-input">
+                                </div>
+
+
+                                <!-- Generate Button -->
+                                <div class="col-lg-2 col-md-6 d-flex align-items-end justify-content-center">
+                                    <button type="button" id="btnGenerateReport" class="btn fw-bold w-100"
+                                        style="background-color: rgb(162, 197, 227);"
+                                        onclick="generateDailyAnalyticalReport();">
+
+                                        <i class="fa-solid fa-file-lines"></i>
+                                        Generate
+
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- report table start -->
+                <div class="row  mx-3">
+                    <div class="col">
+                        <table id="tableDailyAnalytical" class="table table-hover table-bordered table-striped">
+                            <!-- table head -->
+                            <thead class="text-dark tablehead tableh text-center">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Batch</th>
+                                    <th>Total Batch Payment</th>
+                                    <th>Institute Payment</th>
+                                    <th>Teacher Payment</th>
+                                </tr>
+                            </thead>
+                            <!-- table body -->
+                            <tbody id="tableBodyDailyAnalytical">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- report table end -->
+
+                <!-- summary section -->
+                <div class="row m-3">
+
+                    <div class="col-md-4">
+                        <div class="alert alert-primary">
+                            Total Batch Income :
+                            <span id="totalBatchIncome">0.00</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="alert alert-success">
+                            Institute Payment :
+                            <span id="totalInstitutePayment">0.00</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="alert alert-info">
+                            Teacher Payment :
+                            <span id="totalTeacherPayment">0.00</span>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- summary section end -->
+
+
+            </div>
+            <!-- filter card end -->
+        </div>
+        <!-- filter card end -->
+    </div>
+    <!-- view content end -->
+    </div>
+    <!-- container end -->
+
+
+    <div th:replace="~{fragment :: footerFragment}"></div>
+
+    <!-- link report js -->
+    <script src="reportjs/reportdailypaymentanalytical.js"></script>
+
+</body>
+
+</html>

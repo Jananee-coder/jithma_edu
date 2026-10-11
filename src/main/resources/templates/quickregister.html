@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragment :: headerFragment}">
+</head>
+
+<body>
+
+    <div class="container-fluid">
+
+        <div th:replace="~{fragment :: sidebarFrgment}"></div>
+
+        <div class="view-content">
+
+            <!-- card title area start -->
+            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                <div class="card-header div-head">
+
+                    <!-- title section strat -->
+                    <div class="row mt-2">
+                        <div class="d-flex justify-content-start">
+                            <i class="fa-solid fa-user-plus"></i>
+                            <h3 class="h3 ms-3">Quick Registration Process</h3>
+                        </div>
+                    </div>
+                    <!-- title section end -->
+
+                </div>
+            </div>
+            <!-- card title area end -->
+
+            <div style="background-color:aliceblue">
+
+                <div class="steps">
+
+                    <!-- Step 1 -->
+                    <div class="step">
+                        <div class="step-icon-wrap">
+                            <div class="step-icon">
+                                <i class="fa fa-user-graduate"></i>
+                            </div>
+                        </div>
+                        <div class="step-title">Student</div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="step">
+                        <div class="step-icon-wrap">
+                            <div class="step-icon">
+                                <i class="fa-solid fa-clipboard-list"></i>
+                            </div>
+                        </div>
+                        <div class="step-title">Registration</div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="step">
+                        <div class="step-icon-wrap">
+                            <div class="step-icon">
+                                <i class="fa-solid fa-credit-card"></i>
+                            </div>
+                        </div>
+                        <div class="step-title">Payment</div>
+                    </div>
+
+                </div>
+
+                <!-- ================= STEP 1 ================= -->
+                <div id="step1Form" class="step-content">
+                    <!-- Student No Search -->
+                    <div class="row mt-4">
+                        <div class="col-2"></div>
+
+                        <div class="col-2 fw-bold form-label text-end">
+                            Student No :
+                        </div>
+
+                        <div class="col-4">
+
+                            <div class="input-group">
+
+                                <input type="text" id="textStuNoFilter" class="form-control form-input"
+                                    placeholder="Enter Student No">
+
+                                <button type="button" id="btnAddStudent" class="btn"
+                                    style="background-color: rgb(162, 197, 227);" onclick="openStudentModal()">
+
+                                    <i class="fa fa-plus"></i>
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="row mt-2">
+                        <!-- Photo and Calling Name at end of column -->
+                        <div class="col-4"></div>
+                        <div class="col-2">
+                            <div id="divStudentPhoto"
+                                style="display:none; text-align:centr; flex-direction: column; align-items: center;">
+
+                                <img src="images/studenticon.jpg" id="imgPhoto"
+                                    style="width: 75px; height: 75px; border-radius: 50%;">
+
+                                <p id="pCallingName" class="fw-bold form-label mb-0 mt-2 text-center"></p>
+                            </div>
+                        </div>
+
+                        <!-- View Button -->
+                        <div class="col-2">
+                            <div id="divButtonView" style="display:none; text-align:left;">
+                                <button type="button" id="btnViewStudent" class="btn btn-sm fw-bold"
+                                    style="display:none; background-color: rgb(164, 201, 232); width: 120px;">
+                                    View more
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-4"></div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-2"></div>
+
+                        <div class="col-2 fw-bold form-label text-end">
+                            Register batches :
+                        </div>
+
+                        <div class="col-8" id="divStudentBatches">
+                        </div>
+
+                    </div>
+                    <div class="row mt-3 mb-2">
+                        <div class="d-flex justify-content-center gap-2 mt-3"> <!-- <button class="btn fw-bold btnall"
+                            onclick="goBack()" style="background-color:   rgb(162, 197, 227);">Back</button> -->
+                            <button class="btn fw-bold btnall" onclick="goNext()"
+                                style="background-color:  rgb(162, 197, 227);">Next</button>
+                        </div>
+                    </div>
+                    <div class="row mt-3"></div>
+
+                </div>
+
+                <!-- ================= STEP 2 ================= -->
+                <div id="step2Form" class="step-content d-none">
+                    <div class="container-fluid mt-4">
+                        <div class="row">
+                            <!-- left side student details area start -->
+                            <div class="col-4">
+                                <!-- student summary card start -->
+                                <div class="card shadow-sm p-4 " style="background-color: aliceblue;">
+
+                                    <!-- student details area start -->
+                                    <div class="text-center">
+                                        <!-- student photo -->
+                                        <img src="images/studenticon.jpg" id="imgStep2StudentPhoto" style="width: 90px;
+                            height: 90px;
+                            border-radius: 50%;">
+
+                                        <!-- student full name -->
+                                        <h4 id="h4Step2StudentFullname" class="fw-bold form-label mt-3 mb-1">
+                                        </h4>
+                                        <!-- student no -->
+                                        <h6 id="h6Step2StudentNo" class="text-muted">
+                                        </h6>
+                                    </div>
+                                    <!-- student details area end -->
+
+                                    <hr>
+
+                                    <!-- registered classes title -->
+                                    <h5 class="fw-bold form-label mb-3">
+                                        Registered Batches
+                                    </h5>
+
+                                    <!-- registered batch list -->
+                                    <div id="divStep2RegisteredBatches">
+                                    </div>
+                                </div>
+                                <!-- student summary card end -->
+                            </div>
+                            <!-- left side student details area end -->
+
+                            <!-- right side registration table area start -->
+                            <div class="col-8">
+                                <div class="card shadow-sm p-4" style="background-color: aliceblue;">
+                                    <!-- inner form  area start -->
+                                    <div class="row">
+                                        <!-- grade -->
+                                        <div class="col-4">
+                                            <label class="form-label fw-bold">
+                                                Grade : <span class="text-danger">*</span>
+                                            </label>
+                                            <select required id="selectGrade" class="form-select form-input" onchange="registrationBatch.grade_id=JSON.parse(this.value);
+                                this.style.border='2px solid green';">
+                                                <option value="" selected disabled>Select Grade...!</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Subject -->
+                                        <div class="col-4">
+                                            <label for="selectSubject" class="form-label fw-bold">
+                                                Subject : <span class="text-danger">*</span>
+                                            </label>
+                                            <select required id="selectSubject" class="form-select form-input" onchange="registrationBatch.subjectdetail_id=JSON.parse(this.value);
+                                this.style.border='2px solid green';">
+                                                <option value="" selected disabled>Select Subject...!</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- teacher -->
+                                        <div class="col-4">
+                                            <label for="selectTeacher" class="form-label fw-bold">
+                                                Teacher : <span class="text-danger">*</span>
+                                            </label>
+                                            <select required id="selectTeacher" class="form-select form-input" onchange="registrationBatch.teacher_id=JSON.parse(this.value);
+                                this.style.border='2px solid green';">
+                                                <option value="" selected disabled>Select Teacher...!</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- batch, registration type area start -->
+                                    <div class="row mt-3">
+                                        <!-- batch -->
+                                        <div class="col-7">
+                                            <label for="selectBatch" class="form-label fw-bold">
+                                                Batch : <span class="text-danger">*</span>
+                                            </label>
+                                            <select required id="selectBatch" class="form-select form-input" onchange="registrationBatch.batch_id=JSON.parse(this.value);
+                                this.style.border='2px solid green';">
+                                                <option value="" selected disabled>Select Batch...!</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-4">
+                                            <label for="selectRegType" class="form-label fw-bold">
+                                                Registration Type : <span class="text-danger">*</span>
+                                            </label>
+                                            <select required id="selectRegType" class="form-select form-input" onchange="registrationBatch.regtype_id=JSON.parse(this.value);
+                                            genareteRegFree();
+                                this.style.border='2px solid green';">
+                                            </select>
+                                        </div>
+                                        <!-- add button -->
+                                        <div class="col-1 d-flex align-items-end">
+                                            <button type="button" class="btn fw-bold" style="background-color:
+                                rgb(162, 197, 227);" onclick="registrationBatchesSubmit()">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <!-- batch, registration type area end -->
+                                    <!-- inner form  area start -->
+
+                                    <hr>
+
+                                    <!-- inner registration table start -->
+                                    <table class="table table-bordered table-hover">
+                                        <thead class="text-dark tablehead tableh">
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Batch Name</th>
+                                                <th>Reg Type</th>
+                                                <th>Fee</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbodyRegistration">
+                                        </tbody>
+                                    </table>
+                                    <!-- inner registration table end -->
+                                </div>
+                                <hr>
+
+                                <div class="row mt-3">
+                                    <div class="col-md-4">
+                                        <label for="textTotalBatchFee" class="fw-bold form-label">Total Batch Fee :
+                                            <span class="text-danger">*</span></label>
+                                        <input type="text" required id="textTotalBatchFee"
+                                            onkeyup="inputTextValidator(this,'^(([1-9][0-9]{0,7})|([1-9][0-9]{0,6}[.][0-9]{2}))$','registration','totalbatchfee'); "
+                                            class="form-control form-input" readonly>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="textAdmissionFee" class="fw-bold form-label">Admission Fee:
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="text" id="textAdmissionFee" class="form-control form-input"
+                                            onkeyup="inputTextValidator(this,'^(([1-9][0-9]{0,7})|([1-9][0-9]{0,6}[.][0-9]{2}))$','registration','admissionfee');">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="textGrandTotal" class="fw-bold form-label">Total Fee: <span
+                                                class="text-danger">*</span></label>
+                                        <input type="text" required id="textGrandTotal" class="form-control form-input"
+                                            readonly
+                                            onkeyup="inputTextValidator(this,'^(([1-9][0-9]{0,7})|([1-9][0-9]{0,6}[.][0-9]{2}))$','registration','totalfee'); ">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- right side registration table area end -->
+                        </div>
+
+                        <!-- button area start -->
+                        <div class="text-end mt-4">
+                            <button class="btn btn-secondary" onclick="goBack()">
+                                Back
+                            </button>
+                            <button class="btn btn-primary" onclick="buttonRegistrationSubmit();">
+                                Next
+                            </button>
+                        </div>
+                        <!-- button area end -->
+                    </div>
+                </div>
+
+                <!-- ================= STEP 3 ================= -->
+                <div id="step3Form" class="step-content d-none">
+                    <div class="container-fluid mt-4">
+                        <div class="row">
+                            <!-- LEFT- Student Details -->
+                            <div class="col-12 col-md-4">
+                                <div class="card shadow-sm p-4 text-center" style="background-color: aliceblue;">
+                                    <div style="text-align:center;">
+                                        <img src="images/studenticon.jpg" id="imgStep3StudentPhoto"
+                                            style="width:90px;height:90px;border-radius:50%;">
+                                    </div>
+                                    <h4 id="h4Step3StudentFullname" class="fw-bold form-label mt-3 mb-1"></h4>
+                                    <h6 id="h6Step3StudentNo" class="text-muted"></h6>
+                                    <hr>
+                                </div>
+                            </div>
+
+                            <!-- RIGHT- Payment Table -->
+                            <div class="col-12 col-md-8">
+                                <div class="card shadow-sm p-4" style="background-color: aliceblue;">
+                                    <h5 class="fw-bold form-label mb-3">Payment Details</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover">
+                                            <thead class="text-dark tablehead tableh">
+                                                <tr>
+                                                    <th>Id</th>
+                                                    <th>Registerd batches</th>
+                                                    <th>Fee</th>
+                                                    <th>Status</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tbodyPayment">
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <!-- SUMMARY -->
+                                    <hr>
+                                    <div class="row g-3">
+                                        <div class="col-md-3">
+                                            <label for="textTotalFee" class="form-label fw-bold">Total Fee: <span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" required id="textTotalFee"
+                                                class="form-control form-input" readonly
+                                                onkeyup="inputTextValidator(this,'^[1-9][0-9]{0,9}$','studentpayment','totalamount');;">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="textPaidAmount" class="form-label fw-bold">Paid Amount <span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" required id="textPaidAmount"
+                                                class="form-control form-input"
+                                                onkeyup="inputTextValidator(this,'^[0-9][0-9]{0,9}$','studentpayment','paidamount'); calculateQuickBalanceAmount();">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="textBalance" class="form-label fw-bold">Balance: <span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" required id="textBalance" class="form-control form-input"
+                                                readonly>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="selectPaymentMethod" class="form-label fw-bold">
+                                                Pay-Method:<span class="text-danger">*</span></label>
+                                            <select required id="selectPaymentMethod" class="form-select form-input"
+                                                onchange="studentpayment.paymentmethod_id=JSON.parse(this.value);
+                                this.style.border='2px solid green';">
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- BUTTONS -->
+                                    <div class="text-end mt-4">
+                                        <button class="btn btn-secondary" onclick="goBack()">
+                                            Back
+                                        </button>
+                                        <button class="btn btn-success" onclick="buttonPaymentsSubmit()">
+                                            Finish Payment
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ================= MODAL ================= -->
+        <div class="modal fade" id="studentModal">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+
+                    <!-- Header -->
+                    <div class="modal-header">
+                        <h5>Add New Student</h5>
+                        <button class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <!-- Body -->
+                    <div class="modal-body">
+
+                        <!-- default submition eka wada krnawa auto html wala..api wenama submit function ekak use krnawnam default eka wada krna eka nawaththanna ona klin...defult method post -->
+                        <form id="formStudent" onsubmit="return false">
+
+                            <!-- required mark start -->
+                            <div class="row mt-2">
+                                <div class="col text-end fw-bold">
+                                    <p>Required<span class="text-danger">*</span></p>
+                                </div>
+                            </div>
+                            <!-- required mark end -->
+
+                            <div class="row mt-2">
+                                <!-- guardian filter area start -->
+                                <div class="col-2"></div>
+                                <div class="col-2 fw-bold form-label text-end">
+                                    Guardian NIC :
+                                    <span class="text-danger">*</span>
+                                </div>
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <input type="text" id="textGuardianFilterNic" class="form-control form-input"
+                                            placeholder="Enter Guardian NIC">
+                                        <button type="button" id="btnAddGuardian" class="btn"
+                                            style="background-color: rgb(162, 197, 227);"
+                                            onclick="displayAddNewGuardain()">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="col-4"></div>
+                                <!-- guardian filter area end -->
+
+                            </div>
+
+                            <!-- Guardian details hidden card -->
+                            <div class="row mt-2" id="divGuardian" style="display:none;">
+
+                                <div class="row mt-3">
+
+                                    <!-- Guardian Name area start -->
+                                    <label class="col-2 form-label fw-bold mt-2">
+                                        Guardian Name
+                                    </label>
+
+                                    <div class="col-4">
+                                        <input type="text" id="textGuardianName" class="form-control" readonly>
+                                    </div>
+                                    <!-- Guardian Name area end -->
+
+                                    <!-- Guardian Contact area start -->
+                                    <label class="col-2 form-label fw-bold mt-2">
+                                        Contact Number
+                                    </label>
+
+                                    <div class="col-4">
+                                        <input type="text" id="textGuardianMobile" class="form-control" readonly>
+                                    </div>
+                                    <!-- Guardian Contact area end -->
+
+                                </div>
+
+                                <div class="row mt-2">
+
+                                    <!-- Guardian Type area start -->
+                                    <label class="col-2 form-label fw-bold mt-2">
+                                        Guardian Type
+                                    </label>
+
+                                    <div class="col-4">
+                                        <input type="text" id="selectGuardianType" class="form-control" readonly>
+                                    </div>
+                                    <!-- Guardian Type area end -->
+
+                                    <!-- Guardian adress area start -->
+                                    <label class="col-2 form-label fw-bold mt-2">
+                                        Guardian Address
+                                    </label>
+
+                                    <div class="col-4">
+                                        <input type="text" id="textGuAddress" class="form-control" readonly>
+                                    </div>
+                                    <!-- Guardian adress area end -->
+
+                                </div>
+                                <div class="row mt-2">
+
+                                    <!-- GuardianStatus area start -->
+                                    <label for="selectGuardianStatus" class="col-2 form-label fw-bold mt-2">
+                                        Guardian Status
+                                    </label>
+                                    <div class="col-4">
+                                        <input type="text" id="selectGuardianStatus" class="form-control" readonly>
+                                    </div>
+                                    <!-- GuardianStatus area end -->
+                                </div>
+
+                            </div>
+
+                            <!-- Guardian details hidden card -->
+                            <div class="row mt-2" id="divNewGuardianForm" style="display:none;">
+
+                                <div class="row mt-2">
+                                    <!-- Guardian Name area start -->
+                                    <label for="textGuardianName" class="col-2 form-label fw-bold mt-2">
+                                        Guardian Name :
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-4">
+                                        <input type="text" required id="textGuardianName"
+                                            class="form-control form-input" placeholder="Enter Guardian Name Here"
+                                            onkeyup="inputTextValidator(this,'^([A-Z][a-z]{2,20}(\\s)){1,20}([Dd]e\\s)?([A-Z][a-z]{2,20})$','guardian','guardianname')">
+                                    </div>
+                                    <!-- Guardian Name area end -->
+
+                                    <!-- Guardian NIC area start -->
+                                    <label for="textGuardianNic" class="col-2 form-label fw-bold mt-2">
+                                        Guardian NIC :
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-4">
+                                        <input type="text" placeholder="Enter Guardian NIC Here" required
+                                            id="textGuardianNic" class="form-control form-input"
+                                            onkeyup="inputTextValidator(this,'^((([6][56789][0-9]{7}[VvXxSs])|([7-9][0-9]{8}[VvXxSs]))|([0-9]{12}))$','guardian','nic')">
+                                    </div>
+                                    <!-- Guardian NIC area start -->
+                                </div>
+                                <div class="row mt-2">
+                                    <!-- Guardian Contact area start -->
+                                    <label for="textGuardianMobile" class="col-2 form-label fw-bold mt-2">
+                                        Contact No :
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-4">
+                                        <input type="text" id="textGuardianMobile" class="form-control form-input "
+                                            placeholder="Enter Guardian Contact Number Here"
+                                            onkeyup="inputTextValidator(this,'^[0][7][01245678][0-9]{7}$','guardian','mobileno')">
+                                    </div>
+                                    <!-- Guardian Contact area end -->
+
+                                    <!-- Guardian Type area start -->
+                                    <label for="selectGuardianType" class="col-2 form-label fw-bold mt-2">
+                                        Guardian Type :
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-4">
+                                        <select required id="selectGuardianType" class="form-select form-input"
+                                            onchange="handleSelectedOtherGuardian(); this.style.border='2px solid green';">
+                                            <option value="" selected disabled>Select Guardian Type
+                                            </option>
+                                            <option value="Father">Father</option>
+                                            <option value="Mother">Mother</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+
+                                    </div>
+                                    <!-- Guardian Type area end -->
+                                </div>
+
+                                <div class="row mt-2" id="otherTypeRow" hidden>
+                                    <div class="col-6"></div>
+                                    <!-- Guardian type- other  area start -->
+                                    <label for="otherGuardianType" class="col-2 form-label fw-bold mt-2">
+                                    </label>
+                                    <div class="col-4">
+                                        <input type="text" class="form-control form-input" required
+                                            placeholder="Enter Guardain Type Ex-Uncle" id="otherGuardianType">
+
+                                    </div>
+                                    <!-- Guardian type- other  area start -->
+
+                                </div>
+                                <div class="row mt-2">
+                                    <!-- Guardian adress area start -->
+                                    <label for="textGuAddress" class="col-2 form-label fw-bold mt-2">
+                                        Address:
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-4">
+                                        <textarea class="form-control form-input" id="textGuAddress"
+                                            onkeyup="inputTextValidator(this,'^([A-Za-z0-9\\,\\/\\-]{2,15}[\\,]{0,1}[ ]){1,10}([A-Z][a-z]{2,15}[.])$','guardian','address')"
+                                            placeholder="Enter Guardian Address Here"></textarea>
+
+                                    </div>
+                                    <!-- Guardian adress area end -->
+
+                                </div>
+                                <hr class="mt-3">
+                            </div>
+
+                            <div class="row mt-2">
+
+                                <!-- student full name area start -->
+                                <label class="col-2 form-label fw-bold mt-2">
+                                    Full Name :
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <div class="col-4">
+                                    <input type="text" id="textStuFullname" class="form-control form-input"
+                                        placeholder="Enter Student Full Name Here" onkeyup="textFullnameValidator()">
+                                </div>
+                                <!-- student full name area end -->
+
+                                <!-- Student calling name area start -->
+                                <label class="col-2 form-label fw-bold mt-2">
+                                    Calling Name :
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <div class="col-4">
+                                    <select id="selectCallingName" class="form-select form-input"
+                                        onchange="callingNameValidator()">
+
+                                        <option value="" selected disabled>Select Calling name</option>
+                                        <option value="">Name-1</option>
+                                        <option value="">Name-2</option>
+
+                                    </select>
+                                </div>
+                                <!-- Student calling name area end -->
+
+                            </div>
+
+                            <!-- Student NIC area start -->
+                            <div class="row mt-2">
+
+                                <label class="col-2 form-label fw-bold mt-2">
+                                    NIC :
+                                </label>
+
+                                <div class="col-4">
+                                    <input type="text" id="textStuNic" class="form-control form-input"
+                                        placeholder="Enter NIC Here" onkeyup="textStuNicValidator()">
+                                </div>
+
+                                <!-- student birthday area start -->
+                                <label class="col-2 form-label fw-bold mt-2">
+                                    Birth Of Date :
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <div class="col-4">
+                                    <input type="date" id="dateDob" class="form-control form-input"
+                                        onchange="dateDobValidator()">
+                                </div>
+                                <!-- student birthdaay area end -->
+
+                            </div>
+                            <!-- Student NIC area end -->
+
+                            <div class="row mt-2">
+
+                                <!-- Student age area start -->
+                                <label class="col-2 form-label fw-bold mt-2">
+                                    Age :
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <div class="col-4">
+                                    <input type="text" id="textStuAge" class="form-control form-input" disabled>
+                                </div>
+                                <!-- Student age area end -->
+
+                                <!-- Student gender area start -->
+                                <label class="col-2 form-label fw-bold mt-2">
+                                    Gender :
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <div class="col-4">
+
+                                    <div class="form-check form-check-inline">
+                                        <input type="radio" value="Male" id="radioMale"
+                                            class="form-check-input form-input" name="gender">
+                                        <label for="radioMale" class="form-check-label">Male</label>
+                                    </div>
+
+                                    <div class="form-check form-check-inline">
+                                        <input type="radio" value="Female" id="radioFemale"
+                                            class="form-check-input form-input" name="gender">
+                                        <label for="radioFemale" class="form-check-label">Female</label>
+                                    </div>
+
+                                </div>
+                                <!-- Student gender area end -->
+
+                            </div>
+
+                            <div class="row mt-2">
+
+                                <!-- Mobile no (WhatsApp) area start -->
+                                <label class="col-2 form-label fw-bold mt-2">
+                                    WhatsApp No:
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <div class="col-4">
+                                    <input type="text" id="textMobileWhatsApp" class="form-control form-input"
+                                        onkeyup="inputTextValidator(this,'^[0][7][01245678][0-9]{7}$','student','whatsapno')"
+                                        placeholder="Enter WhatsApp Mobile No Here">
+                                </div>
+                                <!-- Mobile no (WhatsApp) area end -->
+
+                                <!-- Student Land umber area start -->
+                                <label class="col-2 form-label fw-bold mt-2">
+                                    Land-Number :
+                                </label>
+
+                                <div class="col-4">
+                                    <input type="text" id="textStuLandno" class="form-control form-input"
+                                        onkeyup="inputTextValidator(this,'^[0][123456789][1-9][0-9]{7}$','student','landno')"
+                                        placeholder="Enter Student Land No Here(Optional)">
+                                </div>
+                                <!-- Student Land umber end -->
+
+                            </div>
+
+                            <div class="row mt-2">
+
+                                <!-- student adress area start -->
+                                <label class="col-2 form-label fw-bold mt-2">
+                                    Address :
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <div class="col-4">
+                                    <textarea class="form-control form-input" id="textStuAddress"
+                                        placeholder="Enter Address Here"
+                                        onkeyup="inputTextValidator(this, '^([A-Za-z0-9\\,\\/\\-]{2,15}[\\,]{0,1}[ ]){1,10}([A-Z][a-z]{2,15}[.])$', 'student', 'address')"></textarea>
+                                </div>
+                                <!-- student adress area end -->
+
+                                <!-- Student Photo area -->
+                                <label class="col-2 form-label fw-bold mt-2">
+                                    Student Photo :
+                                </label>
+
+                                <div class="col-4">
+                                    <img src="images/studenticon.jpg" id="imgPhoto"
+                                        style="width: 75px; height: 75px; border-radius: 50%;">
+                                    <button type="button" class="btn fw-bold"
+                                        style="background-color: rgb(164, 201, 232);" onclick="filePhoto.click()">
+                                        Select a Photo
+                                    </button>
+                                    <button type="button" class="btn fw-bold"
+                                        style="background-color: rgb(164, 201, 232);" onclick="clearPhoto()">
+                                        Clear
+                                    </button>
+                                    <input type="file" id="filePhoto" class="form-control form-input"
+                                        style="display: none;" onchange="validateFile(this,student,'photo',imgPhoto)">
+                                </div>
+                            </div>
+
+                            <div class="row mt-2">
+                                <!-- Student School name area start -->
+                                <label class="col-2 form-label fw-bold mt-2">
+                                    School:
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-4">
+                                    <input type="text" id="textStuSchool" class="form-control form-input"
+                                        placeholder="Enter Student School"
+                                        onkeyup="inputTextValidator(this,'^[A-Za-z0-9\\s\\.,\'\\-]{3,100}$','student','schoolname')">
+                                </div>
+                                <!-- Student School name area end -->
+                            </div>
+
+                            <!-- buttons area start -->
+                            <div class="row mt-2">
+
+                                <div class="d-flex justify-content-center gap-2 mt-3">
+
+                                    <button class="btn fw-bold btnall btn-submit" id="buttonSubmit" type="button"
+                                        onclick="buttonStudentSubmit()">
+
+                                        <i class="fa-solid fa-paper-plane"></i> Submit
+                                    </button>
+
+                                </div>
+
+                            </div>
+                            <!-- buttons area end -->
+
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <div class="modal modalPrint" id="modalStudentDetail">
+        <div class="modal-dialog">
+            <div class="modal-content div-card">
+                <div class="modal-header">
+                    <h4>Student Details</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="tablePrint table table-hover table-bordered" id="tableShowStudent">
+                        <tbody>
+                            <tr>
+                                <th>Student Number</th>
+                                <td id="tdStudentNo"></td>
+                            </tr>
+                            <tr>
+                                <th>Full Name</th>
+                                <td id="tdFullName"></td>
+                            </tr>
+                            <tr>
+                                <th>Calling Name</th>
+                                <td id="tdCallingName"></td>
+                            </tr>
+                            <tr>
+                                <th>NIC</th>
+                                <td id="tdNic"></td>
+                            </tr>
+                            <tr>
+                                <th>Date of Birth</th>
+                                <td id="tdDob"></td>
+                            </tr>
+                            <tr>
+                                <th>Gender</th>
+                                <td id="tdGender"></td>
+                            </tr>
+                            <tr>
+                                <th>Address</th>
+                                <td id="tdAddress"></td>
+                            </tr>
+                            <tr>
+                                <th>Mobile Number</th>
+                                <td id="tdMobile"></td>
+                            </tr>
+                            <tr>
+                                <th>School Name</th>
+                                <td id="tdSchool"></td>
+                            </tr>
+                            <tr>
+                                <th>Student Status</th>
+                                <td id="tdStudentStatus"></td>
+                            </tr>
+                            <tr>
+                                <th>Guardian Name</th>
+                                <td id="tdGuardianName"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div th:replace="~{fragment :: footerFragment}"></div>
+
+    <!-- link quickregister js file -->
+    <script src="modaljs/quickregister.js"></script>
+
+</body>
+
+</html>

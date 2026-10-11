@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+<head th:replace="~{fragment :: headerFragment}">
+</head>
+
+
+<body>
+    <div class="container-fluid">
+        <!-- ==== SIDEBAR ==== -->
+        <div th:replace="~{fragment :: sidebarFrgment}"></div>
+        <!-- ==== TOPBAR ==== -->
+        <div class="topbar d-flex justify-content-between align-items-center">
+            <div class="fw-bold" th:text="'Welcome ' + ${loggedusername}">Welcome User</div>
+
+            <div class="d-flex align-items-center">
+                <!-- notification bell icon -->
+               <!--  <i id="btnNotification" class="fa-solid fa-bell me-3 text-secondary" style="cursor:pointer;">
+                </i> -->
+                <a href="#" class="btn btn-outline-primary btn-sm" onclick="logoutConfirm()">
+                    <i class="fa-solid fa-right-to-bracket me-1"></i> Logout
+                </a>
+            </div>
+        </div>
+
+        <!-- ==== MAIN AREA ==== -->
+        <div class="main-content">
+            <div class="row g-3">
+
+                <!-- Quick Registration -->
+                <!-- <div class="col-md-4">
+                    <a href="/quickregister" class="text-decoration-none">
+                        <div class="card p-3 h-100">
+                            <div class="d-flex align-items-center">
+                                <i class="fa-solid fa-user-plus me-3 fs-3" style="color: #005fa3;"></i>
+                                <div>
+                                    <h5 class="mb-0 text-dark">Quick Registration</h5>
+                                    <small class="text-muted">Register new students</small>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div> -->
+                <div class="col-md-4" id="studentregistrationDivAreaId">
+                    <a href="/studentregistration" class="text-decoration-none">
+                        <div class="card p-3 h-100">
+                            <div class="d-flex align-items-center">
+                                <i class="fa-solid fa-user-plus me-3 fs-3" style="color: #005fa3;"></i>
+                                <div>
+                                    <h5 class="mb-0 text-dark">Registration</h5>
+                                    <small class="text-muted">Student to Batch Registration</small>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Attendance -->
+                <div class="col-md-4" id="attendanceDivAreaId">
+                    <a href="/attendance" class="text-decoration-none">
+                        <div class="card p-3 h-100">
+                            <div class="d-flex align-items-center">
+                                <i class="fa-solid fa-calendar-check me-3 fs-3" style="color: #005fa3;"></i>
+                                <div>
+                                    <h5 class="mb-0 text-dark">Attendance</h5>
+                                    <small class="text-muted">Manage student attendance</small>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Student Payments -->
+                <div class="col-md-4" id="studentpaymentDivAreaId">
+                    <a href="/studentpayment" class="text-decoration-none">
+                        <div class="card p-3 h-100">
+                            <div class="d-flex align-items-center">
+                                <i class="fa-solid fa-credit-card me-3 fs-3" style="color: #005fa3;"></i>
+                                <div>
+                                    <h5 class="mb-0 text-dark">Student Payments</h5>
+                                    <small class="text-muted">Manage student payments</small>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+            <!-- Gallery -->
+            <div class="row mt-4 align-items-stretch">
+
+                <div class="col-md-7" id="galleryDivAreaId">
+                    <div class="card p-3 h-100">
+                        <h5 class="fw-bold mb-3">Institute Gallery</h5>
+
+                        <div id="instituteCarousel" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner rounded">
+                                <div class="carousel-item active">
+                                    <img src="images/institute1.png" class="d-block w-100 rounded"
+                                        style="height:300px; object-fit:cover;" alt="Institute 1">
+                                </div>
+
+                                <div class="carousel-item">
+                                    <img src="images/institute2.jpg" class="d-block w-100 rounded"
+                                        style="height:300px; object-fit:cover;" alt="Institute 2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Monthly Payment Collection -->
+                <div class="col-md-5" id="chartDivAreaId">
+                    <div class="card p-3 h-100">
+                        <h5 class="mb-3">Monthly Payment Collection</h5>
+
+                        <div style="height:300px;">
+                            <canvas id="paymentChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div th:replace="~{fragment :: footerFragment}"></div>
+    <script>
+        function logoutConfirm() {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You are about to log out.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, log me out!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.replace('/logout');
+                }
+            });
+        }
+
+
+
+
+
+        // Ada date eka gannawa
+        /*  today = new Date();
+ 
+         // Maas 3k passe yanna
+         today.setMonth(today.getMonth() - 3);
+ 
+         console.log(today);
+ 
+         // Year, month saha date wen wenama gannawa
+         year = today.getFullYear().toString();
+         month = (today.getMonth() + 1).toString().padStart(2, "0");
+         date = today.getDate().toString().padStart(2, "0");
+ 
+         // Full date eka hadanawa (yyyy-MM-dd)
+         fullDate = year + "-" + month + "-" + date;
+ 
+         console.log(fullDate);
+ 
+         // Chart ekata month nam saha income store karanna arrays hadanawa
+         monthName = new Array();
+         monthQuentity = new Array();
+ 
+         // Maas 4kata income data gannawa
+         for (let index = 0; index < 4; index++) {
+ 
+             // Ilanga maaseta yannawa
+             today.setMonth(today.getMonth() + 1);
+ 
+             console.log(index);
+ 
+             // Aluth month eke year, month saha date gannawa
+             year = today.getFullYear().toString();
+             month = (today.getMonth() + 1).toString().padStart(2, "0");
+             date = today.getDate().toString().padStart(2, "0");
+ 
+             // Full date eka hadanawa
+             fullDate = year + "-" + month + "-" + date;
+ 
+             // Ada month ekata adala income eka backend eken gannawa
+             mounthlyIncome = getDataAjaxGetRequest("/report/mounthlyincome/" + month);
+ 
+             // Chart label ekata year-month hadanawa
+             yearAndMonth = year + "-" + month;
+ 
+             // Arrays walata values add karanawa
+             monthName.push(yearAndMonth);
+             monthQuentity.push(mounthlyIncome);
+         }
+  */
+        // Arrays dekama console eke balagannawa
+        //console.log(monthName);
+        //console.log(monthQuentity);
+        // notification bell click event
+
+        /*  $(document).on("click", "#btnNotification", function () {
+             // backend eken ada thiyena classes list eka gannawa
+             let todayClasses = getDataAjaxGetRequest("/batch/todayclasses");
+ 
+             // notification message eka hadanawa
+             let message = "";
+             // class list eka loop karanawa
+             todayClasses.forEach(batch => {
+                 message +=
+                     batch.batchname +
+                     " - " +
+                     batch.starttime +
+                     "\n";
+ 
+             });
+             // ada classes nathnam message eka pennanawa
+             if (message == "") {
+                 message = "No classes today";
+             }
+             // notification popup display karanawa
+             Swal.fire({
+                 title: "Today's Classes",
+                 text: message,
+                 icon: "info"
+             });
+ 
+ 
+         }); */
+
+
+        // Ada date eka gannawa
+        today = new Date();
+
+        // Maas 3k passe yanna
+        // Udaharanayak: July nam April idan patan gannawa
+        today.setMonth(today.getMonth() - 3);
+
+
+        // Chart ekata month name saha income store karanna arrays hadanawa
+        monthName = new Array();
+        monthQuentity = new Array();
+
+
+        // Maas 3k passe idan ada masa dakwa (total masa 4k) income data gannawa
+        for (let index = 0; index < 4; index++) {
+
+            // Current index ekata adala month eka hadanawa
+            // index = 0  → 2026-04
+            // index = 1  → 2026-05
+            // index = 2  → 2026-06
+            // index = 3  → 2026-07
+            let chartDate = new Date(
+                today.getFullYear(),
+                today.getMonth() + index,
+                1
+            );
+
+            // Aluth month eke year saha month gannawa
+            year = chartDate.getFullYear().toString();
+            month = (chartDate.getMonth() + 1).toString().padStart(2, "0");
+
+
+            // Adala month ekata income eka backend eken gannawa
+            mounthlyIncome = getDataAjaxGetRequest(
+                "/report/mounthlyincome/" + month
+            );
+
+
+            // Chart label ekata year-month format eka hadanawa
+            yearAndMonth = year + "-" + month;
+
+
+            // Chart labels array ekata month eka add karanawa
+            monthName.push(yearAndMonth);
+
+            // Chart data array ekata income eka add karanawa
+            monthQuentity.push(mounthlyIncome);
+
+
+            // Console eke index ekata adala month eka display karanawa
+            console.log("index = " + index + " → " + yearAndMonth);
+        }
+
+        // Chart display karana canvas eka gannawa
+        const ctx = document.getElementById("paymentChart");
+
+        // Bar chart eka create karanawa
+        new Chart(ctx, {
+            type: "bar",
+            data: {
+                // X-axis ekata month labels set karanawa
+                labels: monthName,
+                datasets: [{
+                    // Dataset eke label eka
+                    label: "Income (Rs.)",
+                    // Maas walata adala income values set karanawa
+                    data: monthQuentity,
+                    // Bar wala paata set karanawa
+                    backgroundColor: [
+                        "#005fa3",
+                        "#005fa3",
+                        "#005fa3",
+                        "#005fa3",
+                        "#005fa3",
+                        "#005fa3"
+                    ],
+                    // Bar wala kon round karanawa
+                    borderRadius: 8
+                }]
+            },
+
+            options: {
+                // Screen size anuwa chart eka resize wenna denna
+                responsive: true,
+                // Container eke height eka use karanna
+                maintainAspectRatio: false,
+                plugins: {
+                    // Legend eka hide karanawa
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        // Y-axis eka 0 idala patan gannawa
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Login wela inna userge role eka backend eken gannawa
+        loggedUserRole = getDataAjaxGetRequestForString("/rolecheck/whatisloggeduserrole");
+
+        // User role eka console eke balagannawa
+        console.log(loggedUserRole);
+        // Logged user role eka anuwa dashboard modules show/hide karanawa
+
+        if (loggedUserRole == "Manager") {
+
+            // Manager ta siyalu dashboard sections pennanawa
+            galleryDivAreaId.style.display = "block";
+            chartDivAreaId.style.display = "block";
+            studentregistrationDivAreaId.style.display = "block";
+            attendanceDivAreaId.style.display = "block";
+            studentpaymentDivAreaId.style.display = "block";
+
+        } else if (loggedUserRole == "Coordinator") {
+
+            // Coordinator ta gallery saha student management sections pennanawa
+            // Chart section eka hide karanawa
+            galleryDivAreaId.style.display = "block";
+            chartDivAreaId.style.display = "none";
+            studentregistrationDivAreaId.style.display = "block";
+            attendanceDivAreaId.style.display = "block";
+            studentpaymentDivAreaId.style.display = "block";
+
+        } else if (loggedUserRole == "Receptionist") {
+
+            // Receptionist ta gallery, registration saha payment sections pennanawa
+            // Chart saha attendance sections hide karanawa
+            galleryDivAreaId.style.display = "block";
+            chartDivAreaId.style.display = "none";
+            studentregistrationDivAreaId.style.display = "block";
+            attendanceDivAreaId.style.display = "none";
+            studentpaymentDivAreaId.style.display = "block";
+
+        } else if (loggedUserRole == "Card-Checker") {
+
+            // Card-Checker ta attendance section witharak pennanawa
+            // Registration, payment saha chart sections hide karanawa
+            galleryDivAreaId.style.display = "block";
+            chartDivAreaId.style.display = "none";
+            studentregistrationDivAreaId.style.display = "none";
+            attendanceDivAreaId.style.display = "block";
+            studentpaymentDivAreaId.style.display = "none";
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>

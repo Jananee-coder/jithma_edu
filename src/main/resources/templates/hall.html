@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragment :: headerFragment}">
+</head>
+
+<body>
+    <!-- Container start -->
+    <div class="container-fluid">
+        <div th:replace="~{fragment :: sidebarFrgment}"></div>
+        <div class="view-content">
+            <!-- card area start -->
+            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                <div class="card-header div-head">
+                    <!-- title section strat -->
+                    <div class="row mt-2">
+                        <div class="d-flex justify-content-center">
+                            <i class="fa-solid fa-building-columns"></i>
+                            <h3 class="h2 ms-3 "> Hall Management</h3>
+                            <div class="col text-end">
+                                <ul class="nav nav-tabs float-end">
+                                    <li class="nav-item p-1">
+                                        <button id="tabFormButton" class="nav-link" data-bs-toggle="tab"
+                                            data-bs-target="#tabFormArea" type="button"
+                                            style="background-color: rgba(240, 248, 255, 0.765);">Add
+                                            Hall</button>
+                                    </li>
+                                    <li class="nav-item p-1">
+                                        <button class="nav-link active" data-bs-toggle="tab"
+                                            data-bs-target="#tabTableArea" type="button"
+                                            style="background-color: rgba(240, 248, 255, 0.838);">View Hall
+                                            data</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- title section end -->
+                </div>
+            </div>
+            <div class="tab-content">
+                <!-- Hall Form -->
+                <div class="tab-pane fade" id="tabFormArea">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                                <div class="card-body">
+                                    <form id="formHall" onsubmit="return false">
+                                        <!-- default submition eka wada krnawa auto html wala..api wenama submit function ekak use krnawnam default eka wada krna eka nawaththanna ona klin...defult method post -->
+                                        <!-- Required mark area start -->
+                                        <div class="row mt-2">
+                                            <div class="col text-end fw-bold">
+                                                <p>Required <span class="text-danger">*</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <!-- Hall Name area start -->
+                                            <label for="textHallName" class="col-2 form-label fw-bold mt-2">
+                                                Hall Name :
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <input type="text" required id="textHallName"
+                                                    class="form-control form-input" placeholder="Enter Hall Name Here"
+                                                    onkeyup="inputTextValidator(this,'^[A-Za-z0-9 \\-]{3,50}$','hall','name')">
+                                            </div>
+                                            <!-- Hall Name area end -->
+
+                                            <!-- Hall Location area start -->
+                                            <label for="selectHallLocation" class="col-2 form-label fw-bold mt-2">
+                                                Location :
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <select required id="selectHallLocation" class="form-select form-input"
+                                                    onchange="hall.location=this.value;
+                                this.style.border='2px solid green';">
+                                                    <option value="" selected disabled>Select Hall Location
+                                                    </option>
+                                                    <option value="Grand Floor">Grand Floor</option>
+                                                    <option value="1 st Floor">1 st Floor</option>
+                                                    <option value="1 st Floor">2 nd Floor</option>
+
+                                                </select>
+                                            </div>
+
+                                            <!-- Hall Location area end -->
+                                        </div>
+                                        <div class="row mt-3">
+                                            <!-- Maxiumum Student Count area start -->
+                                            <label for="textMaxStuCount" class="col-2 form-label fw-bold mt-2">
+                                                Max Student count:
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <input type="text" required id="textMaxStuCount"
+                                                    class="form-control form-input "
+                                                    placeholder="Enter Maxiumum Student Count Here"
+                                                    onkeyup="inputTextValidator(this,'^[1-9][0-9]{0,4}$','hall','maxstucount')">
+                                            </div>
+                                            <!-- Maxiumum Student Count area end -->
+
+                                            <!-- Maxiumum Desk Count area start -->
+                                            <label for="textMaxDeskCount" class="col-2 form-label fw-bold mt-2">
+                                                Max Desks :
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <input type="text" required id="textMaxDeskCount"
+                                                    class="form-control form-input "
+                                                    placeholder="Enter Maxiumum Desk Count Here"
+                                                    onkeyup="inputTextValidator(this,'^[1-9][0-9]{0,4}$','hall','maxdeskcount')">
+                                            </div>
+                                            <!-- Maxiumum Desk Count area end -->
+                                        </div>
+
+                                        <div class="row mt-3">
+                                            <!-- Available Desk Count area start -->
+                                            <label for="textAvailableDeskCount" class="col-2 form-label fw-bold mt-2">
+                                                Available Desks :
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <input type="text" required id="textAvailableDeskCount"
+                                                    class="form-control form-input "
+                                                    placeholder="Enter Available Desk Count Here"
+                                                    onkeyup="inputTextValidator(this,'^[0-9]{1,5}$','hall','availabledeskcount')">
+                                            </div>
+                                            <!-- Available Desk Count area end -->
+
+                                            <!-- Maxiumum Seat Count area start -->
+                                            <label for="textMaxSeatCount" class="col-2 form-label fw-bold mt-2">
+                                                Max Seats :
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <input type="text" required id="textMaxSeatCount"
+                                                    class="form-control form-input "
+                                                    placeholder="Enter Maxiumum Seat Count Here"
+                                                    onkeyup="inputTextValidator(this,'^[1-9][0-9]{0,4}$','hall','maximumseats')">
+                                            </div>
+                                            <!-- Maxiumum Seat Count area end -->
+                                        </div>
+
+
+                                        <div class="row mt-3">
+                                            <!-- Available Seat Count area start -->
+                                            <label for="textAvailableSeatCount" class="col-2 form-label fw-bold mt-2">
+                                                Available Seats :
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <input type="text" required id="textAvailableSeatCount"
+                                                    class="form-control form-input "
+                                                    placeholder="Enter Available Seat Count Here"
+                                                    onkeyup="inputTextValidator(this,'^[0-9]{1,5}$','hall','availableseats')">
+                                            </div>
+                                            <!-- Available Seat Count area end -->
+                                            <!-- Hall status area start -->
+                                            <label for="selectHallStatus" id="hallStatusLabel"
+                                                class="col-2 form-label fw-bold mt-2">
+                                                Hall status:
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4" id="hallStatusSelect">
+                                                <select required id="selectHallStatus" class="form-select form-input"
+                                                    onchange="hall.hallstatus_id=JSON.parse(this.value);
+                                this.style.border='2px solid green';">
+                                                    <option value="" selected disabled>Select Hall Status
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <!--Hall status area end -->
+                                        </div>
+                                        <div class="row mt-4">
+                                            <!-- features list area start -->
+                                            <label class="col-2 form-label fw-bold mt-2">
+                                                Features List : <span class="text-danger">*</span>
+                                            </label>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <!-- All Features Column -->
+                                            <div class="col-5">
+                                                <label for="selectAllFeatures"
+                                                    class="form-label fw-bold d-block text-center mb-2">All
+                                                    Features</label>
+                                                <select name="allfeatureslist" required id="selectAllFeatures"
+                                                    class="form-select form-list " multiple>
+                                                    <!-- Options will go here -->
+                                                </select>
+                                            </div>
+
+                                            <!-- Buttons Column -->
+                                            <div
+                                                class="col-2 d-flex flex-column justify-content-center align-items-center">
+                                                <!-- Add Single Feature -->
+                                                <button class="btn btn-list btn-sm mb-2" onclick="addSingleFeature()">
+                                                    <i class="fa-solid fa-angle-right"></i>
+                                                </button>
+
+                                                <!-- Add All Features -->
+                                                <button class="btn btn-list btn-sm mb-2" onclick="addAllFeature()">
+                                                    <i class="fa-solid fa-angle-right"></i>
+                                                    <i class="fa-solid fa-angle-right"></i>
+                                                </button>
+
+                                                <!-- Remove Single Feature -->
+                                                <button class="btn btn-list btn-sm mb-2 fw-bold"
+                                                    onclick="removeSingleFeature()">
+                                                    <i class="fa-solid fa-angle-left"></i>
+                                                </button>
+
+                                                <!-- Remove All Features -->
+                                                <button class="btn btn-list btn-sm" onclick="removeAllFeature()">
+                                                    <i class="fa-solid fa-angle-left"></i>
+                                                    <i class="fa-solid fa-angle-left"></i>
+                                                </button>
+                                            </div>
+
+                                            <!-- Selected Features Column -->
+                                            <div class="col-5">
+                                                <label for="selectSelectedFeatures"
+                                                    class="form-label fw-bold  d-block text-center mb-2">Selected
+                                                    Features</label>
+                                                <select name="selectedFeature" id="selectSelectedFeatures"
+                                                    class="form-select form-list" multiple>
+                                                    <!-- Options will go here -->
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+
+                                        <!-- buttons area start -->
+                                        <div class="row mt-2">
+                                            <div class="d-flex justify-content-center gap-2 mt-3">
+                                                <button class="btn fw-bold btnall btn-clear" id="buttonClear"
+                                                    type="button" onclick="clearFormData('formHall','hall')">
+                                                    <i class="fa-solid fa-recycle"></i> Clear
+                                                </button>
+                                                <button class="btn fw-bold btnall btn-update" id="buttonUpdate"
+                                                    type="button" onclick="buttonHallUpdate()">
+                                                    <i class="fa-solid fa-edit"></i> Update
+                                                </button>
+                                                <button class="btn fw-bold btnall btn-submit" id="buttonSubmit"
+                                                    type="button" onclick="buttonHallSubmit()">
+                                                    <i class="fa-solid fa-paper-plane"></i> Submit
+                                                </button>
+                                            </div>
+                                            <!-- buttons area end -->
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hall Table -->
+                <div class="tab-pane fade show active" id="tabTableArea">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                                <div class="card-body">
+                                    <table id="tableHall" class="table table-hover table-bordered table-striped ">
+                                        <thead class="text-dark tablehead tableh">
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Hall Name</th>
+                                                <th>Location</th>
+                                                <th>Features</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tableBodyHall">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Hall Print Modal -->
+    <div class="modal modalPrint" id="modalHallPrint">
+        <div class="modal-dialog">
+            <div class="modal-content div-card">
+                <div class="modal-header">
+                    <h4>Print Hall</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="tablePrint table table-bordered table-hover" id="tablePrintHall">
+                        <tbody>
+                            <tr>
+                                <th>Hall name</th>
+                                <td id="tdHallname"></td>
+                            </tr>
+                            <tr>
+                                <th>Location</th>
+                                <td id="tdLocation"></td>
+                            </tr>
+                            <tr>
+                                <th>Max Student Count</th>
+                                <td id="tdMaxStusCount"></td>
+                            </tr>
+                            <tr>
+                                <th>Max Desk Count </th>
+                                <td id="tdMaxDeskCount"></td>
+                            </tr>
+                            <tr>
+                                <th>Available Desk Count</th>
+                                <td id="tdAvailableDesk"></td>
+                            </tr>
+                            <tr>
+                                <th>Max Seat Count</th>
+                                <td id="tdMaxSeatCount"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Available Seat Count</th>
+                                <td id="tdAvailableSeat"></td>
+                            </tr>
+                            <tr>
+                                <th>Hall Status</th>
+                                <td id="tdHallStatus"></td>
+                            </tr>
+                            <tr>
+                                <th>Features</th>
+                                <td id="tdFeatures"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="buttonPrint()" class="btn btn-secondary">
+                        Print
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{fragment :: footerFragment}"></div>
+
+    <!-- linkemployee js file -->
+    <script src="modaljs/hall.js"></script>
+
+</body>
+
+
+
+</html>

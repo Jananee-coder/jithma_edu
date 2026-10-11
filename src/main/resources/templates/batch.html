@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragment :: headerFragment}">
+</head>
+
+<body>
+    <!-- Container start -->
+    <div class="container-fluid">
+        <div th:replace="~{fragment :: sidebarFrgment}"></div>
+        <div class="view-content">
+            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                <div class="card-header div-head">
+                    <!-- title section start -->
+                    <div class="row mt-2">
+                        <div class="d-flex justify-content-center">
+                            <i class="fa-solid fa-layer-group"></i>
+                            <h3 class="h2 ms-3"> Batch Management</h3>
+                            <div class="col text-end">
+                                <ul class="nav nav-tabs float-end">
+                                    <!-- Form tab -->
+                                    <li class="nav-item p-1">
+                                        <button id="tabFormButton" class="nav-link" data-bs-toggle="tab"
+                                            data-bs-target="#tabFormArea" type="button"
+                                            style="background-color: rgba(240, 248, 255, 0.765);">Add
+                                            Batch</button>
+                                    </li>
+                                    <!-- Table tab -->
+                                    <li class="nav-item p-1">
+                                        <button class="nav-link active" data-bs-toggle="tab"
+                                            data-bs-target="#tabTableArea" type="button" onclick="showBatchFormTab()"
+                                            style="background-color: rgba(240, 248, 255, 0.838);">View
+                                            Batch
+                                            Data</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- title section end -->
+                </div>
+            </div>
+            <div class="tab-content">
+                <!-- Batch Form -->
+                <div class="tab-pane fade" id="tabFormArea">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                                <div class="card-body">
+                                    <form id="formBatch" onsubmit="return false">
+                                        <!-- default submition eka wada krnawa auto html wala..api wenama submit function ekak use krnawnam default eka wada krna eka nawaththanna ona klin...defult method post -->
+                                        <!-- required mark start -->
+                                        <div class="row mt-2">
+                                            <div class="col text-end fw-bold">
+                                                <p>Required <span class="text-danger">*</span></p>
+                                            </div>
+                                        </div>
+                                        <!-- required mark end -->
+                                        <div class="row mt-3">
+                                            <!-- Year area start -->
+                                            <label for="yearDropdown" class="col-2 form-label fw-bold mt-2">
+                                                Year : <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <select required id="yearDropdown" class="form-select form-input"
+                                                    onchange="batch.currentyear=this.value;
+                                this.style.border='2px solid green';">
+                                                </select>
+                                            </div>
+                                            <!-- Year area end -->
+                                            <!-- select class area start -->
+                                            <label for="selectClassName" class="col-2 form-label fw-bold mt-2">
+                                                Class : <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <select required id="selectClassName"
+                                                    class="form-select form-input js-example-basic-single"
+                                                    onchange="batch.classdetail_id=JSON.parse(this.value); $(this).next('.select2-container').find('.select2-selection').addClass('valid-border');">
+                                                </select>
+                                            </div>
+                                            <!-- select class area end -->
+                                        </div>
+                                        <div class="row mt-3">
+                                            <!-- Weekday area start -->
+                                            <label for="selectWeekday" class="col-2 form-label fw-bold mt-2">
+                                                Weekday : <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <select required id="selectWeekday" class="form-select form-input"
+                                                    onchange="batch.weekday_id=JSON.parse(this.value);
+                                this.style.border='2px solid green';">
+                                                    <option value="" selected disabled>Select Weekday</option>
+                                                    <option value="Monday">Monday</option>
+                                                    <option value="Tuesday">Tuesday</option>
+                                                </select>
+                                            </div>
+                                            <!-- Weekday area end -->
+                                            <!-- select class type area start -->
+                                            <label for="selectClassType" class="col-2 form-label fw-bold mt-2">
+                                                Class Type : <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <select required id="selectClassType" class="form-select form-input"
+                                                    onchange="batch.classtype_id=JSON.parse(this.value);
+                                this.style.border='2px solid green';">
+                                                    <option value="" selected disabled>Select Class Type</option>
+                                                    <option value="Theory Class">Theory Class</option>
+                                                    <option value="Revision Class">Revision Class</option>
+                                                    <option value="Practical Class">Practical Class</option>
+                                                </select>
+                                            </div>
+                                            <!-- select class type area end -->
+
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-2"></div>
+                                            <!-- Batch Name area start -->
+                                            <label for="textBatchName" class="col-2 form-label fw-bold mt-2">
+                                                Batch Name : <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-6">
+                                                <input type="text" required id="textBatchName"
+                                                    class="form-control form-input"
+                                                    placeholder="2026 Grade 6 ICT - Janith Perera Sunday Theory Class"
+                                                    readonly>
+                                            </div>
+                                            <!-- Batch Name area end -->
+                                            <div class="col-2"></div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <!-- Monthly Fees area start -->
+                                            <label for="textMonthlyFee" class="col-2 form-label fw-bold mt-2">
+                                                Monthly Fee : <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <input type="text" required id="textMonthlyFee"
+                                                    class="form-control form-input" placeholder="Enter Monthly Fee Here"
+                                                    onkeyup="inputTextValidator(this,'^[1-9][0-9]{0,9}$','batch','monthfee')">
+                                            </div>
+                                            <!-- Monthly Fees area end -->
+                                            <!-- Service Charge Percentage area start -->
+                                            <label class="col-2 form-label fw-bold mt-2">
+                                                Service Charge% :
+                                                <span class="text-danger">*</span>
+                                            </label>
+
+                                            <div class="col-4">
+                                                <div class="form-check form-check-inline">
+                                                    <input type="radio" value="20" id="radioSc20" name="servicechragep"
+                                                        class="form-check-input form-input" required>
+                                                    <label for="radioSc20" class="form-check-label">20%</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="radio" value="25" id="radioSc25" name="servicechragep"
+                                                        class="form-check-input form-input">
+                                                    <label for="radioSc25" class="form-check-label">25%</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="radio" value="30" id="radioSc30" name="servicechragep"
+                                                        class="form-check-input form-input">
+                                                    <label for="radioSc30" class="form-check-label">25%</label>
+                                                </div>
+                                            </div>
+                                            <!-- Service Charge Percentage area end -->
+
+                                        </div>
+                                        <div class="row mt-3">
+                                            <!-- Service Charge area start -->
+                                            <label for="textServiceCharge" class="col-2 form-label fw-bold mt-2">
+                                                Service Charge : <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <input type="number" required id="textServiceCharge"
+                                                    class="form-control form-input" readonly>
+                                            </div>
+                                            <!-- Service Charge area end -->
+                                            <!-- Free Card area start -->
+                                            <label for="textFreeCard" class="col-2 form-label fw-bold mt-2">
+                                                Free Card Count : 
+                                            </label>
+                                            <div class="col-4">
+                                                <input type="number" required id="textFreeCard"
+                                                    class="form-control form-input" placeholder="Enter Free Card Count"
+                                                    onkeyup="inputTextValidator(this,'^[0-9]{1,2}$','batch','freecardp')">
+                                            </div>
+                                            <!-- Free Card area end -->
+                                        </div>
+
+                                        <div class="row mt-3">
+                                            <!-- Duration area start -->
+                                            <label for="textDuration" class="col-2 form-label fw-bold mt-2">
+                                                Duration-Months:<span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <input type="number" required id="textDuration"
+                                                    class="form-control form-input" placeholder="Enter Duration Here"
+                                                    onkeyup="inputTextValidator(this,'^([1-9]|[1-2][0-9]|30)$','batch','duration')">
+                                            </div>
+                                            <!-- Duration area end -->
+                                            <!-- Start Date area end -->
+                                            <label for="dateStart" class="col-2 form-label fw-bold mt-2">
+                                                Start Date : <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <input type="date" required id="dateStart"
+                                                    class="form-control form-input" onchange="batch.startdate=this.value;
+                                this.style.border='2px solid green';">
+                                            </div>
+                                            <!-- Start Date area end -->
+
+                                        </div>
+
+
+                                        <div class="row mt-3">
+                                            <!-- Start Time area start -->
+                                            <label for="timeStart" class="col-2 form-label fw-bold mt-2">
+                                                Start Time : <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <input type="time" required id="timeStart"
+                                                    class="form-control form-input" onchange="batch.starttime=this.value;
+                                this.style.border='2px solid green';">
+                                            </div>
+                                            <!-- Start Time area end -->
+                                            <!-- End Time area start -->
+                                            <label for="timeEnd" class="col-2 form-label fw-bold mt-2">
+                                                End Time : <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <input type="time" required id="timeEnd" class="form-control form-input"
+                                                    onchange="batch.endtime=this.value;
+                                this.style.border='2px solid green';">
+                                            </div>
+                                            <!-- End Time area end -->
+                                        </div>
+
+
+                                        <div class="row mt-3">
+                                            <!-- Batch status area start -->
+                                            <label for="selectBatchStatus" id="batchStatusLabel"
+                                                class="col-2 form-label fw-bold mt-2">
+                                                Batch Status : <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4" id="batchStatusSelect">
+                                                <select required id="selectBatchStatus" class="form-select form-input"
+                                                    onchange="batch.batchstatus_id=JSON.parse(this.value);
+                                this.style.border='2px solid green';">
+                                                    <option value="" selected disabled>Select Batch Status</option>
+                                                    <option value="Active">Active</option>
+                                                    <option value="Inactive">Inactive</option>
+                                                    <option value="Completed">Completed</option>
+                                                </select>
+                                            </div>
+                                            <!-- Batch status area end -->
+                                        </div>
+
+                                        <!-- buttons area start -->
+                                        <div class="row mt-2">
+                                            <div class="d-flex justify-content-center gap-2 mt-3">
+                                                <button class="btn fw-bold btnall btn-clear" id="buttonClear"
+                                                    type="button" onclick="clearFormData('formBatch','batch')">
+                                                    <i class="fa-solid fa-recycle"></i> Clear
+                                                </button>
+                                                <button class="btn fw-bold btnall btn-update" id="buttonUpdate"
+                                                    type="button" onclick="buttonBatchUpdate()">
+                                                    <i class="fa-solid fa-edit"></i> Update
+                                                </button>
+                                                <button class="btn fw-bold btnall btn-submit" id="buttonSubmit"
+                                                    type="button" onclick="buttonBatchSubmit()">
+                                                    <i class="fa-solid fa-paper-plane"></i> Submit
+                                                </button>
+                                            </div>
+                                            <!-- buttons area end -->
+                                        </div>
+
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!-- Batch Table -->
+                <div class="tab-pane fade show active" id="tabTableArea">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                                <div class="card-body">
+                                    <table id="tableBatch" class="table table-hover table-bordered table-striped">
+                                        <thead class="text-dark tablehead tableh">
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Batch Name</th>
+                                                <th>Fee</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tableBodyBatch">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- Batch Print Modal -->
+    <div class="modal modalPrint" id="modalBatchPrint">
+        <div class="modal-dialog">
+            <div class="modal-content div-card">
+                <div class="modal-header">
+                    <h4>Print Batch</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="tablePrint table table-bordered table-hover" id="tablePrintBatch">
+                        <tbody>
+                            <tr>
+                                <th>Batch name</th>
+                                <td id="tdBatchname"></td>
+                            </tr>
+                            <tr>
+                                <th>Year</th>
+                                <td id="tdYear"></td>
+                            </tr>
+                            <tr>
+                                <th>Class name</th>
+                                <td id="tdClassname"></td>
+                            </tr>
+                            <tr>
+                                <th>Weekday</th>
+                                <td id="tdWeekday"></td>
+                            </tr>
+                            <tr>
+                                <th>Class Type</th>
+                                <td id="tdClassType"></td>
+                            </tr>
+                            <tr>
+                                <th>Monthly Fee</th>
+                                <td id="tdMonthlyFee"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Service Charge</th>
+                                <td id="tdServiceCharge"></td>
+                            </tr>
+                            <tr>
+                                <th>Free Card %</th>
+                                <td id="tdFreeCard"></td>
+                            </tr>
+                            <tr>
+                                <th>Duration-Months</th>
+                                <td id="tdDuration"></td>
+                            </tr>
+                            <tr>
+                                <th> Start Date</th>
+                                <td id="tdStartDate"></td>
+                            </tr>
+                            <tr>
+                                <th>Start Time</th>
+                                <td id="tdStartTime"></td>
+                            </tr>
+                            <tr>
+                                <th>End Time</th>
+                                <td id="tdEndTime"></td>
+                            </tr>
+                            <tr>
+                                <th>Batch Status</th>
+                                <td id="tdBatchStatus"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="buttonPrint()" class="btn btn-secondary">
+                        Print
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div th:replace="~{fragment :: footerFragment}"></div>
+
+
+    <!-- link batch js file -->
+    <script src="modaljs/batch.js"></script>
+
+</body>
+
+</html>

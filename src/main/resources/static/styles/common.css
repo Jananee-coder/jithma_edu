@@ -1,0 +1,391 @@
+/* ==== GLOBAL RESET ==== */
+/* me styling eken thiyenne global reset ekak karanna */
+* {
+  font-family: 'Times New Roman', Times, serif;
+  /* color: rgb(17, 58, 92); */
+  box-sizing: border-box;
+}
+
+/* me div ekata content ekata left margin danna */
+.view-content {
+  margin-left: 270px;
+  /* adjust based on sidebar width */
+}
+
+/* ==== BODY ==== */
+/* body eke background, font, margin, padding set karanawa */
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #e0eafc 0%, #cfd9df 100%);
+  background-attachment: fixed;
+  background-size: cover;
+  min-height: 100vh;
+  /* Ensures at least 1 screen height */
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==== HEADINGS & TITLES ==== */
+/* headings / title styling */
+.div-head {
+  font-weight: bold;
+  color: rgb(6, 19, 54);
+  background-color: rgba(187, 204, 225, 0.747);
+  border-radius: 5px 5px 0 0;
+  padding: 10px;
+}
+
+/* ==== CARD ==== */
+/* card styling with shadow and hover effect */
+.div-card {
+  background-color: aliceblue;
+  border-radius: 10px;
+  border: 2px solid rgba(141, 167, 189, 0.8);
+  color: rgb(5, 34, 58);
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* card hover effect */
+.div-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* ==== SECTION BACKGROUNDS ==== */
+/* div sections background color ekata */
+.div-span {
+  background-color: rgb(199, 218, 234);
+}
+
+/* ==== FORM INPUTS ==== */
+/* input fields styling */
+.form-input {
+  border: 1.5px solid rgb(164, 201, 232);
+  border-radius: 6px;
+  padding: 6px 10px;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+/* FIXED focus style */
+.form-input:focus {
+  outline: none;
+  border-color: rgb(164, 201, 232);
+  box-shadow: none;
+  transform: scale(1);
+}
+
+
+/* input labels styling */
+.form-label {
+  color: rgb(53, 96, 138);
+  font-weight: bold;
+}
+
+/* ==== BUTTONS ==== */
+/* common button styling */
+.btnall {
+  width: 20%;
+  border-radius: 6px;
+  font-weight: bold;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+/* btn list trnsfer */
+.btn-list {
+  background-color: rgb(164, 201, 232);
+  width: 70px;
+}
+
+.btn-list:hover {
+  background-color: rgb(151, 170, 211);
+
+}
+
+.form-list {
+  border: 1.5px solid rgb(164, 201, 232);
+}
+
+/* Clear Button styling */
+.btn-clear {
+  background-color: rgb(115, 201, 201);
+  color: rgb(5, 34, 58);
+}
+
+.btn-clear:hover {
+  background-color: rgb(84, 162, 162);
+  color: rgb(44, 7, 7);
+}
+
+/* Update Button styling */
+.btn-update {
+  background-color: rgb(232, 216, 132);
+  color: rgb(62, 53, 12);
+}
+
+.btn-update:hover {
+  background-color: rgb(222, 210, 100);
+  color: rgb(51, 9, 9);
+}
+
+/* Submit Button styling */
+.btn-submit {
+  background-color: rgb(91, 173, 119);
+  color: rgb(37, 9, 67);
+}
+
+.btn-submit:hover {
+  background-color: rgb(74, 156, 102);
+  color: rgb(62, 7, 7);
+}
+
+/* ==== TABLE ==== */
+/* table header styling */
+.tableh {
+  background-color: #8caed1ff;
+  color: rgb(5, 34, 58);
+  font-weight: bold;
+}
+
+/* ==== BORDERS ==== */
+/* border end (right) styling */
+.border-end {
+  border-right: 1px solid rgb(5, 34, 58) !important;
+}
+
+/* ==== MISC ==== */
+/* textarea resize disable karanna */
+textarea.form-input {
+  resize: none;
+}
+
+/* ----------- common print modal & table styles ----------- */
+/* print modal content styling */
+.modalPrint .modal-content {
+  background-color: aliceblue;
+  border-radius: 12px;
+  border: 2px solid rgba(141, 167, 189, 0.7);
+  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+/* print modal header */
+.modalPrint .modal-header {
+  background-color: rgb(164, 191, 223);
+  color: white;
+  border-radius: 10px 10px 0 0;
+}
+
+/* modal title */
+.modalPrint .modal-title {
+  font-weight: bold;
+  font-size: 1.4rem;
+}
+
+/* modal close button filter */
+.modalPrint .btn-close {
+  filter: invert(1);
+}
+
+/* print table header */
+.tablePrint th {
+  background-color: rgb(199, 218, 234);
+  color: rgb(5, 34, 58);
+  width: 35%;
+  font-weight: bold;
+  text-align: left;
+  padding: 10px;
+}
+
+/* print table data cells */
+.tablePrint td {
+  color: rgb(41, 80, 121);
+  background-color: rgba(240, 248, 255, 0.7);
+  padding: 10px;
+}
+
+/* ==== PRINT BUTTON ==== */
+/* print button styling */
+.button {
+  font-weight: bold;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  transform: scale(1.03);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* divGuardian, divStudent eke input fields styling with !important */
+#divGuardian input,
+#divStudent input {
+  border: 1.3px solid rgb(164, 201, 232) !important;
+  background-color: #d4e3edeb;
+}
+
+.steps {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.step {
+  flex: 1;
+  text-align: center;
+  position: relative;
+}
+
+/* icon wrapper */
+.step-icon-wrap {
+  position: relative;
+  height: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* connector line (default) */
+.step-icon-wrap::before,
+.step-icon-wrap::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 50%;
+  height: 3px;
+  background: #d6eaff;
+  z-index: 1;
+}
+
+.step-icon-wrap::before {
+  left: 0;
+}
+
+.step-icon-wrap::after {
+  right: 0;
+}
+
+/* remove first & last line */
+.step:first-child .step-icon-wrap::before {
+  display: none;
+}
+
+.step:last-child .step-icon-wrap::after {
+  display: none;
+}
+
+/* circle icon */
+.step-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: #e6f2ff;
+  border: 2px solid #99ccff;
+  line-height: 45px;
+  font-size: 18px;
+  color: #4a5d6a;
+  display: inline-block;
+  position: relative;
+  z-index: 5;
+}
+
+/* title */
+.step-title {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #5a6b77;
+}
+
+/* ACTIVE STEP */
+.step.active .step-icon {
+  background: #3399ff;
+  color: white;
+  border-color: #3399ff;
+}
+
+.step.active .step-title {
+  color: #1f7fd6;
+}
+
+/* COMPLETED STEP */
+.step.completed .step-icon {
+  background: #1f7fd6;
+  color: white;
+  border-color: #1f7fd6;
+}
+
+/* completed line */
+.step.completed .step-icon-wrap::before,
+.step.completed .step-icon-wrap::after {
+  background: #1f7fd6;
+}
+
+/* active line */
+.step.active .step-icon-wrap::before,
+.step.active .step-icon-wrap::after {
+  background: #3399ff;
+}
+
+.customTable {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.customTable th,
+.customTable td {
+  vertical-align: middle;
+  padding: 14px 12px;
+}
+
+/* batch column text */
+.customTable td:nth-child(2) {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Select2 default look (same as your form-input style) */
+.select2-container--bootstrap-5 .select2-selection {
+  border: 1.5px solid rgb(164, 201, 232) !important;
+  border-radius: 6px !important;
+  min-height: 38px !important;
+}
+
+/* VALID (green border when selected) */
+.select2-container--bootstrap-5 .select2-selection.valid-border {
+  border: 2px solid green !important;
+}
+
+/* INVALID (red border) */
+.select2-container--bootstrap-5 .select2-selection.invalid-border {
+  border: 2px solid red !important;
+}
+
+/* Show only 5 items in Select2 dropdown */
+.select2-container--bootstrap-5 .select2-results__options {
+  max-height: 200px !important;
+  /* approximately 5 items */
+  overflow-y: auto !important;
+}
+
+/* Hover item */
+.select2-container--bootstrap-5 .select2-results__option--highlighted {
+    background-color: rgb(115, 162, 199) !important; 
+    color: #fff !important;
+}
+
+.custom-checkbox {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid rgb(164, 201, 232);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.custom-checkbox:checked {
+  background-color: rgb(49, 135, 75);
+}

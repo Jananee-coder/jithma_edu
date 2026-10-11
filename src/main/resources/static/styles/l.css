@@ -1,0 +1,62 @@
+/* Background */
+body {
+    background-image: url(../images/bc.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Login Box */
+.login-box {
+    background: rgba(255, 255, 255, 0.75);
+    width: 600px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Left Image Section */
+.login-image {
+    background-image: url(../images/jithma.jpg);
+    background-size: cover;
+    background-position: center;
+    min-height: 350px;
+    opacity: 0.8;
+}
+
+/* Input Fields */
+.span-login {
+    background-color: #438080f0;
+    color: white;
+    border-radius: 12px 0 0 12px;
+}
+
+.input-text {
+    background-color: #f1faff;
+    border-radius: 0 12px 12px 0;
+}
+
+.input-text:focus {
+    background-color: #e9ecef;
+    box-shadow: none;
+}
+
+/* Login Button */
+.btn-login {
+    width: 60%;
+    padding: 10px;
+    background-color: #4d7d7d;
+    color: white;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.btn-login:hover {
+    background-color: #547e7e;
+    color: black;
+    transform: scale(1.05);
+    border-radius: 14px;
+}

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragment :: headerFragment}">
+</head>
+
+<body>
+    <!-- Container start -->
+    <div class="container-fluid">
+        <div th:replace="~{fragment :: sidebarFrgment}"></div>
+        <div class="view-content">
+            <!-- card area start -->
+            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                <div class="card-header div-head ">
+                    <!-- title section strat -->
+                    <div class="row mt-2">
+                        <div class="d-flex justify-content-center">
+                            <i class="fa-solid fa-users-gear"></i>
+                            <h3 class="h3 ms-3 text-start "> User Management</h3>
+                            <div class="col text-end">
+                                <ul class="nav nav-tabs float-end">
+                                    <li class="nav-item p-1">
+                                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabFormArea"
+                                            type="button" id="tabFormButton"
+                                            style="background-color: rgba(240, 248, 255, 0.765);">Add User</button>
+                                    </li>
+                                    <li class="nav-item p-1">
+                                        <button class="nav-link active" data-bs-toggle="tab"
+                                            data-bs-target="#tabTableArea" type="button"
+                                            style="background-color: rgba(240, 248, 255, 0.838);">View User
+                                            data</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- title section end -->
+                </div>
+            </div>
+
+            <div class="tab-content">
+                <!-- user Form -->
+                <div class="tab-pane fade" id="tabFormArea">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card div-card mx-auto mt-3" style="max-width: 60rem;">
+                                <div class="card-body">
+                                    <form id="formUser" onsubmit="return false">
+                                        <!-- default submition eka wada krnawa auto html wala..api wenama submit function ekak use krnawnam default eka wada krna eka nawaththanna ona klin...defult method post -->
+                                        <!-- required mark start -->
+                                        <div class="row mt-1">
+                                            <div class="col text-end fw-bold">
+                                                <p>Required<span class="text-danger">*</span></p>
+                                            </div>
+                                        </div>
+                                        <!-- required mark end -->
+
+                                        <div class="row mt-4">
+                                            <!-- employee select area start -->
+                                            <label for="selectEmployee" class="col-2 form-label fw-bold">
+                                                Employee :
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <select id="selectEmployee" class="form-select form-input" onchange="user.employee_id=JSON.parse(this.value);
+                                            this.style.border='2px solid green' ;">
+                                                    <option value="" selected disabled>Select Employee</option>
+                                                    <option value="name-1">name-1</option>
+                                                    <option value="name-2">name-2</option>
+                                                    <option value="name-3">name-3</option>
+                                                </select>
+                                            </div>
+                                            <!-- employee select area end-->
+                                            <!-- username area start -->
+                                            <label for="textUsername" class="col-2 form-label fw-bold">
+                                                User name :
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <input type="text" id="textUsername" class="form-control form-input"
+                                                    placeholder="Enter User Name Here" required
+                                                    onkeyup="inputTextValidator(this,'^[A-Za-z0-9]{4,20}$','user','username')">
+                                            </div>
+                                            <!-- username area end -->
+                                        </div>
+                                        <div class="row mt-4">
+                                            <!-- password area start -->
+                                            <label for="textPassword" class="col-2 form-label fw-bold">
+                                                Password :
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <input type="password" id="textPassword" name="password"
+                                                    class="form-control form-input" placeholder="Enter Password Here"
+                                                    onkeyup="inputTextValidator(this,'^[A-Za-z0-9\\_\\$\\#\\@\\-]{4,16}$','user','password')">
+                                                <!-- password area end -->
+                                            </div>
+                                            <!-- repassword area end -->
+                                            <label for="textRePassword" class="col-2 form-label fw-bold">
+                                                Re-Password:
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <input type="password" id="textRePassword"
+                                                    class="form-control form-input" name="repassword"
+                                                    placeholder="Re-Enter Password Here" required>
+                                            </div>
+                                            <!-- repassword area end -->
+                                        </div>
+                                        <div class="row mt-4">
+                                            <!-- email area start-->
+                                            <label for="textEmail" class=" col-2 form-label fw-bold">
+                                                User Email :
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <input type="email" placeholder="Enter Email" required id="textEmail"
+                                                    class="form-control form-input"
+                                                    onkeyup="inputTextValidator(this,'^[a-z]{1,20}[a-z0-9\\*\\#]{0,20}[@][a-z]{4,10}[.][a-z]{2,3}$','user','email')">
+                                            </div>
+                                            <!-- email area end-->
+                                            <!-- User status area start -->
+                                            <label for="selectUserStatus" id="labelUserStatus"
+                                                class="col-2 form-label fw-bold mt-2">
+                                                User status :
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4" id="divSelectUserStatus">
+                                                <select required id="selectUserStatus" class="form-select form-input"
+                                                    onchange="user.userstatus=this.value;
+                                this.style.border='2px solid green';">
+                                                    <option value="" selected disabled>Select User Status
+                                                    </option>
+                                                    <option value="true">Active</option>
+                                                    <option value="false">In-Active</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--User status area end -->
+                                        <!--role start -->
+                                        <div class="row mt-4">
+                                            <label for="selectUserRoles" class="col-2 form-label fw-bold mt-2">
+                                                Roles :
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-10 mt-2" id="divRole"></div>
+                                        </div>
+                                        <!-- role  area end-->
+
+                                        <!-- buttons area start -->
+                                        <div class="row mt-2">
+                                            <div class="d-flex justify-content-center gap-2 mt-3">
+                                                <button class="btn fw-bold btnall btn-clear" id="buttonClear"
+                                                    type="button"
+                                                    onclick="clearFormData('formUser','user')">
+                                                    <i class="fa-solid fa-recycle"></i> Clear
+                                                </button>
+                                                <button class="btn fw-bold btnall btn-update" id="buttonUpdate"
+                                                    type="button" onclick="buttonUserUpdate()">
+                                                    <i class="fa-solid fa-edit"></i> Update
+                                                </button>
+                                                <button class="btn fw-bold btnall btn-submit" id="buttonSubmit"
+                                                    type="button" onclick="buttonUserSubmit()">
+                                                    <i class="fa-solid fa-paper-plane"></i> Submit
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                        <!-- buttons area end -->
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade show active" id="tabTableArea">
+                    <!-- user table -->
+                    <div class="row">
+                        <div class="col">
+                            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                                <div class="card-body">
+                                    <table id="tableUser" class="table table-hover table-bordered table-striped ">
+                                        <thead class="text-dark tablehead tableh">
+                                            <tr>
+                                                <th></th>
+                                                <th>Employee</th>
+                                                <th>Username</th>
+                                                <!-- <th>Email</th> -->
+                                                <th>Roles</th>
+                                                <th>Status</th>
+                                                <th>Modify</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tableBodyUser">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Print Modal -->
+    <div class="modal modalPrint" id="modalUserPrint">
+        <div class="modal-dialog">
+            <div class="modal-content div-card">
+                <div class="modal-header">
+                    <h4>Print User</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="tablePrint table table-bordered table-hover" id="tablePrintUser">
+                        <tbody>
+                            <tr>
+                                <th>Employee</th>
+                                <td id="tdEmployee"></td>
+                            </tr>
+                            <tr>
+                                <th>Username</th>
+                                <td id="tdUsername"></td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td id="tdEmail"></td>
+                            </tr>
+                            <tr>
+                                <th>Roles</th>
+                                <td id="tdRoles"></td>
+                            </tr>
+                            <tr>
+                                <th>User Status</th>
+                                <td id="tdUserStatus"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="buttonPrint()" class="btn btn-secondary">
+                        Print
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div th:replace="~{fragment :: footerFragment}"></div>
+
+    <!-- link user js -->
+    <script src="modaljs/user.js"></script>
+
+
+
+</body>
+
+
+
+</html>

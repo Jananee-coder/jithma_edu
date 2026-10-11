@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragment :: headerFragment}">
+
+</head>
+
+<body>
+
+
+<div class="container-fluid">
+
+
+    <!-- sidebar start -->
+    <div th:replace="~{fragment :: sidebarFrgment}"></div>
+    <!-- sidebar end -->
+
+
+
+    <!-- view content start -->
+    <div class="view-content">
+
+
+        <!-- Title Card -->
+
+        <div class="card div-card mx-auto mt-3"
+             style="max-width:70rem;">
+
+
+            <div class="card-header div-head">
+
+
+                <div class="row mt-2">
+
+
+                    <div class="d-flex justify-content-center">
+
+
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+
+
+                        <h3 class="h2 ms-3">
+                            Monthly Student Payment Status Report
+                        </h3>
+
+
+
+                        <div class="col text-end">
+
+
+                            <button class="btn btn-light fw-bold"
+                            style="background-color:rgba(240,248,255,0.765);">
+
+
+                                <i class="fa-solid fa-print"></i>
+                                Print Report
+
+
+                            </button>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+        <!-- Filter Card -->
+
+
+        <div class="card div-card mx-auto mt-3"
+             style="max-width:70rem;">
+
+
+            <div class="card-body">
+
+
+                <div class="row">
+
+
+                    <!-- Year -->
+
+
+                    <div class="col-lg-2 col-md-6">
+
+
+                        <label class="form-label fw-bold">
+                            Year :
+                        </label>
+
+
+                        <select class="form-select"
+                        style="border:2px solid rgb(107,153,194);">
+
+
+                            <option selected>
+                                2026
+                            </option>
+
+                            <option>
+                                2025
+                            </option>
+
+
+                        </select>
+
+
+                    </div>
+
+
+
+
+
+                    <!-- Month -->
+
+
+                    <div class="col-lg-3 col-md-6">
+
+
+                        <label class="form-label fw-bold">
+                            Month :
+                        </label>
+
+
+                        <input type="month"
+                        class="form-control"
+                        value="2026-06"
+                        style="border:2px solid rgb(107,153,194);">
+
+
+                    </div>
+
+
+
+
+
+
+                    <!-- Batch -->
+
+
+                    <div class="col-lg-5 col-md-6">
+
+
+                        <label class="form-label fw-bold">
+                            Batch Name :
+                        </label>
+
+
+                        <select class="form-select"
+                        style="border:2px solid rgb(107,153,194);">
+
+
+                            <option>
+                                Select Batch
+                            </option>
+
+
+                            <option selected>
+                                2026 Grade 7 ICT - Prasanga Perera - Tuesday Theory Class
+                            </option>
+
+
+                            <option>
+                                2026 Grade 6 Mathematics - Rukman Premalal - Friday Theory Class
+                            </option>
+
+
+                        </select>
+
+
+                    </div>
+
+
+
+
+
+
+                    <!-- Generate -->
+
+
+                    <div class="col-lg-2 col-md-6 d-flex align-items-end">
+
+
+                        <button class="btn fw-bold"
+                        style="background-color:rgb(162,197,227);">
+
+
+                            <i class="fa-solid fa-file-lines"></i>
+
+                            Generate
+
+
+                        </button>
+
+
+                    </div>
+
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+
+
+
+        <!-- Chart and Summary -->
+
+
+        <div class="row mx-auto mt-3"
+        style="max-width:70rem;">
+
+
+
+
+
+            <!-- Chart -->
+
+
+            <div class="col-lg-7">
+
+
+                <div class="card div-card">
+
+
+                    <div class="card-header div-head">
+
+
+                        <h5 class="text-center fw-bold">
+
+                            Monthly Payment Collection Analysis
+
+                        </h5>
+
+
+                    </div>
+
+
+
+                    <div class="card-body p-2">
+
+
+                        <canvas id="paymentChart"
+                        height="150"></canvas>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+
+            <!-- Summary -->
+
+
+            <div class="col-lg-5">
+
+
+                <div class="card div-card">
+
+
+                    <div class="card-header div-head">
+
+
+                        <h5 class="text-center fw-bold">
+
+                            Payment Summary - June 2026
+
+                        </h5>
+
+
+                    </div>
+
+
+
+
+
+                    <div class="card-body">
+
+
+                        <div class="alert alert-primary">
+
+                            <strong>
+                                Total Students :
+                            </strong>
+
+                            35
+
+                        </div>
+
+
+
+
+
+                        <div class="alert alert-success">
+
+                            <strong>
+                                Paid Students :
+                            </strong>
+
+                            30
+
+                        </div>
+
+
+
+
+
+                        <div class="alert alert-danger">
+
+                            <strong>
+                                Pending Students :
+                            </strong>
+
+                            5
+
+                        </div>
+
+
+
+
+
+                        <div class="alert alert-info">
+
+                            <strong>
+                                Collection Rate :
+                            </strong>
+
+                            85.71%
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+        <!-- Payment Table -->
+
+
+        <div class="card div-card mx-auto mt-3 mb-3"
+        style="max-width:70rem;">
+
+
+            <div class="card-body">
+
+
+                <table id="tablePaymentStatus"
+                class="table table-hover table-bordered table-striped">
+
+
+                    <thead class="tablehead tableh">
+
+
+                        <tr>
+
+                            <th>No</th>
+
+                            <th>Student No</th>
+
+                            <th>Student Name</th>
+
+                            <th>Batch</th>
+
+                            <th>Payment Status</th>
+
+                            <th>Paid Amount</th>
+
+                            <th>Balance</th>
+
+
+                        </tr>
+
+
+                    </thead>
+
+
+
+
+
+                    <tbody>
+
+
+
+                        <tr>
+
+                            <td>1</td>
+
+                            <td>ST2600001</td>
+
+                            <td>Kasun Fernando</td>
+
+                            <td>Grade 7 ICT</td>
+
+                            <td>
+                                <span class="text-success fw-bold">
+                                    Paid
+                                </span>
+                            </td>
+
+                            <td>
+                                Rs.2500
+                            </td>
+
+                            <td>
+                                Rs.0
+                            </td>
+
+
+                        </tr>
+
+
+
+
+
+
+                        <tr>
+
+                            <td>2</td>
+
+                            <td>ST2600002</td>
+
+                            <td>Ayesha Kumari</td>
+
+                            <td>Grade 7 ICT</td>
+
+                            <td>
+                                <span class="text-success fw-bold">
+                                    Paid
+                                </span>
+                            </td>
+
+                            <td>
+                                Rs.2500
+                            </td>
+
+                            <td>
+                                Rs.0
+                            </td>
+
+
+                        </tr>
+
+
+
+
+
+
+                        <tr>
+
+                            <td>3</td>
+
+                            <td>ST2600003</td>
+
+                            <td>Dinuka Silva</td>
+
+                            <td>Grade 7 ICT</td>
+
+
+                            <td>
+                                <span class="text-danger fw-bold">
+                                    Pending
+                                </span>
+                            </td>
+
+
+                            <td>
+                                Rs.0
+                            </td>
+
+
+                            <td>
+                                Rs.2500
+                            </td>
+
+
+                        </tr>
+
+
+
+
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+<script>
+
+
+$('#tablePaymentStatus').DataTable();
+
+
+
+
+new Chart(document.getElementById('paymentChart'),{
+
+
+    type:'bar',
+
+
+    data:{
+
+
+        labels:[
+
+            'April',
+            'May',
+            'June'
+
+        ],
+
+
+
+        datasets:[
+
+
+            {
+
+                label:'Paid Students',
+
+                data:[
+
+                    28,
+                    32,
+                    30
+
+                ]
+
+            },
+
+
+
+            {
+
+                label:'Pending Students',
+
+                data:[
+
+                    7,
+                    3,
+                    5
+
+                ]
+
+            }
+
+
+        ]
+
+    },
+
+
+
+    options:{
+
+
+        responsive:true,
+
+
+        maintainAspectRatio:true,
+
+
+        plugins:{
+
+
+            legend:{
+
+                position:'bottom'
+
+            }
+
+
+        },
+
+
+        scales:{
+
+
+            y:{
+
+                beginAtZero:true
+
+            }
+
+
+        }
+
+
+    }
+
+
+});
+
+
+
+</script>
+
+
+
+
+<script src="bootstrap-5.2.3/js/bootstrap.bundle.min.js"></script>
+
+<script src="fontawesome-6.7.2/js/all.min.js"></script>
+
+
+</body>
+
+</html>

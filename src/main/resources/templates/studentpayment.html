@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragment :: headerFragment}">
+</head>
+
+<body>
+    <!-- Container start -->
+    <div class="container-fluid">
+        <div th:replace="~{fragment :: sidebarFrgment}"></div>
+        <!-- card area start -->
+        <div class="view-content">
+            <!-- card title area start -->
+            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                <div class="card-header div-head">
+                    <!-- title section strat -->
+                    <div class="row mt-2">
+                        <div class="d-flex justify-content-center">
+                            <i class="fa-solid fa-money-check-dollar"></i>
+                            <h3 class="h3 ms-3"> Student Payment Management</h3>
+                            <div class="col text-end">
+                                <ul class="nav nav-tabs float-end">
+                                    <li class="nav-item p-1">
+                                        <button id="tabFormButton" class="nav-link" data-bs-toggle="tab"
+                                            data-bs-target="#tabFormArea" type="button"
+                                            style="background-color: rgba(240, 248, 255, 0.765);">Add
+                                            Payment</button>
+                                    </li>
+                                    <li class="nav-item p-1">
+                                        <button class="nav-link active" data-bs-toggle="tab"
+                                            data-bs-target="#tabTableArea" type="button"
+                                            style="background-color: rgba(240, 248, 255, 0.838);">View
+                                            Payment</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- title section end -->
+                </div>
+            </div>
+            <div class="tab-content">
+                <!-- Student Form -->
+                <div class="tab-pane fade" id="tabFormArea">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card div-card mx-auto mt-3" style="max-width: 60rem;">
+                                <div class="card-body">
+                                    <!-- default submition eka wada krnawa auto html wala..api wenama submit function ekak use krnawnam default eka wada krna eka nawaththanna ona klin...defult method post -->
+                                    <form id="formStudentPayment" onsubmit="return false">
+                                        <!-- required mark start -->
+                                        <div class="row mt-2">
+                                            <div class="col text-end fw-bold">
+                                                <p>Required<span class="text-danger">*</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="row mt-3">
+                                                    <label for="textStuNoFilter" class="col-4 form-label fw-bold mt-2">
+                                                        Student No: <span class="text-danger">*</span>
+                                                    </label>
+                                                    <div class="col-8">
+                                                        <input type="text" id="textStuNoFilter" required
+                                                            class="form-control form-input"
+                                                            placeholder="Enter Student No">
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-3">
+                                                    <label for="selectPaymentCategory"
+                                                        class="col-4 form-label fw-bold mt-2">
+                                                        Pay-Category:
+                                                        <span class="text-danger">*</span>
+                                                    </label>
+                                                    <div class="col-8">
+                                                        <select required class="form-select form-input"
+                                                            id="selectPaymentCategory" onchange="studentpayment.paymentcategory_id=JSON.parse(this.value);
+                                this.style.border='2px solid green'; handleDivRegBatch()">
+                                                            <option value="" selected disabled>Select Payment Category
+                                                            </option>
+                                                            <option value="Admission Fee">Admission Fee</option>
+                                                            <option value="Monthly Fee">Monthly Fee</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-3" id="divPaymonth" hidden>
+                                                    <!-- current month area start -->
+                                                    <label for="dateMonth" class="col-4 form-label fw-bold mt-2">
+                                                        Pay-Month:
+                                                        <span class="text-danger">*</span>
+                                                    </label>
+                                                    <div class="col-8">
+                                                        <input type="month" id="dateMonth"
+                                                            class="form-control form-input" name="dateMonth">
+                                                    </div>
+                                                    <!-- current month area end -->
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6">
+
+                                                <!-- Photo + Calling Name + Button -->
+                                                <div class="row mt-2">
+                                                    <!-- Photo and Calling Name at end of column -->
+                                                    <div class="col-7">
+                                                        <div id="divStudentPhoto"
+                                                            style="display:none; text-align:centr; flex-direction: column; align-items: center;">
+
+                                                            <img src="images/studenticon.jpg" id="imgPhoto"
+                                                                style="width: 75px; height: 75px; border-radius: 50%;">
+
+                                                            <p id="pCallingName"
+                                                                class="fw-bold form-label mb-0 mt-4 text-center"></p>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- View Button -->
+                                                    <div class="col-3">
+                                                        <div id="divButtonView" style="display:none; text-align:left;">
+                                                            <button type="button" id="btnViewStudent"
+                                                                class="btn btn-sm fw-bold"
+                                                                style="display:none; background-color: rgb(164, 201, 232); width: 120px;">
+                                                                View more
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-2"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-3" id="divRegBatch" hidden>
+                                            <!-- Reg batch area start -->
+                                            <div class="col-2"></div>
+                                            <label for="selectRegBatch" class="col-2 form-label fw-bold mt-2">
+                                                Registered Bacth: <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-6">
+                                                <select id="selectRegBatch" class="form-select form-input"
+                                                    name="selectRegBatch" onchange="loadBatchFee();
+                                this.style.border='2px solid green';">
+                                                    <option value="" selected disabled>Select Batch</option>
+
+                                                </select>
+                                            </div>
+                                            <!-- Reg batch area end -->
+                                            <div class="col-2"></div>
+                                        </div>
+
+                                        <div class="row mt-3 ">
+                                            <!-- Payment Mode area  start -->
+                                            <label for="selectPaymentMode" class="col-2 form-label fw-bold mt-2">
+                                                Pay-Mode:
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <select required class="form-select form-input" id="selectPaymentMode"
+                                                    onchange="studentpayment.paymentmode_id=JSON.parse(this.value);this.style.border='2px solid green';handlePaymentMode();">
+                                                    <option value="" selected disabled>Select Payment Mode</option>
+                                                </select>
+                                            </div>
+                                            <!-- Payment Mode area  end -->
+
+                                            <!-- Payment Method area  start -->
+                                            <label for="selectPaymentMethod" class="col-2 form-label fw-bold mt-2">
+                                                Pay-Method:
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <select required class="form-select form-input" id="selectPaymentMethod"
+                                                    onchange="studentpayment.paymentmode_id=JSON.parse(this.value);this.style.border='2px solid green';">
+                                                    <option value="" selected disabled>Select Payment Method
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <!-- Payment Method area  end -->
+                                        </div>
+                                        <!-- Reference No area start -->
+                                        <div class="row mt-3" id="divReferenceNo" hidden>
+
+                                            <label for="textReferenceNo" class="col-2 form-label fw-bold mt-2">
+                                                Reference No:
+                                                <span class="text-danger">*</span>
+                                            </label>
+
+                                            <div class="col-4">
+                                                <input type="text" id="textReferenceNo" class="form-control form-input"
+                                                    placeholder="Enter Reference No"
+                                                    onkeyup="inputTextValidator(this,'^[1-9][0-9]{0,9}$','studentpayment','referenceno');">
+                                            </div>
+
+                                        </div>
+                                        <!-- Reference No area end -->
+                                        <div class="row mt-3 ">
+                                            <!-- Total Amount area start -->
+                                            <label for="textTotalAmount" class="col-2 form-label fw-bold mt-2">
+                                                Total Amount:
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <input type="text" required id="textTotalAmount"
+                                                    class="form-control form-input"
+                                                    placeholder="Enter Total Amount Here"
+                                                    onkeyup="inputTextValidator(this,'^[1-9][0-9]{0,9}$','studentpayment','totalamount'); calculateBalanceAmount();">
+                                            </div>
+                                            <!--  Total Amount area end -->
+                                            <!-- Paid Amount area start -->
+                                            <label for="textPaidAmount" class="col-2 form-label fw-bold mt-2">
+                                                Paid Amount:
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <input type="text" required id="textPaidAmount"
+                                                    class="form-control form-input" placeholder="Enter Paid Amount Here"
+                                                    onkeyup="inputTextValidator(this,'^[0-9][0-9]{0,9}$','studentpayment','paidamount'); calculateBalanceAmount();">
+                                            </div>
+                                            <!--  Paid Amount area end -->
+
+                                        </div>
+
+                                        <div class="row mt-3 ">
+                                            <!-- Balance Amount area start -->
+                                            <label for="textBalanceAmount" class="col-2 form-label fw-bold mt-2">
+                                                Balance Amount:
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <input type="text" required id="textBalanceAmount"
+                                                    class="form-control form-input" placeholder="Balance Amount"
+                                                    readonly>
+                                            </div>
+                                            <!--  Paid Amount area end -->
+                                        </div>
+                                        <div class="row mt-4">
+                                            <!-- buttons area start -->
+                                            <div class="col text-center">
+                                                <button class="btn fw-bold btnall btn-clear" id="buttonClear"
+                                                    type="button"
+                                                    onclick="clearFormData('formStudentPayment','studentpayment')">
+                                                    <i class="fa-solid fa-recycle"></i> Clear
+                                                </button>
+                                                <button class="btn fw-bold  btn-submit  btnall form-input"
+                                                    id="buttonSubmit" onclick="buttonStudenPaySubmit()" type="submit"><i
+                                                        class="fa-solid fa-paper-plane"></i>
+                                                    Submit</button>
+                                            </div>
+                                            <!-- buttons area end -->
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Student Payment Table -->
+                <div class="tab-pane fade show active" id="tabTableArea">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                                <div class="card-body">
+                                    <table id="tableStudentPayment"
+                                        class="table table-hover table-bordered table-striped ">
+                                        <thead class="text-dark tablehead tableh">
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Stu No</th>
+                                                <th>Calling name</th>
+                                                <th>Registered Batch</th>
+                                                <th>Payment Category</th>
+                                                <th>Modify</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tableBodyStudentPayment">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Student Payment Print Modal -->
+    <div class="modal modalPrint" id="modalStudantPayPrint">
+        <div class="modal-dialog">
+            <div class="modal-content div-card">
+                <div class="modal-header">
+                    <h4>Print Student Payment Details</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="tablePrint table table-bordered  table-hover align-middle" id="tablePrintStudentPay">
+                        <tbody>
+                            <tr>
+                                <th>Student Number</th>
+                                <td id="tdStuNo"></td>
+                            </tr>
+                            <tr>
+                                <th>Calling name</th>
+                                <td id="tdCallingName"></td>
+                            </tr>
+                            <tr>
+                                <th>Registered Batch</th>
+                                <td id="tdRegBatch"></td>
+                            </tr>
+                            <tr>
+                                <th>Payment No</th>
+                                <td id="tdPaymentNo"></td>
+                            </tr>
+                            <tr>
+                                <th>Payment Category</th>
+                                <td id="tdPaymentCategory"></td>
+                            </tr>
+                            <tr>
+                                <th>Payment Mode</th>
+                                <td id="tdPaymentMode"></td>
+                            </tr>
+                            <tr>
+                                <th>Payment Method</th>
+                                <td id="tdPaymentMethod"></td>
+                            </tr>
+                            <tr>
+                                <th>Reference No</th>
+                                <td id="tdReferenceNo"></td>
+                            </tr>
+                            <tr>
+                                <th>Paid Month</th>
+                                <td id="tdPayMonth"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Total Amount</th>
+                                <td id="tdTamount"></td>
+                            </tr>
+                            <tr>
+                                <th>Paid Amount</th>
+                                <td id="tdPamount"></td>
+                            </tr>
+                            <tr>
+                                <th>Balance Amount</th>
+                                <td id="tdBamount"></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="buttonPrint()" class="btn btn-secondary">
+                        Print
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal modalPrint" id="modalStudentDetail">
+        <div class="modal-dialog">
+            <div class="modal-content div-card">
+                <div class="modal-header">
+                    <h4>Student Details</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="tablePrint table table-hover table-bordered" id="tableShowStudent">
+                        <tbody>
+                            <tr>
+                                <th>Student Number</th>
+                                <td id="tdStudentNo"></td>
+                            </tr>
+                            <tr>
+                                <th>Full Name</th>
+                                <td id="tdFullName"></td>
+                            </tr>
+                            <tr>
+                                <th>Calling Name</th>
+                                <td id="tdCallingNameShow"></td>
+                            </tr>
+                            <tr>
+                                <th>NIC</th>
+                                <td id="tdNic"></td>
+                            </tr>
+                            <tr>
+                                <th>Date of Birth</th>
+                                <td id="tdDob"></td>
+                            </tr>
+                            <tr>
+                                <th>Gender</th>
+                                <td id="tdGender"></td>
+                            </tr>
+                            <tr>
+                                <th>Address</th>
+                                <td id="tdAddress"></td>
+                            </tr>
+                            <tr>
+                                <th>Mobile Number</th>
+                                <td id="tdMobile"></td>
+                            </tr>
+                            <tr>
+                                <th>School Name</th>
+                                <td id="tdSchool"></td>
+                            </tr>
+                            <tr>
+                                <th>Student Status</th>
+                                <td id="tdStudentStatus"></td>
+                            </tr>
+                            <tr>
+                                <th>Guardian Name</th>
+                                <td id="tdGuardianName"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{fragment :: footerFragment}"></div>
+
+    <!-- linkemployee js file -->
+    <script src="modaljs/studentpayment.js"></script>
+
+
+
+</body>
+
+
+
+</html>

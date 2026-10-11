@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragment :: headerFragment}">
+</head>
+
+<body>
+    <!-- Container start -->
+    <div class="container-fluid">
+        <div th:replace="~{fragment :: sidebarFrgment}"></div>
+        <div class="view-content">
+            <!-- card area start -->
+            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                <!--  Card Header Start  -->
+                <div class="card-header div-head">
+                    <div class="row mt-2">
+                        <div class="d-flex justify-content-center">
+                            <i class="fa-solid fa-user-check"></i>
+                            <h3 class="h3 ms-3">Enrollment Management</h3>
+                            <div class="col text-end">
+                                <ul class="nav nav-tabs float-end">
+                                    <li class="nav-item p-1">
+                                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabFormArea"
+                                            id="tabFormButton" type="button"
+                                            style="background-color: rgba(240, 248, 255, 0.765);">
+                                            Add Enrollment
+                                        </button>
+                                    </li>
+                                    <li class="nav-item p-1">
+                                        <button class="nav-link active" data-bs-toggle="tab"
+                                            data-bs-target="#tabTableArea" type="button"
+                                            style="background-color: rgba(240, 248, 255, 0.838);">
+                                            View Enrollments
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--  Card Header End -->
+
+            <div class="tab-content">
+                <!--  Enrollment Form Tab Start -->
+                <div class="tab-pane fade" id="tabFormArea">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                                <div class="card-body">
+                                    <!-- default submition eka wada krnawa auto html wala..api wenama submit function ekak use krnawnam default eka wada krna eka nawaththanna ona klin...defult method post -->
+                                    <form id="formEnrollment" onsubmit="return false">
+                                        <!-- Required Mark area start -->
+                                        <div class="row mt-2">
+                                            <div class="col text-end fw-bold">
+                                                <p>Required <span class="text-danger">*</span></p>
+                                            </div>
+                                        </div>
+                                        <!-- Required Mark area end -->
+                                        <div class="row mt-3">
+                                            <!-- select Teacher area start -->
+                                            <label for="selectTeacher" class="col-2 form-label fw-bold mt-2">
+                                                Teacher : <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <select required id="selectTeacher" class="form-select form-input"
+                                                    onchange="enrollment.teacher_id=JSON.parse(this.value);
+                                this.style.border='2px solid green';">
+                                                    <option value="" selected disabled>Select Teacher</option>
+                                                    <option value="1">Janith Perera</option>
+                                                    <option value="2">Kamal Fernando</option>
+                                                </select>
+                                            </div>
+                                            <!-- select Teacher area end -->
+                                            <!-- Enrollment Month area start -->
+                                            <label for="textEnrollmentMonth" class="col-2 form-label fw-bold mt-2">
+                                                Month : <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-4">
+                                                <input type="month" id="textEnrollmentMonth"
+                                                    class="form-control form-input" onchange="enrollment.enrollmentmonth =this.value;
+                                this.style.border='2px solid green';">
+                                            </div>
+                                            <!-- Enrollment Month area end -->
+                                        </div>
+                                        <div class="row mt-3">
+                                            <!-- Batch Details Inner Table area start-->
+                                            <label class="col-2 form-label fw-bold mt-2">Batch Details :</label>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <!-- Batch Details  Inner Table area start -->
+                                            <table class="table table-bordered table-striped table-hover"
+                                                id="tabelInnerBatchDetails">
+                                                <thead class="text-dark tablehead tableh align-middle text-center">
+                                                    <tr>
+                                                        <th style="width: 5%;">Id</th>
+                                                        <th style="width: 25%;">Batch</th>
+                                                        <th style="width: 8%;">Batch Fee</th>
+                                                        <th style="width: 8%;">Register Count</th>
+                                                        <th style="width: 8%;">Paid Count</th>
+                                                        <th style="width: 12%;">Total Income</th>
+                                                        <th style="width: 8%;">Total Free Card</th>
+                                                        <th style="width: 8%;">Registered Free Card</th>
+                                                        <th style="width: 8%;">Available Free Card</th>
+                                                        <th style="width: 10%;">Additional Charges</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="batchDetailsBody" class="align-middle text-center">
+                                                    <!-- Dynamic rows will be filled by JS -->
+                                                </tbody>
+                                            </table>
+                                            <!-- Batch Details  Inner Table area end -->
+                                        </div>
+
+                                        <!--Total Batch Income & Total Service Charge area start -->
+                                        <div class="row mt-5">
+                                            <div class="col-2"></div>
+                                            <div class="col-4 d-flex justify-content-between">
+                                                <label class="fw-bold form-label">Total Batch Income :</label>
+                                                <span id="totalBatchIncome"></span>
+                                            </div>
+                                            <div class="col-4 d-flex justify-content-between">
+                                                <label class="fw-bold form-label">Total Service Charge :</label>
+                                                <span id="totalServiceCharge"></span>
+                                            </div>
+                                            <div class="col-2"></div>
+                                        </div>
+                                        <!--Total Batch Income & Total Service Charge area end -->
+
+                                        <!-- Total Additional Charges & Net Amount area start -->
+                                        <div class="row mt-2">
+
+                                            <div class="col-2"></div>
+
+                                            <div class="col-4 d-flex justify-content-between">
+                                                <label class="fw-bold form-label">
+                                                    Total Additional Charges :
+                                                </label>
+
+                                                <span id="totalAdditionalCharges"></span>
+                                            </div>
+
+                                            <div class="col-4 d-flex justify-content-between">
+                                                <label class="fw-bold form-label">
+                                                    Net Amount :
+                                                </label>
+
+                                                <span id="netAmount"></span>
+                                            </div>
+
+                                            <div class="col-2"></div>
+
+                                        </div>
+                                        <!-- Total Additional Charges & Net Amount area end -->
+
+                                        <!-- Tax Amount & Final Amount area start -->
+                                        <div class="row mt-2">
+
+                                            <div class="col-2"></div>
+
+                                            <!--  <div class="col-4 d-flex justify-content-between">
+                                                <label class="fw-bold form-label">
+                                                    Tax Amount :
+                                                </label>
+
+                                                <span id="taxAmount"></span>
+                                            </div> -->
+
+                                            <div class="col-4 d-flex justify-content-between">
+                                                <label class="fw-bold form-label">
+                                                    Final Amount :
+                                                </label>
+
+                                                <span id="finalAmount" class="text-success fw-bold"></span>
+                                            </div>
+
+                                            <div class="col-2"></div>
+
+                                        </div>
+                                        <!-- Tax Amount & Final Amount area end -->
+
+
+                                        <!-- buttons area start -->
+                                        <div class="row mt-2">
+                                            <div class="d-flex justify-content-center gap-2 mt-3">
+                                                <button class="btn fw-bold btnall btn-clear" id="buttonClear"
+                                                    type="button"
+                                                    onclick="clearFormData('formEnrollment','enrollment')">
+                                                    <i class="fa-solid fa-recycle"></i> Clear
+                                                </button>
+                                                <button class="btn fw-bold btnall btn-submit" id="buttonSubmit"
+                                                    type="button" onclick="buttonEnrollmentSubmit()">
+                                                    <i class="fa-solid fa-paper-plane"></i> Submit
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enrollment Table -->
+                <div class="tab-pane fade show active" id="tabTableArea">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                                <div class="card-body">
+                                    <table id="tableEnrollment" class="table table-hover table-bordered table-striped">
+                                        <thead class="text-dark tablehead tableh">
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Teacher</th>
+                                                <th>Month</th>
+                                                <th>Full Amount</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tableBodyEnrollment">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!--  Container end  -->
+
+    <!-- Enrollment Print Modal -->
+    <div class="modal modalPrint" id="modalEnrollmentPrint">
+        <div class="modal-dialog">
+            <div class="modal-content div-card">
+                <div class="modal-header">
+                    <h4>Print Enrollment</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <table class="table table-bordered table-hover" id="tablePrintEnrollment">
+                        <tbody>
+
+                            <tr>
+                                <th>Teacher</th>
+                                <td id="tdTeacher"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Month</th>
+                                <td id="tdMonth"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Total Batch Income</th>
+                                <td id="tdTotalBatchIncome"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Total Service Charge</th>
+                                <td id="tdServiceCharge"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Total Additional Charges</th>
+                                <td id="tdAdditionalCharges"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Net Amount</th>
+                                <td id="tdNetAmount"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Final Amount</th>
+                                <td id="tdFinalAmount"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Status</th>
+                                <td id="tdStatus"></td>
+                            </tr>
+
+
+                            <!-- Batch Summary -->
+
+                            <tr>
+                                <th>Total Batches</th>
+                                <td id="tdTotalBatches"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Total Registered Students</th>
+                                <td id="tdTotalRegisteredStudents"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Total Paid Students</th>
+                                <td id="tdTotalPaidStudents"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Total Free Card Count</th>
+                                <td id="tdTotalFreeCardCount"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Registered Free Card Count</th>
+                                <td id="tdRegisteredFreeCardCount"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Available Free Card Count</th>
+                                <td id="tdAvailableFreeCardCount"></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="buttonPrint()" class="btn btn-secondary">
+                        Print
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div th:replace="~{fragment :: footerFragment}"></div>
+
+    <!-- link enrollment js file -->
+    <script src="modaljs/enrollment.js"></script>
+
+</body>
+
+</html>

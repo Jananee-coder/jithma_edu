@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragment :: headerFragment}">
+</head>
+
+<body>
+    <!-- container start -->
+    <div class="container-fluid">
+        <!-- sidebar start -->
+        <div th:replace="~{fragment :: sidebarFrgment}"></div>
+        <!-- sidebar end -->
+        <!-- view content start -->
+        <div class="view-content">
+            <!-- title card start -->
+            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                <div class="card-header div-head">
+                    <!-- title section start -->
+                    <div class="row mt-2">
+                        <div class="d-flex justify-content-center">
+                            <i class="fa-solid fa-file-lines"></i>
+                            <!-- title -->
+                            <h3 class="h2 ms-3">
+                                Student Attendance Report
+                            </h3>
+                            <!-- print button -->
+                            <div class="col text-end">
+                                <button type="button" id="btnPrintReport" class="btn btn-light fw-bold"
+                                    style="background-color: rgba(240, 248, 255, 0.765);">
+                                    <i class="fa-solid fa-print"></i>
+                                    Print Report
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- title section end -->
+                </div>
+            </div>
+            <!-- title card end -->
+            <!-- filter card start -->
+            <div class="card div-card mx-auto mt-3" style="max-width: 70rem;">
+                <div class="card-body">
+                    <div class="row">
+                        <!-- student search area start -->
+                        <div class="col-lg-2 col-md-6">
+                            <label class="form-label fw-bold">
+                                Student :
+                            </label>
+                            <select id="selectStudent" class="form-select form-input js-example-basic-single">
+                            </select>
+                        </div>
+                        <!-- student search area end -->
+                        <!-- Batch -->
+                        <div class="col-lg-4 col-md-6">
+                            <label for="selectBatch" class="form-label">
+                                Batch Name :
+                            </label>
+
+                            <select id="selectBatch" class="form-select form-input">
+                                <option value="" selected disabled>Select Batch..!</option>
+                            </select>
+                        </div>
+                        <!-- from date area start -->
+                        <div class=" col-lg-2 col-md-6">
+                            <label class="form-label fw-bold">
+                                From Date :
+                            </label>
+                            <input type="date" id="fromDate" class="form-control form-input">
+                        </div>
+                        <!-- from date area end -->
+                        <!-- to date area start -->
+                        <div class="col-lg-2 col-md-6">
+                            <label class="form-label fw-bold">
+                                To Date :
+                            </label>
+                            <input type="date" id="toDate" class="form-control form-input">
+                        </div>
+                        <!-- to date area end -->
+                        <!-- generate button start -->
+                        <div class="col-lg-2 col-md-6 d-flex align-items-end">
+                            <button type="button" id="btnGenerateReport" class="btn fw-bold"
+                                style="background-color: rgb(162, 197, 227);"
+                                onclick="generateStudentAttendanceReport();">
+                                <i class="fa-solid fa-file-lines"></i>
+                                Generate
+                            </button>
+                        </div>
+                        <!-- generate button end -->
+                    </div>
+                </div>
+                <!-- summary section start -->
+                <div class="row m-3">
+                    <div class="col-md-3">
+                        <div class="alert alert-primary">
+                            Total Classes :
+                            <span id="totalClasses">0</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="alert alert-success">
+                            Present :
+                            <span id="presentCount">0</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="alert alert-danger">
+                            Absent :
+                            <span id="absentCount">0</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="alert alert-info">
+                            Attendance :
+                            <span id="attendancePercentage">0%</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- summary section end -->
+                <!-- report table start -->
+                <div class="row  mx-3">
+                    <div class="col">
+                        <table id="tableStudentAttendance" class="table table-hover table-bordered table-striped">
+                            <!-- table head -->
+                            <thead class="text-dark tablehead tableh text-center">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Attendance Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <!-- table body -->
+                            <tbody id="tableBodyStudentAttendance">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- report table end -->
+
+            </div>
+            <!-- filter card end -->
+        </div>
+        <!-- view content end -->
+    </div>
+    <!-- container end -->
+
+
+    <div th:replace="~{fragment :: footerFragment}"></div>
+
+    <!-- link report js -->
+    <script src="reportjs/reportstudentattendance.js"></script>
+
+</body>
+
+</html>

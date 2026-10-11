@@ -1,0 +1,68 @@
+* {
+    font-family: 'Times New Roman', Times, serif;
+    color: rgb(5, 34, 58);
+}
+
+body {
+    /* background-color: rgb(173, 193, 210); */
+    /* background: linear-gradient(rgb(118, 150, 183), rgb(201, 207, 212)); */
+    background: url(../images/bc.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.div-head {
+    font-weight: bold;
+    color: rgb(15, 50, 78);
+    font-style: italic;
+}
+
+.div-card {
+    /* background: linear-gradient(rgb(211, 201, 214), rgb(211, 185, 201)); */
+    background-color: aliceblue;
+    border-radius: 15px;
+    border: 3px solid rgba(14, 7, 56, 0.621);
+    color: rgb(5, 34, 58);
+   
+}
+
+.login-image {
+    background-image: url(../images/jithma.jpg);
+    background-size: cover;
+    background-position: center;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    min-height: 350px;
+}
+
+.div-span {
+    background-color: rgb(199, 218, 234);
+}
+
+
+.form-input {
+    border: 1px solid rgb(164, 201, 232);
+    border-radius: 6px;
+    transition: transform ease 0.4 s, box-shadow ease 0.4s;
+
+}
+
+.form-label {
+    color: rgb(23, 72, 125);
+}
+
+
+.btn-login {
+    background-color: rgb(165, 202, 232);
+     width: 100%;
+    border-radius: 5px;
+}
+.btn-login:hover {
+    background-color: rgb(147, 168, 204);
+    color: rgb(15, 6, 47);
+}

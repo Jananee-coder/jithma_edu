@@ -1,0 +1,55 @@
+/* Page background and text */
+body {
+    font-family: Arial, sans-serif;
+    background-image: url(../images/bc.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Error container styling */
+.error-container {
+    background-color: rgba(245, 198, 203, 0.9);
+    border: 1px solid #f5c6cb;
+    padding: 50px 40px;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    max-width: 600px;
+    width: 90%;
+    text-align: center;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: #721c24;
+    border-color: #721c24;
+}
+
+.btn-secondary {
+    background-color: #a63b4d;
+    border-color: #a63b4d;
+}
+
+/* Hover effects for buttons */
+.btn-primary:hover,
+.btn-secondary:hover {
+    opacity: 0.9;
+    transform: translateY(-3px);
+    transition: 0.3s ease;
+}
+
+/* Link styling */
+a {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

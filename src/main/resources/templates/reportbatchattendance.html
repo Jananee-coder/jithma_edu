@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragment :: headerFragment}">
+</head>
+
+<body>
+
+    <!-- container start -->
+    <div class="container-fluid">
+        <!-- sidebar start -->
+        <div th:replace="~{fragment :: sidebarFrgment}"></div>
+        <!-- sidebar end -->
+        <!-- view content start -->
+        <div class="view-content">
+            <!-- title card start -->
+            <div class="card div-card mx-auto mt-3" style="max-width:70rem;">
+                <div class="card-header div-head">
+                    <!-- title section start -->
+                    <div class="row mt-2">
+                        <div class="d-flex justify-content-center">
+                            <i class="fa-solid fa-file-lines"></i>
+                            <h3 class="h2 ms-3"> Batch Attendance Report</h3>
+                            <!-- print button start -->
+                            <div class="col text-end">
+                                <button type="button" id="btnPrintReport" class="btn btn-light fw-bold"
+                                    style="background-color:rgba(240,248,255,0.765);">
+                                    <i class="fa-solid fa-print"></i>
+                                    Print Report
+                                </button>
+                            </div>
+                            <!-- print button end -->
+                        </div>
+                    </div>
+                    <!-- title section end -->
+                </div>
+            </div>
+            <!-- title card end -->
+            <!-- filter card start -->
+            <div class="card div-card mx-auto mt-3" style="max-width:70rem;">
+                <div class="card-body">
+                    <div class="row">
+                        <!-- teacher search area start -->
+                        <div class="col-lg-4 col-md-6">
+                            <label class="form-label fw-bold">
+                                Teacher :
+                            </label>
+                            <select id="selectTeacher" class="form-select form-input js-example-basic-single">
+                                <option value="" selected disabled>
+                                    Select Teacher..!
+                                </option>
+                            </select>
+                        </div>
+                        <!-- teacher search area end -->
+                        <!-- batch search area start -->
+                        <div class="col-lg-4 col-md-6">
+                            <label class="form-label fw-bold">
+                                Batch Name :
+                            </label>
+                            <select id="selectBatch" class="form-select form-input">
+                                <option value="" selected disabled>
+                                    Select Batch..!
+                                </option>
+                            </select>
+                        </div>
+                        <!-- batch search area end -->
+                        <!-- date search area start -->
+                        <div class="col-lg-2 col-md-6">
+                            <label class="form-label fw-bold">
+                                Attendance Date :
+                            </label>
+                            <select id="selectAttendanceDate" class="form-select form-input">
+                                <option value="" selected disabled>
+                                    Select Date..!
+                                </option>
+                            </select>
+                        </div>
+                        <!-- date search area end -->
+                        <!-- generate button start -->
+                        <div class="col-lg-2 col-md-6 d-flex align-items-end">
+                            <button type="button" id="btnGenerateReport" class="btn fw-bold"
+                                style="background-color:rgb(162,197,227);" onclick="generateBatchAttendanceReport();">
+                                <i class="fa-solid fa-file-lines"></i>
+                                Generate
+                            </button>
+                        </div>
+                        <!-- generate button end -->
+                    </div>
+                </div>
+                <!-- report area start -->
+                <div class="row mx-3 mt-3">
+                    <!-- summary section start -->
+                    <div class="col-md-3">
+                        <!-- total student count start -->
+                        <div class="alert alert-primary">
+                            Total Students :
+                            <span id="totalStudents">0</span>
+                        </div>
+                        <!-- total student count end -->
+                        <!-- present count start -->
+                        <div class="alert alert-success">
+                            Present :
+                            <span id="presentCount">0</span>
+                        </div>
+                        <!-- present count end -->
+                        <!-- absent count start -->
+                        <div class="alert alert-danger">
+                            Absent :
+                            <span id="absentCount">0</span>
+                        </div>
+                        <!-- absent count end -->
+                    </div>
+                    <!-- summary section end -->
+                    <!-- present student table start -->
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-header div-head">
+                                <h4>
+                                    Present Student List
+                                </h4>
+                            </div>
+                            <div class="card-body">
+                                <table id="tablePresentStudent" class="table table-hover table-bordered table-striped">
+                                    <!-- table head start -->
+                                    <thead class="text-dark tablehead tableh text-center">
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Reg No</th>
+                                            <th>Student Name</th>
+                                        </tr>
+                                    </thead>
+                                    <!-- table head end -->
+                                    <!-- table body start -->
+                                    <tbody id="tableBodyPresentStudent">
+                                    </tbody>
+                                    <!-- table body end -->
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- present student table end -->
+                </div>
+                <!-- report area end -->
+            </div>
+            <!-- filter card end -->
+        </div>
+        <!-- view content end -->
+    </div>
+    <!-- container end -->
+
+    <div th:replace="~{fragment :: footerFragment}"></div>
+
+    <script src="reportjs/reportbatchattendance.js"></script>
+
+</body>
+
+</html>
